@@ -24,4 +24,8 @@ public class Position {
     public void setY(int y) {
         this.y = y;
     }
+    public Position(String a){
+        setY(Character.toLowerCase(a.charAt(0)) - 97);
+        setX(8 - Character.getNumericValue(a.charAt(1)));
+    }
 }
