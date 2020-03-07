@@ -1,13 +1,22 @@
 package com.carlsenbot.pieces;
 
-public abstract class Piece {
-    private int value;
+import com.carlsenbot.position.Position;
 
-    public int getValue() {
-        return value;
+public abstract class Piece {
+    private double value;
+    private boolean isWhite;
+    private Position position;
+
+    public Piece(double value, boolean isWhite, Position position) {
+        this.value = value;
+        this.isWhite = isWhite;
+        this.position = position;
     }
 
-    public void setValue(int value) {
+    public double getValue() {
+        return value;
+    }
+    public void setValue(double value) {
         this.value = value;
     }
 }
