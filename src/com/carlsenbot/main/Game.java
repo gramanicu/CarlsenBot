@@ -8,7 +8,7 @@ public class Game {
     private boolean isWhiteTurn;
     private int round;
     private Table table;
-
+    private Piece[][] pieces;
     /**
      * All the pieces are stored in a matrix, as it can offer faster access
      * to the pieces.
@@ -33,7 +33,7 @@ public class Game {
      * id = row * 16 + line + 1,
      * where row and line are the position in the pieces matrix.
      */
-    private Piece[][] pieces;
+
 
     private Piece[] initWhitePieces(){
         PieceColor color = PieceColor.White;
