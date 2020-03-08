@@ -3,8 +3,8 @@ package com.carlsenbot.pieces;
 import com.carlsenbot.position.Position;
 
 public class Rook extends Piece {
-    public Rook(PieceColor color, Position position) {
-        super(5d, color, position,"Rook");
+    public Rook(PieceColor color, Position position, int id) {
+        super(5d, color, position,"Rook", id);
     }
 
     @Override

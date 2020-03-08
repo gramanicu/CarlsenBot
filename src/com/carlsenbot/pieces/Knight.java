@@ -3,8 +3,8 @@ package com.carlsenbot.pieces;
 import com.carlsenbot.position.Position;
 
 public class Knight extends Piece {
-    public Knight(PieceColor color, Position position) {
-        super(3d, color, position,"Knight");
+    public Knight(PieceColor color, Position position, int id) {
+        super(3d, color, position,"Knight", id);
     }
 
     @Override

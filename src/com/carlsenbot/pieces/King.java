@@ -3,8 +3,8 @@ package com.carlsenbot.pieces;
 import com.carlsenbot.position.Position;
 
 public class King extends Piece {
-    public King(PieceColor color, Position position) {
-        super(Double.MAX_VALUE, color, position, "King");
+    public King(PieceColor color, Position position, int id) {
+        super(Double.MAX_VALUE, color, position, "King", id);
     }
 
     @Override

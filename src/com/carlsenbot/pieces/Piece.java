@@ -7,12 +7,22 @@ public abstract class Piece {
     private boolean isWhite;
     private Position position;
     private String name;
+    private byte id;
 
-    public Piece(double value, PieceColor color, Position position, String name) {
+    public Piece(double value, PieceColor color, Position position, String name, int id) {
         setValue(value);
         setColor(color);
         setPosition(position);
         setName(name);
+        setId((byte) id);
+    }
+
+    public byte getId() {
+        return id;
+    }
+
+    public void setId(byte id) {
+        this.id = id;
     }
 
     public boolean isWhite() {

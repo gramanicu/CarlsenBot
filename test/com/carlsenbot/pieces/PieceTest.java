@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PieceTest {
     @Test
     void setColor() {
-        Piece piece = new Piece(0d, PieceColor.White, new Position("a1"), "test") {
+        Piece piece = new Piece(0d, PieceColor.White, new Position("a1"), "test", 0) {
             @Override
             public String getSymbol() {
                 return null;

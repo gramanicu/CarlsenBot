@@ -1,21 +1,43 @@
 package com.carlsenbot.table;
 
 import com.carlsenbot.pieces.Piece;
+import com.carlsenbot.position.Position;
 
 public class Table {
-    private byte[][] matrix;
+    private byte[][] positions;
 
     public Table() {
-        matrix = new byte[8][8];
+        positions = new byte[8][8];
     }
 
     public Table(Piece[][] pieces) {
-        super();
+        this();
+        // Whites
+        for (int i = 0; i < 16; ++i) {
+            Position pos = pieces[0][i].getPosition();
+            positions[pos.getY()][pos.getX()] = pieces[0][i].getId();
+        }
+
+        // Blacks
+        for (int i = 0; i < 16; ++i) {
+            Position pos = pieces[1][i].getPosition();
+            positions[pos.getY()][pos.getX()] = pieces[1][i].getId();
+        }
     }
 
-    public byte[][] getMatrix() {
-        return matrix;
+    public byte[][] getPositions() {
+        return positions;
     }
 
-
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                sb.append(String.format("%3s", positions[i][j]));
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 }

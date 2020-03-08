@@ -3,8 +3,8 @@ package com.carlsenbot.pieces;
 import com.carlsenbot.position.Position;
 
 public class Pawn extends Piece {
-    public Pawn(PieceColor color, Position position) {
-        super(1d, color, position,"Pawn");
+    public Pawn(PieceColor color, Position position, int id) {
+        super(1d, color, position,"Pawn", id);
     }
 
     @Override
