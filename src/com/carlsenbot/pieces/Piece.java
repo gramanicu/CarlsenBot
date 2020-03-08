@@ -8,6 +8,7 @@ public abstract class Piece {
     private Position position;
     private String name;
     private byte id;
+    private boolean onBoard;
 
     public Piece(double value, PieceColor color, Position position, String name, int id) {
         setValue(value);
@@ -15,6 +16,15 @@ public abstract class Piece {
         setPosition(position);
         setName(name);
         setId((byte) id);
+        setOnBoard(onBoard);
+    }
+
+    public boolean isOnBoard() {
+        return onBoard;
+    }
+
+    public void setOnBoard(boolean onBoard) {
+        this.onBoard = onBoard;
     }
 
     public byte getId() {
@@ -28,7 +38,10 @@ public abstract class Piece {
     public boolean isWhite() {
         return isWhite;
     }
-    public boolean isBlack() { return !isWhite; }
+
+    public boolean isBlack() {
+        return !isWhite;
+    }
 
     public void setColor(PieceColor color) {
         isWhite = color == PieceColor.White;
@@ -59,9 +72,11 @@ public abstract class Piece {
     }
 
     protected String unicodeToChar(int unicode) {
-        return Character.toString((char)unicode);
+        return Character.toString((char) unicode);
     }
 
     public abstract String getSymbol();
+
+    public abstract boolean move(Position target);
 
 }
