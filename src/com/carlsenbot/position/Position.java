@@ -18,13 +18,6 @@ public class Position {
         setCoordinates(coordinates);
     }
 
-    public Position(String a, boolean valid) {
-        if (valid) {
-            setY(Character.toLowerCase(a.charAt(0)) - 97);
-            setX(8 - Character.getNumericValue(a.charAt(1)));
-        }
-    }
-
     private boolean validCoordinates(String coordinates) {
         // Too many or too less coordinates
         if (coordinates.length() != 2) {
