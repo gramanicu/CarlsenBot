@@ -77,12 +77,16 @@ public class Pawn extends Piece {
             return false;
         }
 
-        if (isWhite()) {
-            return newRow >= 0;
+        if(isWhite()) {
+            if(newRow < 0) {
+                return false;
+            }
         } else {
-            return newRow <= 7;
+            if(newRow > 7) {
+                return false;
+            }
         }
-
+        return true;
     }
 
     @Override
@@ -92,5 +96,14 @@ public class Pawn extends Piece {
         } else {
             return unicodeToChar(9823);
         }
+    }
+
+    @Override
+    public boolean move(Position target, Table table) {
+        if (isValidMove(table, getPosition().getY(), getPosition().getX(), target.getX(), target.getY())) {
+            super.setPosition(target);
+            return true;
+        }
+        return false;
     }
 }

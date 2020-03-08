@@ -1,6 +1,7 @@
 package com.carlsenbot.pieces;
 
 import com.carlsenbot.position.Position;
+import com.carlsenbot.table.Table;
 
 public class Knight extends Piece {
     public Knight(PieceColor color, Position position, int id) {
@@ -14,5 +15,10 @@ public class Knight extends Piece {
         } else {
             return unicodeToChar(9822);
         }
+    }
+
+    @Override
+    public boolean move(Position target, Table table) {
+        return false;
     }
 }

@@ -1,6 +1,7 @@
 package com.carlsenbot.pieces;
 
 import com.carlsenbot.position.Position;
+import com.carlsenbot.table.Table;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,6 +13,11 @@ class PieceTest {
             @Override
             public String getSymbol() {
                 return null;
+            }
+
+            @Override
+            public boolean move(Position target, Table table) {
+                return false;
             }
         };
 

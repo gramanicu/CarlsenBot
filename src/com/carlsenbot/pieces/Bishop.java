@@ -1,6 +1,7 @@
 package com.carlsenbot.pieces;
 
 import com.carlsenbot.position.Position;
+import com.carlsenbot.table.Table;
 
 public class Bishop extends Piece {
     public Bishop(PieceColor color, Position position, int id) {
@@ -14,5 +15,10 @@ public class Bishop extends Piece {
         } else {
             return unicodeToChar(9821);
         }
+    }
+
+    @Override
+    public boolean move(Position target, Table table) {
+        return false;
     }
 }

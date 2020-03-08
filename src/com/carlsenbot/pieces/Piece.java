@@ -1,6 +1,7 @@
 package com.carlsenbot.pieces;
 
 import com.carlsenbot.position.Position;
+import com.carlsenbot.table.Table;
 
 public abstract class Piece {
     private double value;
@@ -77,6 +78,6 @@ public abstract class Piece {
 
     public abstract String getSymbol();
 
-    public abstract boolean move(Position target);
+    public abstract boolean move(Position target, Table table);
 
 }
