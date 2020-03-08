@@ -89,6 +89,8 @@ public class Position {
     }
 
     public String toString() {
-        return "(" + x + ", " + y + ")";
+        String first = Character.toString((char) (x + 97));
+        String second = Integer.toString(8 - y);
+        return first + second;
     }
 }

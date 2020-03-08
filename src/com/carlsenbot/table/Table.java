@@ -1,5 +1,7 @@
 package com.carlsenbot.table;
 
+import com.carlsenbot.pieces.Piece;
+
 public class Table {
     private byte[][] matrix;
 
@@ -7,11 +9,13 @@ public class Table {
         matrix = new byte[8][8];
     }
 
+    public Table(Piece[][] pieces) {
+        super();
+    }
+
     public byte[][] getMatrix() {
         return matrix;
     }
 
-    public void setMatrix(byte[][] matrix) {
-        this.matrix = matrix;
-    }
+
 }
