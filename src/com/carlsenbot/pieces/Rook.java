@@ -1,3 +1,7 @@
+/*
+ * © 2020 Grama Nicolae, Ioniță Radu , Mosessohn Vlad, 322CA
+ */
+
 package com.carlsenbot.pieces;
 
 import com.carlsenbot.main.GameManager;
@@ -5,14 +9,26 @@ import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
 public class Rook extends Piece {
+    /**
+     * Create a new rook, with the specified position and id
+     * @param color The color of the rook
+     * @param position The position of the rook
+     * @param id The id of the rook
+     */
     public Rook(PieceColor color, Position position, int id) {
         super(5d, color, position, "Rook", id);
     }
 
+    /*
+     * Same as the other one, is uses a "chess position"
+     */
     public Rook(PieceColor color, String position, int id) {
         this(color, new Position(position), id);
     }
 
+    /*
+     * Returns the bishop symbol
+     */
     @Override
     public String getSymbol() {
         if (isWhite()) {
@@ -22,8 +38,16 @@ public class Rook extends Piece {
         }
     }
 
+    /*
+     * Check if rook can move to the specified position
+     */
     @Override
-    public boolean isValidMove(Position target) {
+    public boolean isValidMove(Position target, boolean isAttacking) {
+        // Every move is legal in forced mode
+        if(GameManager.getInstance().isForceMode()) {
+            return true;
+        }
+
         Table table = GameManager.getInstance().getTable();
         Position source = getPosition();
         int currRow = source.getRow();
@@ -69,9 +93,24 @@ public class Rook extends Piece {
         return true;
     }
 
+    /*
+     * Move to the desired position
+     */
     @Override
     public boolean move(Position target) {
-        if (isValidMove(target)) {
+        if (isValidMove(target, false)) {
+            movePiece(target);
+            return true;
+        }
+        return false;
+    }
+
+    /*
+     * Attack the desired position
+     */
+    @Override
+    public boolean attack(Position target) {
+        if (isValidMove(target, true)) {
             movePiece(target);
             return true;
         }

@@ -3,10 +3,6 @@
  */
 
 /*
- * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
- */
-
-/*
  * © 2020 Grama Nicolae, Radu Ionita, Mosessohn Vlad, 322CA
  */
 
@@ -14,7 +10,9 @@ package com.carlsenbot.main;
 
 import com.carlsenbot.communication.Engine;
 import com.carlsenbot.pieces.*;
+import com.carlsenbot.player.Player;
 import com.carlsenbot.position.Position;
+import com.carlsenbot.table.CheckSystem;
 import com.carlsenbot.table.Table;
 
 public class GameManager {
@@ -41,10 +39,13 @@ public class GameManager {
 
     private static GameManager instance = null;
     private boolean isWhiteTurn;
+    private boolean forceMode;
     private int round;
     private Table table;
     private Piece[][] pieces;
     private Engine commEngine;
+    private Player player;
+    private CheckSystem checkSystem;
 
     /* ----------------------------------------
      * Attention when using the following methods, as they
@@ -136,6 +137,9 @@ public class GameManager {
         round = 0;
         isWhiteTurn = true;
         commEngine = Engine.getInstance();
+        forceMode = false;
+        player = new Player();
+        checkSystem = new CheckSystem();
     }
 
     // Get (and initialise if needed) the instance of the singleton
@@ -148,6 +152,9 @@ public class GameManager {
 
     // Getters
     public Table getTable() { return table; }
+    public Player getPlayer() { return player; }
+    public boolean isForceMode() { return forceMode; }
+    public CheckSystem getCheckSystem() { return checkSystem; }
 
     /**
      * Returns a piece with a specific id, managed by the GameManager
@@ -162,7 +169,6 @@ public class GameManager {
             id += 1;
             return pieces[1][-id];
         }
-
     }
 
     /**
@@ -183,6 +189,10 @@ public class GameManager {
             // return Character.toString(getPieceByID(id).getName().charAt(0));
         }
     }
+
+    // Setters
+    public void enableForceMode() { forceMode = true; }
+    public void disableForceMode() { forceMode = false; }
 
     /**
      * Move a piece managed by the GameManager

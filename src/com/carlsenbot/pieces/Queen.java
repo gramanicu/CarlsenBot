@@ -1,3 +1,7 @@
+/*
+ * © 2020 Grama Nicolae, Ioniță Radu , Mosessohn Vlad, 322CA
+ */
+
 package com.carlsenbot.pieces;
 
 import com.carlsenbot.main.GameManager;
@@ -5,14 +9,26 @@ import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
 public class Queen extends Piece {
+    /**
+     * Create a new queen, with the specified position and id
+     * @param color The color of the queen
+     * @param position The position of the queen
+     * @param id The id of the queen
+     */
     public Queen(PieceColor color, Position position, int id) {
         super(9d, color, position,"Queen", id);
     }
 
+    /*
+     * Same as the other one, is uses a "chess position"
+     */
     public Queen(PieceColor color, String position, int id) {
         this(color, new Position(position), id);
     }
 
+    /*
+     * Implementation of the get symbol
+     */
     @Override
     public String getSymbol() {
         if(isWhite()) {
@@ -22,8 +38,16 @@ public class Queen extends Piece {
         }
     }
 
+    /*
+     * Check if queen can move to the specified position
+     */
     @Override
-    public boolean isValidMove(Position target) {
+    public boolean isValidMove(Position target, boolean isAttacking) {
+        // Every move is legal in forced mode
+        if(GameManager.getInstance().isForceMode()) {
+            return true;
+        }
+
         // A queen theoretically is a rook combined with a bishop
         // So we are going to use the two mechanics that are already implemented
 
@@ -94,17 +118,27 @@ public class Queen extends Piece {
         return true;
     }
 
+    /*
+     * Move to the desired position
+     */
     @Override
     public boolean move(Position target) {
-        if(isValidMove(target)) {
+        if(isValidMove(target, false)) {
             movePiece(target);
             return true;
         }
         return false;
     }
 
+    /*
+     * Attack the desired position
+     */
     @Override
     public boolean attack(Position target) {
+        if(isValidMove(target, true)) {
+            movePiece(target);
+            return true;
+        }
         return false;
     }
 }

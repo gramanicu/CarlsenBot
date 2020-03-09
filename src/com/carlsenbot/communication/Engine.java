@@ -14,12 +14,12 @@ public class Engine {
     private static Engine instance = null;
     private BufferedReader input;
     private BufferedWriter output;
+    private Command lastReceived;
 
     // Constructor, made private for singleton
     private Engine() {
         input = new BufferedReader(new InputStreamReader(System.in));
         output = new BufferedWriter(new OutputStreamWriter(System.out));
-        receive();
     }
 
     // Get (and initialise if needed) the instance of the singleton
@@ -30,22 +30,36 @@ public class Engine {
         return instance;
     }
 
+    /**
+     * Listen to input from xboard
+     */
     public void listen() {
-        receive();
-    }
-
-    public void receive() {
         do {
             try {
-                String command = input.readLine();
-                if(!command.isEmpty()) {
-                } else {
+                // If the program should stop (because of a command)
+                if(receive()) {
                     return;
+                } else {
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } while(true);
+    }
+
+    /**
+     * Read data from xboard
+     * @throws IOException In case the read fails
+     */
+    public boolean receive() throws IOException {
+        String command = input.readLine();
+        if (!command.isEmpty()) {
+            // Interpret command
+            return false;
+        }
+
+        return true;
     }
 
 }

@@ -1,4 +1,8 @@
 /*
+ * © 2020 Grama Nicolae, Ioniță Radu , Mosessohn Vlad, 322CA
+ */
+
+/*
  * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
  */
 
@@ -76,6 +80,15 @@ public abstract class Piece {
     }
 
     /**
+     * Notify the capture to the game manager
+     * @param target The position to move to
+     */
+    protected void capturePiece(Position target) {
+        GameManager.getInstance().movePieceGame(this, target);
+        setPosition(target);
+    }
+
+    /**
      * Shows the character associated with a unicode
      * @param unicode The unicode of the wanted char
      * @return The desired character
@@ -84,12 +97,6 @@ public abstract class Piece {
         return Character.toString((char) unicode);
     }
 
-    /*
-     * Abstract methods, that must pe implemented by each specific piece
-     */
-    public abstract String getSymbol();
-    public abstract boolean isValidMove(Position target);
-    public abstract boolean move(Position target);
 
     /**
      * A wrapper for the abstract, to use "chess coordinates" for movement
@@ -100,13 +107,43 @@ public abstract class Piece {
         return move(new Position(target));
     }
 
-    public boolean isSameColor(Position target, Piece[][] pieces) {
+    public boolean isSameColor(Position target) {
         Table table = GameManager.getInstance().getTable();
-        if(table.getPieceByPosition(target, pieces).getId() * this.getId() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+
+        // If they have the same sign, the product is greater than 0
+        return table.idOfCell(target) * id > 0;
     }
+
+    /*
+     * Abstract methods, that must pe implemented by each specific piece
+     */
+
+    /**
+     * Check if it can move to the specified position
+     * @param target The desired position
+     * @param isAttacking Because attacks change the movement pattern for
+     *                     a few pieces, it will be given as a parameter
+     * @return Whether or not the position is available
+     */
+    protected abstract boolean isValidMove(Position target, boolean isAttacking);
+
+    /**
+     * Return the symbol of the piece
+     * @return The symbol
+     */
+    public abstract String getSymbol();
+
+    /**
+     * Move the piece to the target cell
+     * @param target The desired position
+     * @return If the move possible
+     */
+    public abstract boolean move(Position target);
+
+    /**
+     * Attack the target cell with the piece
+     * @param target The desired position
+     * @return If the attack was possible
+     */
     public abstract boolean attack(Position target);
 }

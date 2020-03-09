@@ -1,4 +1,8 @@
 /*
+ * © 2020 Grama Nicolae, Ioniță Radu , Mosessohn Vlad, 322CA
+ */
+
+/*
  * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
  */
 
@@ -22,6 +26,9 @@ public class Knight extends Piece {
         this(color, new Position(position), id);
     }
 
+    /*
+     * Implementation of the get symbol
+     */
     @Override
     public String getSymbol() {
         if(isWhite()) {
@@ -31,8 +38,16 @@ public class Knight extends Piece {
         }
     }
 
+    /*
+     * Check if knight can move to the specified position
+     */
     @Override
-    public boolean isValidMove(Position target) {
+    public boolean isValidMove(Position target, boolean isAttacking) {
+        // Every move is legal in forced mode
+        if(GameManager.getInstance().isForceMode()) {
+            return true;
+        }
+
         Table table = GameManager.getInstance().getTable();
         Position source = getPosition();
         int currRow = source.getRow();
@@ -49,7 +64,7 @@ public class Knight extends Piece {
     }
     @Override
     public boolean move(Position target) {
-        if(isValidMove(target)) {
+        if(isValidMove(target, false)) {
             movePiece(target);
             return true;
         }
@@ -58,6 +73,10 @@ public class Knight extends Piece {
 
     @Override
     public boolean attack(Position target) {
+        if(isValidMove(target, true)) {
+            capturePiece(target);
+            return true;
+        }
         return false;
     }
 }

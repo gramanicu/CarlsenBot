@@ -1,4 +1,8 @@
 /*
+ * © 2020 Grama Nicolae, Ioniță Radu , Mosessohn Vlad, 322CA
+ */
+
+/*
  * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
  */
 
@@ -9,12 +13,8 @@ public class Main {
         GameManager game = GameManager.getInstance();
 
         game.initializeGame();
+        game.startGame();
+
         System.out.println(game.printTable());
-        game.getPieceByID(9).move("a3");
-        game.getPieceByID(2).move("d2");
-        game.getPieceByID(3).move("a2");
-        System.out.println(game.printTable());
-//        game.getPieceByID(1).move("d2");
-//        System.out.println(game.printTable());
     }
 }

@@ -6,8 +6,7 @@
  * © 2020 Grama Nicolae, Ioniță Radu , Mosessohn Vlad, 322CA
  */
 
-package com.carlsenbot.communication;
+package com.carlsenbot.player;
 
-public enum EngineCommands {
-
+public class AI {
 }

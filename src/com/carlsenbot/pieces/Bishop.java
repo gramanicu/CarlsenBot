@@ -1,4 +1,8 @@
 /*
+ * © 2020 Grama Nicolae, Ioniță Radu , Mosessohn Vlad, 322CA
+ */
+
+/*
  * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
  */
 
@@ -9,14 +13,26 @@ import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
 public class Bishop extends Piece {
+    /**
+     * Create a new bishop, with the specified position and id
+     * @param color The color of the bishop
+     * @param position The position of the bishop
+     * @param id The id of the bishop
+     */
     public Bishop(PieceColor color, Position position, int id) {
         super(3.25d, color, position, "Bishop", id);
     }
 
+    /*
+     * Same as the other one, is uses a "chess position"
+     */
     public Bishop(PieceColor color, String position, int id) {
         this(color, new Position(position), id);
     }
 
+    /*
+     * Returns the bishop symbol
+     */
     @Override
     public String getSymbol() {
         if(isWhite()) {
@@ -26,8 +42,17 @@ public class Bishop extends Piece {
         }
     }
 
+
+    /*
+     * Check if bishop can move to the specified position
+     */
     @Override
-    public boolean isValidMove(Position target) {
+    protected boolean isValidMove(Position target, boolean isAttacking) {
+        // Every move is legal in forced mode
+        if(GameManager.getInstance().isForceMode()) {
+            return true;
+        }
+
         Table table = GameManager.getInstance().getTable();
         Position source = getPosition();
         int currRow = source.getRow();
@@ -56,28 +81,42 @@ public class Bishop extends Piece {
         // Move to the first position
         currCol += colDiff;
 
-        for(currRow += rowDiff; currRow != targetRow; currRow += rowDiff) {
+        for(currRow += rowDiff; currRow <= targetRow; currRow += rowDiff) {
             // Check if empty cell
+
             if (!table.isEmptyCell(currRow, currCol)) {
-                return false;
+                // If it is attacking and the target position was reached
+                // we can capture the piece
+                return isAttacking && currRow == targetRow;
             }
+
             currCol += colDiff;
         }
 
         return true;
     }
 
+    /*
+     * Move to the desired position
+     */
     @Override
     public boolean move(Position target) {
-        if (isValidMove(target)) {
+        if (isValidMove(target, false)) {
             movePiece(target);
             return true;
         }
         return false;
     }
 
+    /*
+     * Attack the desired position
+     */
     @Override
     public boolean attack(Position target) {
+        if (isValidMove(target, true)) {
+            capturePiece(target);
+            return true;
+        }
         return false;
     }
 }

@@ -1,8 +1,14 @@
 /*
+ * © 2020 Grama Nicolae, Ioniță Radu , Mosessohn Vlad, 322CA
+ */
+
+/*
  * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
  */
 
 package com.carlsenbot.position;
+
+import com.carlsenbot.main.GameManager;
 
 public class Position {
     private int x;
@@ -134,6 +140,14 @@ public class Position {
      * @return The distance
      */
     public double getDistance(Position other) { return getDistance(this, other); }
+
+    /**
+     * Check in the GameManager table if the position is free
+     * @return If the position is occupied
+     */
+    public boolean isEmpty() {
+        return GameManager.getInstance().getTable().isEmptyCell(this);
+    }
 
     /**
      * Set coordinates of the position, based on the "chess coordinate"

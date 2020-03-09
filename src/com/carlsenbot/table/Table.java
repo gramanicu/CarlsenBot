@@ -1,4 +1,8 @@
 /*
+ * © 2020 Grama Nicolae, Ioniță Radu , Mosessohn Vlad, 322CA
+ */
+
+/*
  * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
  */
 
@@ -69,6 +73,8 @@ public class Table {
         return positions[target.getRow()][target.getCol()] == 0;
     }
 
+    public int idOfCell(Position target) { return positions[target.getRow()][target.getCol()]; }
+
     /**
      * Check if a cell is empty at the specified coordinates
      * @param row The row of the cell to check
@@ -125,16 +131,5 @@ public class Table {
             sb.append("\n");
         }
         return sb.toString();
-    }
-
-    public Piece getPieceByPosition(Position position, Piece[][] pieces) {
-        for(Piece[] pr : pieces) {
-            for(Piece pc : pr) {
-                if(pc.getPosition() == position) {
-                    return pc;
-                }
-            }
-        }
-        return null;
     }
 }
