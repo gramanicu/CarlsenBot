@@ -31,7 +31,9 @@ public class Main {
         game.getPieceByID(-14).move("f5");
         game.getPieceByID(-15).move("g6");
         game.getPieceByID(-16).move("h5");
-
+        game.getPieceByID(-5).move("d7");
+        game.getPieceByID(-1).move("e7");
+        game.getPieceByID(-1).move("d7");
         System.out.println(game.printTable());
 
     }
