@@ -1,4 +1,8 @@
 /*
+ * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
+ */
+
+/*
  * © 2020 Grama Nicolae, Radu Ionita, Mosessohn Vlad, 322CA
  */
 
@@ -8,14 +12,8 @@ import com.carlsenbot.pieces.*;
 import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
-public class Game {
-    private static Game instance = null;
-    private boolean isWhiteTurn;
-    private int round;
-    private Table table;
-    private Piece[][] pieces;
-
-    /**
+public class GameManager {
+    /*
      * All the pieces are stored in a matrix, as it can offer faster access
      * to the pieces.
      *
@@ -36,7 +34,38 @@ public class Game {
      * for white pieces, respectively -1 -> -16 range for the black pieces.
      */
 
+    private static GameManager instance = null;
+    private boolean isWhiteTurn;
+    private int round;
+    private Table table;
+    private Piece[][] pieces;
 
+    /* ----------------------------------------
+     * Attention when using the following methods, as they
+     * can be a bit dangerous to use
+     */
+
+    /**
+     * Assign a new table to the game table
+     * @param table The new table
+     */
+    public void setTable(Table table) { this.table = table; }
+
+    /**
+     * Remove the game instance
+     */
+    public void removeInstance() {
+        instance = null;
+    }
+
+    // ---- End of the "dangerous" methods ----
+
+    // Private, helper methods
+
+    /**
+     * Set the white pieces to the normal, initial position
+     * @return The array of the pieces
+     */
     private Piece[] initWhitePieces(){
         PieceColor color = PieceColor.White;
         Piece[] newPiece = new Piece[16];
@@ -64,6 +93,10 @@ public class Game {
         return newPiece;
     }
 
+    /**
+     * Set the black pieces to the normal, initial position
+     * @return The array of the pieces
+     */
     private Piece[] initBlackPieces(){
         PieceColor color = PieceColor.Black;
         Piece[] newPiece = new Piece[16];
@@ -91,18 +124,29 @@ public class Game {
         return newPiece;
     }
 
-
-    private Game() {
+    // Constructor, made private for singleton
+    private GameManager() {
         pieces = new Piece[2][16];
+        round = 0;
+        isWhiteTurn = true;
     }
 
-    public static Game getInstance() {
+    // Getters
+    public Table getTable() { return table; }
+
+    // Get (and initialise if needed) the instance of the singleton
+    public static GameManager getInstance() {
         if (instance == null) {
-            instance = new Game();
+            instance = new GameManager();
         }
         return instance;
     }
 
+    /**
+     * Returns a piece with a specific id, managed by the GameManager
+     * @param id The id of the piece
+     * @return The desired piece
+     */
     public Piece getPieceByID(int id) {
         if(id > 0) {
             id -= 1;
@@ -114,53 +158,94 @@ public class Game {
 
     }
 
+    /**
+     * Returns the symbol of a piece with the specified id, that
+     * is managed by the GameManager
+     * @param id The id of the piece
+     * @return The symbol of the desired piece
+     */
     private String getSymbolOfPiece(int id) {
         if (id == 0) {
             return " ";
         } else {
             return getPieceByID(id).getSymbol();
+
+            // Use the following line if you want to show pieces as
+            // simple chars : King - K, Queen - Q , etc.
+
+            // return Character.toString(getPieceByID(id).getName().charAt(0));
         }
     }
 
-    // NOTE - probably will change name (or remove completely)
+    /**
+     * Move a piece managed by the GameManager
+     * NOTE - probably will change name (or remove completely), as
+     * this function currently is used to notify the game manager that
+     * the piece changed it's position
+     *
+     * @param piece The piece to be moved
+     * @param target The position to be moved to
+     * @return Whether or not the move was possible
+     */
     public boolean movePieceGame(Piece piece, Position target) {
         return table.movePiece(piece, target);
     }
 
+    /**
+     * Initialise a new game
+     * @return Whether or not it was possible to do the operation
+     */
     public boolean initializeGame() {
         pieces[0] = initWhitePieces();
         pieces[1] = initBlackPieces();
         table = new Table(pieces);
-
+        round = 0;
+        isWhiteTurn = true;
         return true;
     }
 
+    /**
+     * Start a game ( start the AI, wait for input, etc. )
+     * @return The game has finished successfully
+     */
     public boolean startGame() {
+        // If a game is now going on, reinitialise
+        if(round != 0 && !isWhiteTurn) { initializeGame(); }
         return false;
     }
 
-    public String printPiecesPositions() {
+    /**
+     * Returns a string containing all the pieces, with their specific position
+     * @return The list of pieces
+     */
+    public String getPiecesPositions() {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < 16; ++i) {
-            sb.append(pieces[0][i].getSymbol());
-            sb.append(pieces[0][i].getPosition());
-            sb.append("\n");
+            // There can be cases where we do not have 32 pieces
+            if(pieces[0][i] != null) {
+                sb.append(pieces[0][i].getSymbol());
+                sb.append(pieces[0][i].getPosition());
+                sb.append("\n");
+            }
         }
 
         for (int i = 0; i < 16; ++i) {
-            sb.append(pieces[1][i].getSymbol());
-            sb.append(pieces[1][i].getPosition());
-            sb.append("\n");
+            // There can be cases where we do not have 32 pieces
+            if(pieces[1][i] != null) {
+                sb.append(pieces[1][i].getSymbol());
+                sb.append(pieces[1][i].getPosition());
+                sb.append("\n");
+            }
         }
         return sb.toString();
     }
 
-    public Table getTable() {
-        return table;
-    }
 
-
+    /**
+     * Return a string containing the chess table, with all the pieces
+     * @return The string
+     */
     public String printTable() {
         StringBuilder sb = new StringBuilder();
         byte[][] positions = table.getPositions();

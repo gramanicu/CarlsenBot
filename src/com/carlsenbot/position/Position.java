@@ -1,23 +1,50 @@
+/*
+ * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
+ */
+
 package com.carlsenbot.position;
 
 public class Position {
     private int x;
     private int y;
 
-    public Position() {
-        setX(0);
-        setY(0);
+    // Constructors
+    public Position() { setX(0); setY(0); }
+
+    /**
+     * Create a position object, with the specified x and y coordinates
+     * @param x The x coordinate (column)
+     * @param y The y coordinate (row)
+     */
+    public Position(int x, int y) { setX(x); setY(y); }
+
+    /**
+     * Create a position object, with the specified "chess coordinates"
+     * @param coordinates The chess coordinates
+     */
+    public Position(String coordinates) { setCoordinates(coordinates); }
+
+    // Getters
+    public int getX() { return x; }
+    public int getY() { return y; }
+    public int getRow() {
+        return y;
+    }
+    public int getCol() { return x; }
+
+    // Setters
+    public void setX(int x) {
+        this.x = Math.min(Byte.MAX_VALUE, Math.max(x, 0));
+    }
+    public void setY(int y) {
+        this.y = Math.min(Byte.MAX_VALUE, Math.max(y, 0));
     }
 
-    public Position(int x, int y) {
-        setX(x);
-        setY(y);
-    }
-
-    public Position(String coordinates) {
-        setCoordinates(coordinates);
-    }
-
+    /**
+     * Check the validity of the coordinates
+     * @param coordinates The string with the "chess coordinates"
+     * @return Whether or not the coordinates are valid
+     */
     private boolean validCoordinates(String coordinates) {
         // Too many or too less coordinates
         if (coordinates.length() != 2) {
@@ -56,30 +83,62 @@ public class Position {
         return value >= 1 && value <= 8;
     }
 
-    public int getX() {
-        return x;
+    /**
+     * Compute the difference of rows
+     * @param p1 First position
+     * @param p2 Second position
+     * @return The difference
+     */
+    public static double getDiffRow(Position p1, Position p2) {
+        return Math.abs(p2.y - p1.y);
     }
 
-    public void setX(int x) {
-        this.x = Math.min(Byte.MAX_VALUE, Math.max(x, 0));
+    /**
+     * Compute the difference of columns
+     * @param p1 First position
+     * @param p2 Second position
+     * @return The difference
+     */
+    public static double getDiffCol(Position p1, Position p2) {
+        return Math.abs(p2.x - p1.x);
     }
 
-    public int getY() {
-        return y;
+    /**
+     * Compute the distance using the Distance Formula
+     * @param p1 First position
+     * @param p2 Second position
+     * @return The distance
+     */
+    public static double getDistance(Position p1, Position p2) {
+        return Math.sqrt((Math.pow(getDiffRow(p1, p2), 2)
+                        + Math.pow(getDiffCol(p1, p2), 2)));
     }
 
-    public int getRow() {
-        return y;
-    }
+    /**
+     * Compute the difference of rows
+     * @param other The reference position
+     * @return The difference
+     */
+    public double getDiffRow(Position other) { return getDiffRow(this, other); }
 
-    public int getCol() {
-        return x;
-    }
+    /**
+     * Compute the difference of columns
+     * @param other The reference position
+     * @return The difference
+     */
+    public double getDiffCol(Position other) { return getDiffCol(this, other); }
 
-    public void setY(int y) {
-        this.y = Math.min(Byte.MAX_VALUE, Math.max(y, 0));
-    }
+    /**
+     * Compute the distance using the Distance Formula
+     * @param other The reference position
+     * @return The distance
+     */
+    public double getDistance(Position other) { return getDistance(this, other); }
 
+    /**
+     * Set coordinates of the position, based on the "chess coordinate"
+     * @param coordinates The string of coordinates [A-H][1-8]
+     */
     public void setCoordinates(String coordinates) {
         if (validCoordinates(coordinates)) {
             // If the first char is the character
@@ -96,6 +155,10 @@ public class Position {
         }
     }
 
+    /**
+     * Return a string with the "chess coordinates"
+     * @return The coordinates
+     */
     public String toString() {
         String first = Character.toString((char) (x + 97));
         String second = Integer.toString(8 - y);

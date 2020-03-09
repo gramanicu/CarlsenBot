@@ -1,10 +1,12 @@
+/*
+ * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
+ */
+
 package com.carlsenbot.pieces;
 
-import com.carlsenbot.main.Game;
+import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
-
-import java.awt.*;
 
 public class King extends Piece {
     public boolean firstMove;
@@ -28,8 +30,9 @@ public class King extends Piece {
         }
     }
 
+    @Override
     public boolean isValidMove(Position target){
-        Table table = Game.getInstance().getTable();
+        Table table = GameManager.getInstance().getTable();
         Position source = getPosition();
         int currRow = source.getRow();
         int currCol = source.getCol();
@@ -60,30 +63,16 @@ public class King extends Piece {
         if(table.getPositions()[targetRow][targetCol] != 0) {
             return false;
         }
-        if(Math.abs(currCol - targetCol) >= 2 || Math.abs(currRow - targetRow) >= 2) {
-            return false;
-        }
-        return true;
+        return Math.abs(currCol - targetCol) < 2 && Math.abs(currRow - targetRow) < 2;
 
     }
     @Override
     public boolean move(Position target) {
         if(isValidMove(target)) {
             firstMove = true;
-            if(castled == true) {
-                movePiece(target);
-                // we must move the rook too
-                return true;
-            } else {
-                movePiece(target);
-                return true;
-            }
+            movePiece(target);
+            return true;
         }
-        return false;
-    }
-
-    @Override
-    public boolean isValidMove(Position target) {
         return false;
     }
 }

@@ -1,6 +1,10 @@
+/*
+ * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
+ */
+
 package com.carlsenbot.pieces;
 
-import com.carlsenbot.main.Game;
+import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
@@ -35,7 +39,7 @@ public class Pawn extends Piece {
     }
 
     public boolean isValidMove(Position target) {
-        Table table = Game.getInstance().getTable();
+        Table table = GameManager.getInstance().getTable();
         Position source = getPosition();
         int currRow = source.getRow();
         int currCol = source.getCol();

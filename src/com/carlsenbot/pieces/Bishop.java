@@ -1,6 +1,10 @@
+/*
+ * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
+ */
+
 package com.carlsenbot.pieces;
 
-import com.carlsenbot.main.Game;
+import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
@@ -24,46 +28,40 @@ public class Bishop extends Piece {
 
     @Override
     public boolean isValidMove(Position target) {
-        Table table = Game.getInstance().getTable();
+        Table table = GameManager.getInstance().getTable();
         Position source = getPosition();
         int currRow = source.getRow();
         int currCol = source.getCol();
         int targetRow = target.getRow();
         int targetCol = target.getCol();
-        int rowMoveDif = 1;
-        int colMoveDif = 1;
-        int sumRowDif = 0;
-        int sumColDif = 0;
+        int rowDiff = 1;
+        int colDiff = 1;
 
-        if (currRow == targetRow || currCol == targetCol){
-            // Did not move diagonally
+        // Should move the same amount on both axes ( != 0 )
+        if (source.getDiffRow(target) != source.getDiffCol(target) || source.getDiffRow(target) == 0) {
             return false;
         }
 
-        if (Math.abs(targetRow - currRow) != Math.abs(targetCol - currCol)){
-            // a3 -> b4
-            // The difference of the rows must not be different from the difference of the columns
-            // When the bishop is moving, it is moving equally on the row and column.
-            return false;
-        }
-
+        // Evaluate the direction of movement in the Y axis
         if (currRow > targetRow){
-            rowMoveDif = -1;
+            rowDiff = -1;
         }
 
+        // Evaluate the direction of movement in the X axis
         if (currCol > targetCol){
-            colMoveDif = -1;
+            colDiff = -1;
         }
 
-        sumRowDif = currRow + rowMoveDif;
-        sumColDif = currCol + colMoveDif;
+        // Check the existence of pieces along the path
+        // Move to the first position
+        currCol += colDiff;
 
-        for (int i = sumRowDif; i != targetRow; i += rowMoveDif){
-            if (table.getPositions()[sumColDif][sumRowDif] != 0){
+        for(currRow += rowDiff; currRow != targetRow; currRow += rowDiff) {
+            // Check if empty cell
+            if (!table.isEmptyCell(currRow, currCol)) {
                 return false;
-                // If the bishop doesn't meet any piece on its trajectory
             }
-            sumColDif += colMoveDif;
+            currCol += colDiff;
         }
 
         return true;

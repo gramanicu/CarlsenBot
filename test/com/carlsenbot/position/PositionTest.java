@@ -1,3 +1,7 @@
+/*
+ * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
+ */
+
 package com.carlsenbot.position;
 
 import org.junit.jupiter.api.Test;
@@ -76,5 +80,47 @@ class PositionTest {
         pos.setCoordinates("something");
         assertEquals( 0, pos.getX(), "Not correct x value for invalid coordinates");
         assertEquals( 0, pos.getY(), "Not correct y value for invalid coordinates");
+    }
+
+    Position p1 = new Position("d5");
+    Position p2 = new Position("d5");
+    Position p3 = new Position("d6");
+    Position p4 = new Position("d4");
+    Position p5 = new Position("c5");
+    Position p6 = new Position("e5");
+    Position p7 = new Position("e6");
+    Position p8 = new Position("b3");
+
+    @Test
+    void getDiffRow() {
+        assertEquals(Position.getDiffRow(p1, p2), 0, "Should be on the same row");
+        assertEquals(Position.getDiffRow(p1, p3), 1, "Should be 1 rows difference");
+        assertEquals(Position.getDiffRow(p1, p4), 1, "Should be 1 rows difference");
+        assertEquals(Position.getDiffRow(p1, p5), 0, "Should be on the same row");
+        assertEquals(Position.getDiffRow(p1, p6), 0, "Should be on the same row");
+        assertEquals(Position.getDiffRow(p1, p7), 1, "Should be 1 rows difference");
+        assertEquals(Position.getDiffRow(p1, p8), 2, "Should be 2 rows difference");
+    }
+
+    @Test
+    void getDiffCol() {
+        assertEquals(Position.getDiffCol(p1, p2), 0, "Should be on the same column");
+        assertEquals(Position.getDiffCol(p1, p3), 0, "Should be on the same column");
+        assertEquals(Position.getDiffCol(p1, p4), 0, "Should be on the same column");
+        assertEquals(Position.getDiffCol(p1, p5), 1, "Should be 1 columns difference");
+        assertEquals(Position.getDiffCol(p1, p6), 1, "Should be 1 columns difference");
+        assertEquals(Position.getDiffCol(p1, p7), 1, "Should be 1 columns difference");
+        assertEquals(Position.getDiffCol(p1, p8), 2, "Should be 2 columns difference");
+    }
+
+    @Test
+    void getDistance() {
+        assertEquals(Position.getDistance(p1, p2), 0, "Should be the same position");
+        assertEquals(Position.getDistance(p1, p3), 1, "Should be a distance of 1");
+        assertEquals(Position.getDistance(p1, p4), 1, "Should be a distance of 1");
+        assertEquals(Position.getDistance(p1, p5), 1, "Should be a distance of 1");
+        assertEquals(Position.getDistance(p1, p6), 1, "Should be a distance of 1");
+        assertEquals(Position.getDistance(p1, p7), Math.sqrt(2), "Should be a distance of sqrt(2)");
+        assertEquals(Position.getDistance(p1, p8), Math.sqrt(8), "Should be a distance of sqrt(8)");
     }
 }
