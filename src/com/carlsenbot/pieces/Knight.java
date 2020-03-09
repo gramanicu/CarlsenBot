@@ -1,3 +1,7 @@
+/*
+ * © 2020 Grama Nicolae, Radu Ionita, Mosessohn Vlad, 322CA
+ */
+
 package com.carlsenbot.pieces;
 
 import com.carlsenbot.main.Game;
@@ -23,6 +27,7 @@ public class Knight extends Piece {
         }
     }
 
+    @Override
     public boolean isValidMove(Position target) {
         Table table = Game.getInstance().getTable();
         Position source = getPosition();
@@ -36,10 +41,7 @@ public class Knight extends Piece {
         if(Math.abs(targetRow - currRow) == 2 && Math.abs(targetCol - currCol) == 1) {
             return true;
         }
-        if(Math.abs(targetRow - currRow) == 1 && Math.abs(targetCol - currCol) == 2) {
-            return true;
-        }
-        return false;
+        return Math.abs(targetRow - currRow) == 1 && Math.abs(targetCol - currCol) == 2;
     }
     @Override
     public boolean move(Position target) {
@@ -47,11 +49,6 @@ public class Knight extends Piece {
             movePiece(target);
             return true;
         }
-        return false;
-    }
-
-    @Override
-    public boolean isValidMove(Position target) {
         return false;
     }
 }

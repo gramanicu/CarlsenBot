@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="PA Project" pattern="file[CarlsenBot]:*/" />
+</component>
