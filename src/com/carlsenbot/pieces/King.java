@@ -81,4 +81,9 @@ public class King extends Piece {
         }
         return false;
     }
+
+    @Override
+    public boolean isValidMove(Position target) {
+        return false;
+    }
 }

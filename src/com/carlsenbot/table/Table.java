@@ -1,4 +1,9 @@
+/*
+ * © 2020 Grama Nicolae, Radu Ionita, Mosessohn Vlad, 322CA
+ */
+
 package com.carlsenbot.table;
+
 
 import com.carlsenbot.pieces.Piece;
 import com.carlsenbot.position.Position;

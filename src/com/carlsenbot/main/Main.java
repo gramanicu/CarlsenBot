@@ -11,7 +11,7 @@ public class Main {
 
         game.initializeGame();
         System.out.println(game.printTable());
-
+        
         game.getPieceByID(9).move("a4");
         game.getPieceByID(10).move("b3");
         game.getPieceByID(11).move("c4");
@@ -34,6 +34,8 @@ public class Main {
         game.getPieceByID(-5).move("d7");
         game.getPieceByID(-1).move("e7");
         game.getPieceByID(-1).move("d7");
+        game.getPieceByID(7).move("d2");
+
         System.out.println(game.printTable());
 
     }

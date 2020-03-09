@@ -1,3 +1,7 @@
+/*
+ * © 2020 Grama Nicolae, Radu Ionita, Mosessohn Vlad, 322CA
+ */
+
 package com.carlsenbot.main;
 
 import com.carlsenbot.pieces.*;
@@ -171,7 +175,7 @@ public class Game {
             }
             sb.append("\n");
         }
-        sb.append("   A   B   C   D   E   F   G   H\n");
+        sb.append("   A  B  C  D  E  F  G  H\n");
         return sb.toString();
     }
 }
