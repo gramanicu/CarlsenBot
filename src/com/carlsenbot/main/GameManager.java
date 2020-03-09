@@ -1,4 +1,8 @@
 /*
+ * © 2020 Grama Nicolae, Ioniță Radu , Mosessohn Vlad, 322CA
+ */
+
+/*
  * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
  */
 
@@ -8,6 +12,7 @@
 
 package com.carlsenbot.main;
 
+import com.carlsenbot.communication.Engine;
 import com.carlsenbot.pieces.*;
 import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
@@ -39,6 +44,7 @@ public class GameManager {
     private int round;
     private Table table;
     private Piece[][] pieces;
+    private Engine commEngine;
 
     /* ----------------------------------------
      * Attention when using the following methods, as they
@@ -129,10 +135,8 @@ public class GameManager {
         pieces = new Piece[2][16];
         round = 0;
         isWhiteTurn = true;
+        commEngine = Engine.getInstance();
     }
-
-    // Getters
-    public Table getTable() { return table; }
 
     // Get (and initialise if needed) the instance of the singleton
     public static GameManager getInstance() {
@@ -141,6 +145,9 @@ public class GameManager {
         }
         return instance;
     }
+
+    // Getters
+    public Table getTable() { return table; }
 
     /**
      * Returns a piece with a specific id, managed by the GameManager
@@ -211,6 +218,8 @@ public class GameManager {
     public boolean startGame() {
         // If a game is now going on, reinitialise
         if(round != 0 && !isWhiteTurn) { initializeGame(); }
+
+        commEngine.listen();
         return false;
     }
 
