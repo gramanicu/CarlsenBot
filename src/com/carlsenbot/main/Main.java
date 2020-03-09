@@ -10,5 +10,11 @@ public class Main {
 
         game.initializeGame();
         System.out.println(game.printTable());
+        game.getPieceByID(9).move("a3");
+        game.getPieceByID(2).move("d2");
+        game.getPieceByID(3).move("a2");
+        System.out.println(game.printTable());
+//        game.getPieceByID(1).move("d2");
+//        System.out.println(game.printTable());
     }
 }
