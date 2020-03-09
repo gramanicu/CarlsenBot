@@ -25,7 +25,6 @@ public class Pawn extends Piece {
                 return false;
             }
         } else {
-
             if (currentPos.getX() < newPos.getX()) {
                 return false;
             }
@@ -100,6 +99,8 @@ public class Pawn extends Piece {
     public boolean move(Position target, Table table) {
         if (isValidMove(table, getPosition(), target)) {
             super.setPosition(target);
+            // Set the position (x,y) of the target
+            // return true if the move is valid
             return true;
         }
         return false;
