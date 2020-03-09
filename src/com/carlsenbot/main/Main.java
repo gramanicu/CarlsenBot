@@ -10,12 +10,10 @@ public class Main {
         Game g = new Game();
         g.initializeGame();
         System.out.println();
-
-
-//        System.out.println(g.printPiecesPositions());
-//        System.out.println(g.getTable());
-        System.out.println(g.printTable());
         g.startGame();
+        System.out.println(g.getPieceByID(16).getPosition());
+        g.getPieceByID(16).move(new Position("h3"),g.getTable());
+        System.out.println(g.printTable());
 
     }
 }

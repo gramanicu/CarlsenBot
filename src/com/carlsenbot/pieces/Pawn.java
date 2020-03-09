@@ -30,9 +30,6 @@ public class Pawn extends Piece {
                 return false;
             }
         }
-        System.out.println(currentPos.getY());
-        System.out.println(currentPos.getX());
-        System.out.println(newPos.getY());
         if (currentPos.getY() == newPos.getY()) {
             //Not taking a piece
             if (isWhite()) {
@@ -64,12 +61,13 @@ public class Pawn extends Piece {
                 }
             }
         } else {
-            if (Math.abs(newPos.getY() - currentPos.getY()) != 1 || Math.abs(newPos.getX() - currentPos.getX()) != 1) {
+            if (Math.abs(newPos.getY() - currentPos.getY()) != 1
+                    || Math.abs(newPos.getX() - currentPos.getX()) != 1){ // h2 -> h3
                 return false;
             }
         }
 
-        if (table.getPositions()[newPos.getX()][newPos.getY()] != 0) {
+        if (table.getPositions()[newPos.getY()][newPos.getX()] != 0) {
             return false;
         }
 
