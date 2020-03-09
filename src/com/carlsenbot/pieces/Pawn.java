@@ -40,6 +40,7 @@ public class Pawn extends Piece {
         int currRow = source.getRow();
         int currCol = source.getCol();
         int targetRow = target.getRow();
+        int targetCol = target.getCol();
 
         // Make sure the position is in the front of the pawn
         if(!isForward(target)) {
@@ -47,7 +48,7 @@ public class Pawn extends Piece {
         }
 
         // Make sure the pawn is moving along the "Y" axis
-        if (currCol == target.getCol()) {
+        if (currCol == targetCol) {
 
             // Not taking a piece
              if(!table.isEmptyCell(target)) {
@@ -64,7 +65,7 @@ public class Pawn extends Piece {
             return Math.abs(currRow - targetRow) != 2 || firstMove;
         } else {
             // If the pawn is moving diagonally (attack move)
-            return Math.abs(target.getCol() - currCol) == 1
+            return Math.abs(targetCol - currCol) == 1
                     && Math.abs(targetRow - currRow) == 1;
         }
     }

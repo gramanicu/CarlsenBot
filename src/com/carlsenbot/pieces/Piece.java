@@ -90,4 +90,6 @@ public abstract class Piece {
         return move(new Position(target));
     }
 
+    public abstract boolean isValidMove(Position target);
+
 }
