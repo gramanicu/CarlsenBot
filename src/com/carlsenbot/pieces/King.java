@@ -75,4 +75,9 @@ public class King extends Piece {
         }
         return false;
     }
+
+    @Override
+    public boolean attack(Position target) {
+        return false;
+    }
 }

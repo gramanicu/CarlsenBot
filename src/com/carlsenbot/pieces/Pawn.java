@@ -69,6 +69,7 @@ public class Pawn extends Piece {
             return Math.abs(currRow - targetRow) != 2 || firstMove;
         } else {
             // If the pawn is moving diagonally (attack move)
+
             return Math.abs(targetCol - currCol) == 1
                     && Math.abs(targetRow - currRow) == 1;
         }
@@ -91,4 +92,11 @@ public class Pawn extends Piece {
         }
         return false;
     }
+
+    @Override
+    public boolean attack(Position target) {
+        move(target);
+        return false;
+    }
+
 }

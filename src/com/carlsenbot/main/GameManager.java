@@ -263,4 +263,6 @@ public class GameManager {
         sb.append("   A  B  C  D  E  F  G  H\n");
         return sb.toString();
     }
+
+
 }

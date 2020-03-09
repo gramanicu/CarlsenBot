@@ -6,6 +6,7 @@ package com.carlsenbot.pieces;
 
 import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Position;
+import com.carlsenbot.table.Table;
 
 public abstract class Piece {
     private double value;
@@ -99,5 +100,13 @@ public abstract class Piece {
         return move(new Position(target));
     }
 
-
+    public boolean isSameColor(Position target, Piece[][] pieces) {
+        Table table = GameManager.getInstance().getTable();
+        if(table.getPieceByPosition(target, pieces).getId() * this.getId() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public abstract boolean attack(Position target);
 }

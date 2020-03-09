@@ -102,4 +102,9 @@ public class Queen extends Piece {
         }
         return false;
     }
+
+    @Override
+    public boolean attack(Position target) {
+        return false;
+    }
 }

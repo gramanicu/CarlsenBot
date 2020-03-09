@@ -126,4 +126,15 @@ public class Table {
         }
         return sb.toString();
     }
+
+    public Piece getPieceByPosition(Position position, Piece[][] pieces) {
+        for(Piece[] pr : pieces) {
+            for(Piece pc : pr) {
+                if(pc.getPosition() == position) {
+                    return pc;
+                }
+            }
+        }
+        return null;
+    }
 }

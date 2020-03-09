@@ -55,4 +55,9 @@ public class Knight extends Piece {
         }
         return false;
     }
+
+    @Override
+    public boolean attack(Position target) {
+        return false;
+    }
 }
