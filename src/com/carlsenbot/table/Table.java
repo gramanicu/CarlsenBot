@@ -29,6 +29,20 @@ public class Table {
         return positions;
     }
 
+    public boolean isEmptyCell(Position target) {
+        return positions[target.getRow()][target.getCol()] == 0;
+    }
+
+    public boolean movePiece(Piece piece, Position target) {
+        setCell(piece.getPosition(), (byte) 0);
+        setCell(target, piece.getId());
+        return true;
+    }
+
+    private void setCell(Position target, byte value) {
+        positions[target.getRow()][target.getCol()] = value;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -8,6 +8,10 @@ public class Queen extends Piece {
         super(9d, color, position,"Queen", id);
     }
 
+    public Queen(PieceColor color, String position, int id) {
+        this(color, new Position(position), id);
+    }
+
     @Override
     public String getSymbol() {
         if(isWhite()) {
@@ -18,7 +22,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean move(Position target, Table table) {
+    public boolean move(Position target) {
         return false;
     }
 }

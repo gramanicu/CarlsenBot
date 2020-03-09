@@ -1,14 +1,29 @@
 package com.carlsenbot.pieces;
 
+import com.carlsenbot.main.Game;
 import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
 public class Pawn extends Piece {
     boolean firstMove;
 
+    private boolean isForward(Position target) {
+        Position source = getPosition();
+
+        if(isBlack()) {
+            return source.getRow() <= target.getRow();
+        } else {
+            return source.getRow() >= target.getRow();
+        }
+    }
+
     public Pawn(PieceColor color, Position position, int id) {
         super(1d, color, position, "Pawn", id);
-        firstMove = false;
+        firstMove = true;
+    }
+
+    public Pawn(PieceColor color, String position, int id) {
+        this(color, new Position(position), id);
     }
 
     public boolean isFirstMove() {
@@ -19,72 +34,39 @@ public class Pawn extends Piece {
         this.firstMove = firstMove;
     }
 
-    public boolean isValidMove(Table table, Position currentPos, Position newPos) {
-        if (isWhite()) {
-            if (currentPos.getX() > newPos.getX()) {
-                return false;
-            }
-        } else {
+    public boolean isValidMove(Position target) {
+        Table table = Game.getInstance().getTable();
+        Position source = getPosition();
+        int currRow = source.getRow();
+        int currCol = source.getCol();
+        int targetRow = target.getRow();
 
-            if (currentPos.getX() < newPos.getX()) {
-                return false;
-            }
-        }
-        if (currentPos.getY() == newPos.getY()) {
-            //Not taking a piece
-            if (isWhite()) {
-                if (table.getPositions()[currentPos.getX() + 1][currentPos.getY()] != 0) {
-                    return false;
-                }
-            } else {
-                if (table.getPositions()[currentPos.getX() - 1][currentPos.getY()] != 0) {
-                    return false;
-                }
-            }
-
-            if (Math.abs(currentPos.getX() - newPos.getX()) > 2) {
-                return false;
-            }
-
-            if (Math.abs(currentPos.getX() - newPos.getX()) == 2) {
-                if (firstMove) {
-                    return false;
-                }
-                if (isWhite()) {
-                    if (table.getPositions()[currentPos.getX() + 2][currentPos.getY()] != 0) {
-                        return false;
-                    }
-                } else {
-                    if (table.getPositions()[currentPos.getX() - 2][currentPos.getY()] != 0) {
-                        return false;
-                    }
-                }
-            }
-        } else {
-            if (Math.abs(newPos.getY() - currentPos.getY()) != 1
-                    || Math.abs(newPos.getX() - currentPos.getX()) != 1){ // h2 -> h3
-                return false;
-            }
-        }
-
-        if (table.getPositions()[newPos.getY()][newPos.getX()] != 0) {
+        // Make sure the position is in the front of the pawn
+        if(!isForward(target)) {
             return false;
         }
 
-        if (newPos.getY() < 0 || newPos.getY() > 7) {
-            return false;
-        }
+        // Make sure the pawn is moving along the "Y" axis
+        if (currCol == target.getCol()) {
 
-        if(isWhite()) {
-            if(newPos.getX() < 0) {
+            // Not taking a piece
+             if(!table.isEmptyCell(target)) {
+                 return false;
+             }
+
+             // Check if it is moving 2 cells at max
+            if (Math.abs(currRow - targetRow) > 2) {
                 return false;
             }
+
+            // Check if is moving 2 positions and it can do so
+            //(first move of the game)
+            return Math.abs(currRow - targetRow) != 2 || firstMove;
         } else {
-            if(newPos.getX() > 7) {
-                return false;
-            }
+            // If the pawn is moving diagonally (attack move)
+            return Math.abs(target.getCol() - currCol) == 1
+                    && Math.abs(targetRow - currRow) == 1;
         }
-        return true;
     }
 
     @Override
@@ -97,9 +79,9 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean move(Position target, Table table) {
-        if (isValidMove(table, getPosition(), target)) {
-            super.setPosition(target);
+    public boolean move(Position target) {
+        if (isValidMove(target)) {
+            movePiece(target);
             return true;
         }
         return false;

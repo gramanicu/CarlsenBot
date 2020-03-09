@@ -5,10 +5,12 @@ import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
 public class Game {
+    private static Game instance = null;
     private boolean isWhiteTurn;
     private int round;
     private Table table;
     private Piece[][] pieces;
+
     /**
      * All the pieces are stored in a matrix, as it can offer faster access
      * to the pieces.
@@ -26,12 +28,8 @@ public class Game {
      *
      * ! IMPORTANT !
      * The id's of the pieces are a bit different. Because the value of a empty
-     * cell in the matrix of "positions" is 0, we need to use the 1-16 range
-     * for white pieces, respectively 17-32 range for the black pieces.
-     *
-     * The formula for id is:
-     * id = row * 16 + line + 1,
-     * where row and line are the position in the pieces matrix.
+     * cell in the matrix of "positions" is 0, we need to use the 1 -> 16 range
+     * for white pieces, respectively -1 -> -16 range for the black pieces.
      */
 
 
@@ -40,24 +38,24 @@ public class Game {
         Piece[] newPiece = new Piece[16];
 
         // Main pieces
-        newPiece[2] = new Rook(color, new Position("a1"), 3);
-        newPiece[4] = new Knight(color, new Position("b1"), 5);
-        newPiece[6] = new Bishop(color, new Position("c1"), 7);
-        newPiece[1] = new Queen(color, new Position("d1"), 2);
-        newPiece[0] = new King(color, new Position("e1"), 1);
-        newPiece[7] = new Bishop(color, new Position("f1"), 8);
-        newPiece[5] = new Knight(color, new Position("g1"), 6);
-        newPiece[3] = new Rook(color, new Position("h1"), 4);
+        newPiece[2] = new Rook(color, "a1", 3);
+        newPiece[4] = new Knight(color, "b1", 5);
+        newPiece[6] = new Bishop(color, "c1", 7);
+        newPiece[1] = new Queen(color, "d1", 2);
+        newPiece[0] = new King(color, "e1", 1);
+        newPiece[7] = new Bishop(color, "f1", 8);
+        newPiece[5] = new Knight(color, "g1", 6);
+        newPiece[3] = new Rook(color, "h1", 4);
 
         // Pawns
-        newPiece[8] = new Pawn(color, new Position("a2"), 9);
-        newPiece[9] = new Pawn(color, new Position("b2"), 10);
-        newPiece[10] = new Pawn(color, new Position("c2"), 11);
-        newPiece[11] = new Pawn(color, new Position("d2"), 12);
-        newPiece[12] = new Pawn(color, new Position("e2"), 13);
-        newPiece[13] = new Pawn(color, new Position("f2"), 14);
-        newPiece[14] = new Pawn(color, new Position("g2"), 15);
-        newPiece[15] = new Pawn(color, new Position("h2"), 16);
+        newPiece[8] = new Pawn(color, "a2", 9);
+        newPiece[9] = new Pawn(color, "b2", 10);
+        newPiece[10] = new Pawn(color, "c2", 11);
+        newPiece[11] = new Pawn(color, "d2", 12);
+        newPiece[12] = new Pawn(color, "e2", 13);
+        newPiece[13] = new Pawn(color, "f2", 14);
+        newPiece[14] = new Pawn(color, "g2", 15);
+        newPiece[15] = new Pawn(color, "h2", 16);
 
         return newPiece;
     }
@@ -67,40 +65,47 @@ public class Game {
         Piece[] newPiece = new Piece[16];
 
         // Main pieces
-        newPiece[2] = new Rook(color, new Position("a8"), 19);
-        newPiece[4] = new Knight(color, new Position("b8"), 21);
-        newPiece[6] = new Bishop(color, new Position("c8"), 23);
-        newPiece[1] = new Queen(color, new Position("d8"), 18);
-        newPiece[0] = new King(color, new Position("e8"), 17);
-        newPiece[7] = new Bishop(color, new Position("f8"), 24);
-        newPiece[5] = new Knight(color, new Position("g8"), 22);
-        newPiece[3] = new Rook(color, new Position("h8"), 20);
+        newPiece[2] = new Rook(color, "a8", -3);
+        newPiece[4] = new Knight(color, "b8", -5);
+        newPiece[6] = new Bishop(color, "c8", -7);
+        newPiece[1] = new Queen(color, "d8", -2);
+        newPiece[0] = new King(color, "e8", -1);
+        newPiece[7] = new Bishop(color, "f8", -8);
+        newPiece[5] = new Knight(color, "g8", -6);
+        newPiece[3] = new Rook(color, "h8", -4);
 
         // Pawns
-        newPiece[8] = new Pawn(color, new Position("a7"), 25);
-        newPiece[9] = new Pawn(color, new Position("b7"), 26);
-        newPiece[10] = new Pawn(color, new Position("c7"), 27);
-        newPiece[11] = new Pawn(color, new Position("d7"), 28);
-        newPiece[12] = new Pawn(color, new Position("e7"), 29);
-        newPiece[13] = new Pawn(color, new Position("f7"), 30);
-        newPiece[14] = new Pawn(color, new Position("g7"), 31);
-        newPiece[15] = new Pawn(color, new Position("h7"), 32);
+        newPiece[8] = new Pawn(color, "a7", -9);
+        newPiece[9] = new Pawn(color, "b7", -10);
+        newPiece[10] = new Pawn(color, "c7", -11);
+        newPiece[11] = new Pawn(color, "d7", -12);
+        newPiece[12] = new Pawn(color, "e7", -13);
+        newPiece[13] = new Pawn(color, "f7", -14);
+        newPiece[14] = new Pawn(color, "g7", -15);
+        newPiece[15] = new Pawn(color, "h7", -16);
 
         return newPiece;
     }
 
 
-    public Game() {
+    private Game() {
         pieces = new Piece[2][16];
     }
 
+    public static Game getInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+        return instance;
+    }
+
     public Piece getPieceByID(int id) {
-        if(id > 16) {
-            id -= 17;
-            return pieces[1][id];
-        } else {
+        if(id > 0) {
             id -= 1;
             return pieces[0][id];
+        } else {
+            id += 1;
+            return pieces[1][-id];
         }
 
     }
@@ -111,6 +116,11 @@ public class Game {
         } else {
             return getPieceByID(id).getSymbol();
         }
+    }
+
+    // NOTE - probably will change name (or remove completely)
+    public boolean movePieceGame(Piece piece, Position target) {
+        return table.movePiece(piece, target);
     }
 
     public boolean initializeGame() {

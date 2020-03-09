@@ -8,6 +8,10 @@ public class King extends Piece {
         super(Double.MAX_VALUE, color, position, "King", id);
     }
 
+    public King(PieceColor color, String position, int id) {
+        this(color, new Position(position), id);
+    }
+
     @Override
     public String getSymbol() {
         if(isWhite()) {
@@ -18,7 +22,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean move(Position target, Table table) {
+    public boolean move(Position target) {
         return false;
     }
 }

@@ -1,5 +1,6 @@
 package com.carlsenbot.pieces;
 
+import com.carlsenbot.main.Game;
 import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
@@ -56,6 +57,11 @@ public abstract class Piece {
         this.position = position;
     }
 
+    public void movePiece(Position target) {
+        Game.getInstance().movePieceGame(this, target);
+        setPosition(target);
+    }
+
     public String getName() {
         return name;
     }
@@ -78,6 +84,10 @@ public abstract class Piece {
 
     public abstract String getSymbol();
 
-    public abstract boolean move(Position target, Table table);
+    public abstract boolean move(Position target);
+
+    public boolean move(String target) {
+        return move(new Position(target));
+    }
 
 }

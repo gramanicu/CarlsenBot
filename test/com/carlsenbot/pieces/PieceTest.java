@@ -16,7 +16,7 @@ class PieceTest {
             }
 
             @Override
-            public boolean move(Position target, Table table) {
+            public boolean move(Position target) {
                 return false;
             }
         };

@@ -68,6 +68,14 @@ public class Position {
         return y;
     }
 
+    public int getRow() {
+        return y;
+    }
+
+    public int getCol() {
+        return x;
+    }
+
     public void setY(int y) {
         this.y = Math.min(Byte.MAX_VALUE, Math.max(y, 0));
     }
