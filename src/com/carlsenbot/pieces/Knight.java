@@ -1,9 +1,11 @@
 package com.carlsenbot.pieces;
 
+import com.carlsenbot.main.Game;
 import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
 public class Knight extends Piece {
+
     public Knight(PieceColor color, Position position, int id) {
         super(3d, color, position,"Knight", id);
     }
@@ -21,8 +23,30 @@ public class Knight extends Piece {
         }
     }
 
+    public boolean isValidMove(Position target) {
+        Table table = Game.getInstance().getTable();
+        Position source = getPosition();
+        int currRow = source.getRow();
+        int currCol = source.getCol();
+        int targetRow = target.getRow();
+        int targetCol = target.getCol();
+        if(table.getPositions()[targetRow][targetCol] != 0) {
+            return false;
+        }
+        if(Math.abs(targetRow - currRow) == 2 && Math.abs(targetCol - currCol) == 1) {
+            return true;
+        }
+        if(Math.abs(targetRow - currRow) == 1 && Math.abs(targetCol - currCol) == 2) {
+            return true;
+        }
+        return false;
+    }
     @Override
     public boolean move(Position target) {
+        if(isValidMove(target)) {
+            movePiece(target);
+            return true;
+        }
         return false;
     }
 }
