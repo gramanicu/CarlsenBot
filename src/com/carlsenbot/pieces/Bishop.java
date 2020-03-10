@@ -20,7 +20,7 @@ public class Bishop extends Piece {
      * @param id The id of the bishop
      */
     public Bishop(PieceColor color, Position position, int id) {
-        super(3.25d, color, position, "Bishop", id);
+        super(325d, color, position, "Bishop", id);
     }
 
     /*

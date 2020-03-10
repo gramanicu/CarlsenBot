@@ -16,7 +16,7 @@ public class Rook extends Piece {
      * @param id The id of the rook
      */
     public Rook(PieceColor color, Position position, int id) {
-        super(5d, color, position, "Rook", id);
+        super(500d, color, position, "Rook", id);
     }
 
     /*

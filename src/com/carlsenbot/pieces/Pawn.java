@@ -37,7 +37,7 @@ public class Pawn extends Piece {
      * @param id The id of the pawn
      */
     public Pawn(PieceColor color, Position position, int id) {
-        super(1d, color, position, "Pawn", id);
+        super(100d, color, position, "Pawn", id);
         firstMove = true;
     }
 
