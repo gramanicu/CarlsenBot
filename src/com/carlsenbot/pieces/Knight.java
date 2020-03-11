@@ -18,12 +18,12 @@ import com.carlsenbot.table.Table;
 
 public class Knight extends Piece {
 
-    public Knight(PieceColor color, Position position, int id) {
-        super(300d, color, position,"Knight", id);
+    public Knight(PieceColor color, Position position) {
+        super(300d, color, position,"Knight");
     }
 
-    public Knight(PieceColor color, String position, int id) {
-        this(color, new Position(position), id);
+    public Knight(PieceColor color, String position) {
+        this(color, new Position(position));
     }
 
     /*
@@ -42,10 +42,12 @@ public class Knight extends Piece {
      * Check if knight can move to the specified position
      */
     @Override
-    public boolean isValidMove(Position target, boolean isAttacking) {
+    public MoveInfo isValidMove(Position target) {
+        MoveInfo info = new MoveInfo();
         // Every move is legal in forced mode
         if(GameManager.getInstance().isForceMode()) {
-            return true;
+            info.setMove();
+            return info;
         }
 
         Table table = GameManager.getInstance().getTable();
@@ -55,28 +57,28 @@ public class Knight extends Piece {
         int targetRow = target.getRow();
         int targetCol = target.getCol();
         if(table.getPositions()[targetRow][targetCol] != 0) {
-            return false;
+            return info;
         }
         if(Math.abs(targetRow - currRow) == 2 && Math.abs(targetCol - currCol) == 1) {
-            return true;
+            return info;
         }
-        return Math.abs(targetRow - currRow) == 1 && Math.abs(targetCol - currCol) == 2;
-    }
-    @Override
-    public boolean move(Position target) {
-        if(isValidMove(target, false)) {
-            movePiece(target);
-            return true;
-        }
-        return false;
-    }
 
-    @Override
-    public boolean attack(Position target) {
-        if(isValidMove(target, true) && !isSameColor(target)) {
-            capturePiece(target);
-            return true;
+        if (Math.abs(targetRow - currRow) == 1 && Math.abs(targetCol - currCol) == 2) {
+            info.setMove();
         }
-        return false;
+        return info;
+    }
+    @Override
+    public MoveInfo move(Position target) {
+        MoveInfo info = isValidMove(target);
+
+        if (info.canMove) {
+            if(info.attacking) {
+                capturePiece(target);
+            } else {
+                movePiece(target);
+            }
+        }
+        return info;
     }
 }

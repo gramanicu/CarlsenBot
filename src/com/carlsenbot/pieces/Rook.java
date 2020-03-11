@@ -15,15 +15,15 @@ public class Rook extends Piece {
      * @param position The position of the rook
      * @param id The id of the rook
      */
-    public Rook(PieceColor color, Position position, int id) {
-        super(500d, color, position, "Rook", id);
+    public Rook(PieceColor color, Position position) {
+        super(500d, color, position, "Rook");
     }
 
     /*
      * Same as the other one, is uses a "chess position"
      */
-    public Rook(PieceColor color, String position, int id) {
-        this(color, new Position(position), id);
+    public Rook(PieceColor color, String position) {
+        this(color, new Position(position));
     }
 
     /*
@@ -42,10 +42,12 @@ public class Rook extends Piece {
      * Check if rook can move to the specified position
      */
     @Override
-    public boolean isValidMove(Position target, boolean isAttacking) {
+    public MoveInfo isValidMove(Position target) {
+        MoveInfo info = new MoveInfo();
         // Every move is legal in forced mode
         if(GameManager.getInstance().isForceMode()) {
-            return true;
+            info.setMove();
+            return info;
         }
 
         Table table = GameManager.getInstance().getTable();
@@ -58,7 +60,7 @@ public class Rook extends Piece {
 
         if (currRow != targetRow && currCol != targetCol) {
             // If it didn't move along the file/rank
-            return false;
+            return info;
         }
 
         // When the rook is moving along the rows.
@@ -71,7 +73,7 @@ public class Rook extends Piece {
             // I check every space to be empty
             for (int i = difRow; i != targetRow; i += difPos) {
                 if (!table.isEmptyCell(difRow, currCol)) {
-                    return false;
+                    return info;
                 }
             }
         }
@@ -86,34 +88,29 @@ public class Rook extends Piece {
             // I check every space to be empty
             for (int i = difCol; i != targetCol; i += difPos) {
                 if (!table.isEmptyCell(currRow, difCol)) {
-                    return false;
+                    return info;
                 }
             }
         }
-        return true;
+
+        info.setMove();
+        return info;
     }
 
     /*
      * Move to the desired position
      */
     @Override
-    public boolean move(Position target) {
-        if (isValidMove(target, false) && !isSameColor(target)) {
-            movePiece(target);
-            return true;
-        }
-        return false;
-    }
+    public MoveInfo move(Position target) {
+        MoveInfo info = isValidMove(target);
 
-    /*
-     * Attack the desired position
-     */
-    @Override
-    public boolean attack(Position target) {
-        if (isValidMove(target, true) && !isSameColor(target)) {
-            movePiece(target);
-            return true;
+        if (info.canMove) {
+            if(info.attacking) {
+                capturePiece(target);
+            } else {
+                movePiece(target);
+            }
         }
-        return false;
+        return info;
     }
 }

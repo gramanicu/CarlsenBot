@@ -2,10 +2,6 @@
  * © 2020 Grama Nicolae, Ioniță Radu , Mosessohn Vlad, 322CA
  */
 
-/*
- * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
- */
-
 package com.carlsenbot.pieces;
 
 import com.carlsenbot.main.GameManager;
@@ -35,8 +31,8 @@ public class King extends Piece {
      * @param position The position of the king
      * @param id The id of the king
      */
-    public King(PieceColor color, Position position, int id) {
-        super(Double.MAX_VALUE, color, position, "King", id);
+    public King(PieceColor color, Position position) {
+        super(Double.MAX_VALUE, color, position, "King");
         firstMove = false;
         castled = false;
     }
@@ -44,8 +40,8 @@ public class King extends Piece {
     /*
      * Same as the other one, is uses a "chess position"
      */
-    public King(PieceColor color, String position, int id) {
-        this(color, new Position(position), id);
+    public King(PieceColor color, String position) {
+        this(color, new Position(position));
     }
 
     /*
@@ -64,10 +60,12 @@ public class King extends Piece {
      * Check if king can move to the specified position
      */
     @Override
-    public boolean isValidMove(Position target, boolean isAttacking) {
+    public MoveInfo isValidMove(Position target) {
+        MoveInfo info = new MoveInfo();
         // Every move is legal in forced mode
         if (GameManager.getInstance().isForceMode()) {
-            return true;
+            info.setMove();
+            return info;
         }
 
         Table table = GameManager.getInstance().getTable();
@@ -79,41 +77,43 @@ public class King extends Piece {
 
         // Check if the target is empty (or at least, we are attacking)
         if (!target.isEmpty()) {
-            if (!isAttacking) {
-                return false;
-            }
+//            if (!isAttacking) {
+                return info;
+//            }
         }
 
         if (castled && firstMove) {
             // After castling, the king can move 1 cell at max, which
             // a distance between 1 and sqrt(2) - for diagonal
             if (source.getDistance(target) > Math.sqrt(2)) {
-                return false;
+                return info;
             }
 
 
             if (isInCheck(target)) {
-                return false;
+                return info;
             }
 
             // If the target is free and the distance is ok, move the king
-            return true;
+            info.setMove();
+            return info;
         } else {
             // Check if it can castle (because we want to move more than 1 cell
 
             // Check if we move only along the x axis
             if (source.getDiffRow(target) != 0) {
-                return false;
+                return info;
             }
 
             // Check if we move 2 cells
             if (source.getDistance(target) != 2) {
-                return false;
+                return info;
             }
 
             // TODO - Check if the rook can castle
 
-            return true;
+            info.setMove();
+            return info;
         }
     }
 
@@ -121,26 +121,16 @@ public class King extends Piece {
      * Move to the desired position
      */
     @Override
-    public boolean move(Position target) {
-        if(isValidMove(target, false)) {
-            movePiece(target);
-            firstMove = false;
-            castled = true;
+    public MoveInfo move(Position target) {
+        MoveInfo info = isValidMove(target);
 
-            return true;
+        if (info.canMove) {
+            if(info.attacking) {
+                capturePiece(target);
+            } else {
+                movePiece(target);
+            }
         }
-        return false;
-    }
-
-    /*
-     * Attack the desired position
-     */
-    @Override
-    public boolean attack(Position target) {
-        if(isValidMove(target, true)) {
-            capturePiece(target);
-            return true;
-        }
-        return false;
+        return info;
     }
 }

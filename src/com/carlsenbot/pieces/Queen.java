@@ -15,15 +15,15 @@ public class Queen extends Piece {
      * @param position The position of the queen
      * @param id The id of the queen
      */
-    public Queen(PieceColor color, Position position, int id) {
-        super(880d, color, position,"Queen", id);
+    public Queen(PieceColor color, Position position) {
+        super(880d, color, position,"Queen");
     }
 
     /*
      * Same as the other one, is uses a "chess position"
      */
-    public Queen(PieceColor color, String position, int id) {
-        this(color, new Position(position), id);
+    public Queen(PieceColor color, String position) {
+        this(color, new Position(position));
     }
 
     /*
@@ -42,10 +42,12 @@ public class Queen extends Piece {
      * Check if queen can move to the specified position
      */
     @Override
-    public boolean isValidMove(Position target, boolean isAttacking) {
+    public MoveInfo isValidMove(Position target) {
+        MoveInfo info = new MoveInfo();
         // Every move is legal in forced mode
         if(GameManager.getInstance().isForceMode()) {
-            return true;
+            info.setMove();
+            return info;
         }
 
         // A queen theoretically is a rook combined with a bishop
@@ -61,7 +63,7 @@ public class Queen extends Piece {
 
         if (currRow != targetRow && currCol != targetCol) {
             // If it didn't move along the file/rank
-            return false;
+            return info;
         }
 
         // When the queen is moving along the rows.
@@ -74,7 +76,7 @@ public class Queen extends Piece {
             // I check every space to be empty
             for (int i = difRow; i != targetRow; i += difPos) {
                 if (!table.isEmptyCell(difRow, currCol)) {
-                    return false;
+                    return info;
                 }
             }
         }
@@ -89,7 +91,7 @@ public class Queen extends Piece {
             // I check every space to be empty
             for (int i = difCol; i != targetCol; i += difPos) {
                 if (!table.isEmptyCell(currRow, difCol)) {
-                    return false;
+                    return info;
                 }
             }
         }
@@ -111,34 +113,29 @@ public class Queen extends Piece {
         for(currRow += rowDiff; currRow != targetRow; currRow += rowDiff) {
             // Check if empty cell
             if (!table.isEmptyCell(currRow, currCol)) {
-                return false;
+                return info;
             }
             currCol += colDiff;
         }
-        return true;
+
+        info.setMove();
+        return info;
     }
 
     /*
      * Move to the desired position
      */
     @Override
-    public boolean move(Position target) {
-        if(isValidMove(target, false) && !isSameColor(target)) {
-            movePiece(target);
-            return true;
-        }
-        return false;
-    }
+    public MoveInfo move(Position target) {
+        MoveInfo info = isValidMove(target);
 
-    /*
-     * Attack the desired position
-     */
-    @Override
-    public boolean attack(Position target) {
-        if(isValidMove(target, true) && !isSameColor(target)) {
-            movePiece(target);
-            return true;
+        if (info.canMove) {
+            if(info.attacking) {
+                capturePiece(target);
+            } else {
+                movePiece(target);
+            }
         }
-        return false;
+        return info;
     }
 }

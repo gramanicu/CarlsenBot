@@ -2,10 +2,6 @@
  * © 2020 Grama Nicolae, Ioniță Radu , Mosessohn Vlad, 322CA
  */
 
-/*
- * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
- */
-
 package com.carlsenbot.pieces;
 
 import com.carlsenbot.main.GameManager;
@@ -13,12 +9,33 @@ import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
 public abstract class Piece {
+    public static class MoveInfo {
+        public boolean canMove;
+        public boolean attacking;
+
+        public MoveInfo() {
+            canMove = false;
+            attacking = false;
+        }
+
+        public MoveInfo(boolean canMove, boolean attacking) {
+            this.canMove = canMove;
+            this.attacking = attacking;
+        }
+
+        public void setMove() { canMove = true; };
+        public void setStay() { canMove = false; };
+        public void setAttack() { attacking = true; };
+        public void setNotAttack() { attacking = false; };
+    }
+
     private double value;
     private boolean isWhite;
     private Position position;
     private String name;
     private byte id;
     private boolean onBoard;
+    protected Table assignedTable;
 
     // Constructor
 
@@ -28,14 +45,12 @@ public abstract class Piece {
      * @param color The color (white/black) of the piece
      * @param position The position of the piece
      * @param name The name of the piece
-     * @param id The id of the piece
      */
-    public Piece(double value, PieceColor color, Position position, String name, int id) {
+    public Piece(double value, PieceColor color, Position position, String name) {
         setValue(value);
         setColor(color);
         setPosition(position);
         setName(name);
-        setId((byte) id);
         setOnBoard(onBoard);
     }
 
@@ -55,6 +70,7 @@ public abstract class Piece {
     public Position getPosition() { return position; }
     public String getName() { return name; }
     public double getValue() { return value; }
+    public Table getAssignedTable() { return assignedTable; }
 
     // Setters
     public void setOnBoard(boolean onBoard) {
@@ -69,13 +85,13 @@ public abstract class Piece {
     public void setPosition(Position position) { this.position = position; }
     public void setName(String name) { this.name = name; }
     public void setValue(double value) { this.value = value; }
+    public void setAssignedTable(Table table) { this.assignedTable = table; };
 
     /**
      * Notify the movement to the game manager
      * @param target The position to move to
      */
     protected void movePiece(Position target) {
-        GameManager.getInstance().movePieceGame(this, target);
         setPosition(target);
     }
 
@@ -84,7 +100,7 @@ public abstract class Piece {
      * @param target The position to move to
      */
     protected void capturePiece(Position target) {
-        GameManager.getInstance().movePieceGame(this, target);
+        GameManager.getInstance().move(this.position, target);
         setPosition(target);
     }
 
@@ -98,20 +114,17 @@ public abstract class Piece {
     }
 
 
+    protected boolean isSameColor(Position target) {
+        return assignedTable.isSameColor(this.getPosition(), target);
+    }
+
     /**
      * A wrapper for the abstract, to use "chess coordinates" for movement
      * @param target The "chess coordinates" to move to
      * @return If the move was possible
      */
-    public boolean move(String target) {
+    public MoveInfo move(String target) {
         return move(new Position(target));
-    }
-
-    public boolean isSameColor(Position target) {
-        Table table = GameManager.getInstance().getTable();
-
-        // If they have the same sign, the product is greater than 0
-        return table.idOfCell(target) * id > 0;
     }
 
     /*
@@ -121,11 +134,10 @@ public abstract class Piece {
     /**
      * Check if it can move to the specified position
      * @param target The desired position
-     * @param isAttacking Because attacks change the movement pattern for
-     *                     a few pieces, it will be given as a parameter
-     * @return Whether or not the position is available
+     * @return If the move can happen and if the piece needs to
+     *         attack to perform it
      */
-    protected abstract boolean isValidMove(Position target, boolean isAttacking);
+    protected abstract MoveInfo isValidMove(Position target);
 
     /**
      * Return the symbol of the piece
@@ -138,12 +150,5 @@ public abstract class Piece {
      * @param target The desired position
      * @return If the move possible
      */
-    public abstract boolean move(Position target);
-
-    /**
-     * Attack the target cell with the piece
-     * @param target The desired position
-     * @return If the attack was possible
-     */
-    public abstract boolean attack(Position target);
+    public abstract MoveInfo move(Position target);
 }

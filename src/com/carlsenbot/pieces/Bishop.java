@@ -10,7 +10,6 @@ package com.carlsenbot.pieces;
 
 import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Position;
-import com.carlsenbot.table.Table;
 
 public class Bishop extends Piece {
     /**
@@ -19,15 +18,15 @@ public class Bishop extends Piece {
      * @param position The position of the bishop
      * @param id The id of the bishop
      */
-    public Bishop(PieceColor color, Position position, int id) {
-        super(325d, color, position, "Bishop", id);
+    public Bishop(PieceColor color, Position position) {
+        super(325d, color, position, "Bishop");
     }
 
     /*
      * Same as the other one, is uses a "chess position"
      */
-    public Bishop(PieceColor color, String position, int id) {
-        this(color, new Position(position), id);
+    public Bishop(PieceColor color, String position) {
+        this(color, new Position(position));
     }
 
     /*
@@ -47,13 +46,14 @@ public class Bishop extends Piece {
      * Check if bishop can move to the specified position
      */
     @Override
-    protected boolean isValidMove(Position target, boolean isAttacking) {
+    protected MoveInfo isValidMove(Position target) {
+        MoveInfo info = new MoveInfo();
         // Every move is legal in forced mode
         if(GameManager.getInstance().isForceMode()) {
-            return true;
+            info.setMove();
+            return info;
         }
 
-        Table table = GameManager.getInstance().getTable();
         Position source = getPosition();
         int currRow = source.getRow();
         int currCol = source.getCol();
@@ -64,7 +64,7 @@ public class Bishop extends Piece {
 
         // Should move the same amount on both axes ( != 0 )
         if (source.getDiffRow(target) != source.getDiffCol(target) || source.getDiffRow(target) == 0) {
-            return false;
+            return info;
         }
 
         // Evaluate the direction of movement in the Y axis
@@ -81,42 +81,39 @@ public class Bishop extends Piece {
         // Move to the first position
         currCol += colDiff;
 
+
+        // TODO - check this
         for(currRow += rowDiff; currRow <= targetRow; currRow += rowDiff) {
             // Check if empty cell
-
-            if (!table.isEmptyCell(currRow, currCol)) {
+            if (!assignedTable.isEmptyCell(currRow, currCol)) {
                 // If it is attacking and the target position was reached
                 // we can capture the piece
-                return isAttacking && currRow == targetRow;
+                if(currRow == targetRow && isSameColor(target)) {
+                    info.setMove();
+                    info.setAttack();
+                }
             }
 
             currCol += colDiff;
         }
 
-        return true;
+        return info;
     }
 
     /*
      * Move to the desired position
      */
     @Override
-    public boolean move(Position target) {
-        if (isValidMove(target, false) && !isSameColor(target)) {
-            movePiece(target);
-            return true;
-        }
-        return false;
-    }
+    public MoveInfo move(Position target) {
+        MoveInfo info = isValidMove(target);
 
-    /*
-     * Attack the desired position
-     */
-    @Override
-    public boolean attack(Position target) {
-        if (isValidMove(target, true) && !isSameColor(target)) {
-            capturePiece(target);
-            return true;
+        if (info.canMove) {
+            if(info.attacking) {
+                capturePiece(target);
+            } else {
+                movePiece(target);
+            }
         }
-        return false;
+        return info;
     }
 }

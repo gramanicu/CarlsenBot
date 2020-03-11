@@ -13,7 +13,8 @@ class GameManagerTest {
     @Test
     void initializeGame() {
         GameManager g = GameManager.getInstance();
-        g.initializeGame();
+        g.initialize();
+        g.resetPieces();
         String correctInitial = " -3 -5 -7 -2 -1 -8 -6 -4\n" +
                                 " -9-10-11-12-13-14-15-16\n" +
                                 "  0  0  0  0  0  0  0  0\n" +
