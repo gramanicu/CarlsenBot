@@ -78,7 +78,7 @@ public class Queen extends Piece {
                 }
             }
         }
-        difPos = -1;
+        difPos = 1;
         // When the queen is moving along the columns.
         if (currCol != targetCol) {
             if (currCol > targetCol) {
@@ -123,7 +123,7 @@ public class Queen extends Piece {
      */
     @Override
     public boolean move(Position target) {
-        if(isValidMove(target, false)) {
+        if(isValidMove(target, false) && !isSameColor(target)) {
             movePiece(target);
             return true;
         }
@@ -135,7 +135,7 @@ public class Queen extends Piece {
      */
     @Override
     public boolean attack(Position target) {
-        if(isValidMove(target, true)) {
+        if(isValidMove(target, true) && !isSameColor(target)) {
             movePiece(target);
             return true;
         }

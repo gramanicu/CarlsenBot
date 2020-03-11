@@ -109,7 +109,7 @@ public class Pawn extends Piece {
      */
     @Override
     public boolean move(Position target) {
-        if (isValidMove(target, false)) {
+        if (isValidMove(target, false) && !isSameColor(target)) {
             movePiece(target);
             return true;
         }
@@ -121,7 +121,7 @@ public class Pawn extends Piece {
      */
     @Override
     public boolean attack(Position target) {
-        if (isValidMove(target, true)) {
+        if (isValidMove(target, true) && !isSameColor(target)) {
             capturePiece(target);
             return true;
         }

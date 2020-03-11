@@ -73,7 +73,7 @@ public class Knight extends Piece {
 
     @Override
     public boolean attack(Position target) {
-        if(isValidMove(target, true)) {
+        if(isValidMove(target, true) && !isSameColor(target)) {
             capturePiece(target);
             return true;
         }

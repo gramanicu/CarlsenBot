@@ -63,7 +63,7 @@ public class Rook extends Piece {
 
         // When the rook is moving along the rows.
         if (currRow != targetRow) {
-            if (currRow >= targetRow) {
+            if (currRow > targetRow) {
                 difPos = -1;
             }
             difRow = currRow + difPos;
@@ -78,7 +78,7 @@ public class Rook extends Piece {
         difPos = -1;
         // When the rook is moving along the columns.
         if (currCol != targetCol) {
-            if (currCol >= targetCol) {
+            if (currCol > targetCol) {
                 difPos = -1;
             }
             difCol = currCol + difPos;
@@ -98,7 +98,7 @@ public class Rook extends Piece {
      */
     @Override
     public boolean move(Position target) {
-        if (isValidMove(target, false)) {
+        if (isValidMove(target, false) && !isSameColor(target)) {
             movePiece(target);
             return true;
         }
@@ -110,7 +110,7 @@ public class Rook extends Piece {
      */
     @Override
     public boolean attack(Position target) {
-        if (isValidMove(target, true)) {
+        if (isValidMove(target, true) && !isSameColor(target)) {
             movePiece(target);
             return true;
         }
