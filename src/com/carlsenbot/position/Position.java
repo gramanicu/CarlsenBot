@@ -10,6 +10,8 @@ package com.carlsenbot.position;
 
 import com.carlsenbot.main.GameManager;
 
+import java.util.Objects;
+
 public class Position {
     private int x;
     private int y;
@@ -42,9 +44,9 @@ public class Position {
     public void setX(int x) {
         this.x = Math.min(Byte.MAX_VALUE, Math.max(x, 0));
     }
-    public void setY(int y) {
-        this.y = Math.min(Byte.MAX_VALUE, Math.max(y, 0));
-    }
+    public void setY(int y) { this.y = Math.min(Byte.MAX_VALUE, Math.max(y, 0)); }
+    public void setRow(int y) { this.y = Math.min(Byte.MAX_VALUE, Math.max(y, 0)); }
+    public void setCol(int x) { this.x = Math.min(Byte.MAX_VALUE, Math.max(x, 0)); }
 
     /**
      * Check the validity of the coordinates
@@ -167,6 +169,25 @@ public class Position {
             setX(0);
             setY(0);
         }
+    }
+
+    /**
+     * Check if this object is equal to another
+     * @param o The other object
+     * @return If they are equal
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return x == position.x &&
+                y == position.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 
     /**

@@ -8,7 +8,7 @@ import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Position;
 
 public class Pawn extends Piece {
-    boolean firstMove;
+    boolean moved;
 
     /**
      * Helper function, to compute if the pawn is moving forward
@@ -29,11 +29,10 @@ public class Pawn extends Piece {
      * Create a new pawn, with the specified position and id
      * @param color The color of the pawn
      * @param position The position of the pawn
-     * @param id The id of the pawn
      */
     public Pawn(PieceColor color, Position position) {
         super(100d, color, position, "Pawn");
-        firstMove = true;
+        moved = false;
     }
 
     /*
@@ -59,7 +58,7 @@ public class Pawn extends Piece {
      * Check if pawn can move to the specified position
      */
     @Override
-    protected MoveInfo isValidMove(Position target) {
+    protected MoveInfo isValidMove(final Position target) {
         MoveInfo info = new MoveInfo();
 
         // Every move is legal in forced mode
@@ -86,12 +85,19 @@ public class Pawn extends Piece {
                 return info;
             }
 
-            // Check if is moving 2 positions and it can do so
-            // (first move of the game)
-            if (source.getDiffRow(target) == 1 || firstMove) {
+            if (source.getDiffRow(target) == 1) {
                 info.setMove();
+            } else if (!moved) {
+                // Check if is moving 2 positions and it can do so
+                // (first move of the game)
+                Position inter = new Position(target.toString());
+                inter.setRow((inter.getRow() + source.getRow())/2);
+                if(assignedTable.isEmptyCell(inter)) {
+                    info.setMove();
+                }
+
             }
-        } else if (!isSameColor(target)){
+        } else if (!isSameColor(target) && !assignedTable.isEmptyCell(target)) {
             // Check if the pawn can attack and move diagonally
             if(source.getDistance(target) == Math.sqrt(2)) {
                 info.setMove();
@@ -114,6 +120,7 @@ public class Pawn extends Piece {
             } else {
                 movePiece(target);
             }
+            moved = true;
         }
         return info;
     }

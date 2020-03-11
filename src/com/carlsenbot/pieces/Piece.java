@@ -4,7 +4,6 @@
 
 package com.carlsenbot.pieces;
 
-import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
@@ -23,10 +22,10 @@ public abstract class Piece {
             this.attacking = attacking;
         }
 
-        public void setMove() { canMove = true; };
-        public void setStay() { canMove = false; };
-        public void setAttack() { attacking = true; };
-        public void setNotAttack() { attacking = false; };
+        public void setMove() { canMove = true; }
+        public void setStay() { canMove = false; }
+        public void setAttack() { attacking = true; }
+        public void setNotAttack() { attacking = false; }
     }
 
     private double value;
@@ -85,22 +84,20 @@ public abstract class Piece {
     public void setPosition(Position position) { this.position = position; }
     public void setName(String name) { this.name = name; }
     public void setValue(double value) { this.value = value; }
-    public void setAssignedTable(Table table) { this.assignedTable = table; };
+    public void setAssignedTable(Table table) { this.assignedTable = table; }
 
     /**
      * Notify the movement to the game manager
      * @param target The position to move to
      */
-    protected void movePiece(Position target) {
-        setPosition(target);
-    }
+    protected void movePiece(Position target) { setPosition(target); }
 
     /**
      * Notify the capture to the game manager
      * @param target The position to move to
      */
     protected void capturePiece(Position target) {
-        GameManager.getInstance().move(this.position, target);
+        assignedTable.removePiece(target);
         setPosition(target);
     }
 

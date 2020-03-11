@@ -13,7 +13,6 @@ public class Rook extends Piece {
      * Create a new rook, with the specified position and id
      * @param color The color of the rook
      * @param position The position of the rook
-     * @param id The id of the rook
      */
     public Rook(PieceColor color, Position position) {
         super(500d, color, position, "Rook");
@@ -56,7 +55,7 @@ public class Rook extends Piece {
         int currCol = source.getCol();
         int targetRow = target.getRow();
         int targetCol = target.getCol();
-        int difPos = 1, difRow = 0, difCol = 0;
+        int difPos = 1, difRow, difCol;
 
         if (currRow != targetRow && currCol != targetCol) {
             // If it didn't move along the file/rank
@@ -72,7 +71,7 @@ public class Rook extends Piece {
             // I am going to iterate from currentRow to targetRow
             // I check every space to be empty
             for (int i = difRow; i != targetRow; i += difPos) {
-                if (!table.isEmptyCell(difRow, currCol)) {
+                if (table.isNotEmptyCell(difRow, currCol)) {
                     return info;
                 }
             }
@@ -80,14 +79,14 @@ public class Rook extends Piece {
         difPos = -1;
         // When the rook is moving along the columns.
         if (currCol != targetCol) {
-            if (currCol > targetCol) {
-                difPos = -1;
-            }
+//            if (currCol > targetCol) {
+//                difPos = -1;
+//            }
             difCol = currCol + difPos;
             // I am going to iterate from currentCol to targetCol
             // I check every space to be empty
             for (int i = difCol; i != targetCol; i += difPos) {
-                if (!table.isEmptyCell(currRow, difCol)) {
+                if (table.isNotEmptyCell(currRow, difCol)) {
                     return info;
                 }
             }

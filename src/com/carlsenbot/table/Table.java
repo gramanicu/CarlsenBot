@@ -5,7 +5,6 @@
 package com.carlsenbot.table;
 
 
-import com.carlsenbot.main.GameManager;
 import com.carlsenbot.pieces.Piece;
 import com.carlsenbot.position.Position;
 
@@ -95,17 +94,26 @@ public class Table {
      * @return If the piece was found and removed
      */
     public boolean removePiece(Piece piece) {
-        Position p = piece.getPosition();
+        Position position = piece.getPosition();
+        return removePiece(position);
+    }
+
+    /**
+     * Remove a piece from a specific position from the table
+     * The id's are not changed
+     * @param position The position of the piece
+     * @return If the piece was found and removed
+     */
+    public boolean removePiece(Position position) {
         // Check if the piece actually exist
-        if(!isEmptyCell(p)) {
+        if(!isEmptyCell(position)) {
+            Piece piece = getPiece(position);
             if(piece.isBlack()) {
-                pieces[1][blackID * (-1) - 1] = null;
-                blackID++;
+                pieces[1][(piece.getId() * -1) - 1] = null;
             } else {
-                pieces[1][whiteID - 1] = null;
-                whiteID--;
+                pieces[0][(piece.getId()) - 1] = null;
             }
-            positions[p.getRow()][p.getCol()] = 0;
+            positions[position.getRow()][position.getCol()] = 0;
             return true;
         }
         return false;
@@ -148,8 +156,8 @@ public class Table {
      * @param col The column of the cell to check
      * @return If the cell is empty
      */
-    public boolean isEmptyCell(int row, int col) {
-        return positions[row][col] == 0;
+    public boolean isNotEmptyCell(int row, int col) {
+        return positions[row][col] != 0;
     }
 
     /**

@@ -2,10 +2,6 @@
  * © 2020 Grama Nicolae, Ioniță Radu , Mosessohn Vlad, 322CA
  */
 
-/*
- * © 2020 Grama Nicolae, Radu Ioniță, Mosessohn Vlad, 322CA
- */
-
 package com.carlsenbot.pieces;
 
 import com.carlsenbot.main.GameManager;
@@ -16,7 +12,6 @@ public class Bishop extends Piece {
      * Create a new bishop, with the specified position and id
      * @param color The color of the bishop
      * @param position The position of the bishop
-     * @param id The id of the bishop
      */
     public Bishop(PieceColor color, Position position) {
         super(325d, color, position, "Bishop");
@@ -85,7 +80,7 @@ public class Bishop extends Piece {
         // TODO - check this
         for(currRow += rowDiff; currRow <= targetRow; currRow += rowDiff) {
             // Check if empty cell
-            if (!assignedTable.isEmptyCell(currRow, currCol)) {
+            if (assignedTable.isNotEmptyCell(currRow, currCol)) {
                 // If it is attacking and the target position was reached
                 // we can capture the piece
                 if(currRow == targetRow && isSameColor(target)) {
