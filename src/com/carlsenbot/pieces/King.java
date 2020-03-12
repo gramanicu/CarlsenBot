@@ -77,9 +77,8 @@ public class King extends Piece {
 
         // Check if the target is empty (or at least, we are attacking)
         if (!target.isEmpty()) {
-//            if (!isAttacking) {
+
                 return info;
-//            }
         }
 
         if (castled && firstMove) {
@@ -95,8 +94,6 @@ public class King extends Piece {
             }
 
             // If the target is free and the distance is ok, move the king
-            info.setMove();
-            return info;
         } else {
             // Check if it can castle (because we want to move more than 1 cell
 
@@ -112,9 +109,9 @@ public class King extends Piece {
 
             // TODO - Check if the rook can castle
 
-            info.setMove();
-            return info;
         }
+        info.setMove();
+        return info;
     }
 
     /*

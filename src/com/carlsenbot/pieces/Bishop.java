@@ -10,7 +10,8 @@ import com.carlsenbot.position.Position;
 public class Bishop extends Piece {
     /**
      * Create a new bishop, with the specified position and id
-     * @param color The color of the bishop
+     *
+     * @param color    The color of the bishop
      * @param position The position of the bishop
      */
     public Bishop(PieceColor color, Position position) {
@@ -29,7 +30,7 @@ public class Bishop extends Piece {
      */
     @Override
     public String getSymbol() {
-        if(isWhite()) {
+        if (isWhite()) {
             return unicodeToChar(9815);
         } else {
             return unicodeToChar(9821);
@@ -44,7 +45,7 @@ public class Bishop extends Piece {
     protected MoveInfo isValidMove(Position target) {
         MoveInfo info = new MoveInfo();
         // Every move is legal in forced mode
-        if(GameManager.getInstance().isForceMode()) {
+        if (GameManager.getInstance().isForceMode()) {
             info.setMove();
             return info;
         }
@@ -63,35 +64,35 @@ public class Bishop extends Piece {
         }
 
         // Evaluate the direction of movement in the Y axis
-        if (currRow > targetRow){
+        if (currRow > targetRow) {
             rowDiff = -1;
         }
 
         // Evaluate the direction of movement in the X axis
-        if (currCol > targetCol){
+        if (currCol > targetCol) {
             colDiff = -1;
         }
 
         // Check the existence of pieces along the path
         // Move to the first position
-        currCol += colDiff;
+        int y = currCol + colDiff;
 
-
-        // TODO - check this
-        for(currRow += rowDiff; currRow <= targetRow; currRow += rowDiff) {
+        for (int x = currRow + rowDiff; x != targetRow; x += rowDiff) {
             // Check if empty cell
-            if (assignedTable.isNotEmptyCell(currRow, currCol)) {
+            if (assignedTable.isNotEmptyCell(x, y)) {
                 // If it is attacking and the target position was reached
                 // we can capture the piece
-                if(currRow == targetRow && isSameColor(target)) {
-                    info.setMove();
-                    info.setAttack();
-                }
+                return info;
             }
-
-            currCol += colDiff;
+            y += colDiff;
         }
 
+        // h8 -> rook(alba) nu o ia
+        info.setMove();
+        // In case there is on the target position an opponent piece, it also attacks the piece
+        if (!isSameColor(target)) {
+            info.setAttack();
+        }
         return info;
     }
 
@@ -103,7 +104,7 @@ public class Bishop extends Piece {
         MoveInfo info = isValidMove(target);
 
         if (info.canMove) {
-            if(info.attacking) {
+            if (info.attacking) {
                 capturePiece(target);
             } else {
                 movePiece(target);

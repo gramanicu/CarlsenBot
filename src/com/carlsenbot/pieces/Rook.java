@@ -71,22 +71,22 @@ public class Rook extends Piece {
             // I am going to iterate from currentRow to targetRow
             // I check every space to be empty
             for (int i = difRow; i != targetRow; i += difPos) {
-                if (table.isNotEmptyCell(difRow, currCol)) {
+                if (assignedTable.isNotEmptyCell(difRow, currCol)) {
                     return info;
                 }
             }
         }
-        difPos = -1;
+        difPos = 1;
         // When the rook is moving along the columns.
         if (currCol != targetCol) {
-//            if (currCol > targetCol) {
-//                difPos = -1;
-//            }
+            if (currCol > targetCol) {
+                difPos = -1;
+            }
             difCol = currCol + difPos;
             // I am going to iterate from currentCol to targetCol
             // I check every space to be empty
             for (int i = difCol; i != targetCol; i += difPos) {
-                if (table.isNotEmptyCell(currRow, difCol)) {
+                if (assignedTable.isNotEmptyCell(currRow, difCol)) {
                     return info;
                 }
             }
