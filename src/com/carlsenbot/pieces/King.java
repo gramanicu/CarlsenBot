@@ -6,10 +6,11 @@ package com.carlsenbot.pieces;
 
 import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Position;
-import com.carlsenbot.table.Table;
 
 public class King extends Piece {
+    // The king can't castle if he did his first move
     public boolean firstMove;
+    // If the king has castled, he is guaranteed to move 1 cell at max
     public boolean castled;
 
     /**
@@ -29,11 +30,10 @@ public class King extends Piece {
      * Create a new king, with the specified position and id
      * @param color The color of the king
      * @param position The position of the king
-     * @param id The id of the king
      */
     public King(PieceColor color, Position position) {
         super(Double.MAX_VALUE, color, position, "King");
-        firstMove = false;
+        firstMove = true;
         castled = false;
     }
 
@@ -68,34 +68,12 @@ public class King extends Piece {
             return info;
         }
 
-        Table table = GameManager.getInstance().getTable();
         Position source = getPosition();
-        int currRow = source.getRow();
-        int currCol = source.getCol();
-        int targetRow = target.getRow();
-        int targetCol = target.getCol();
 
-        // Check if the target is empty (or at least, we are attacking)
-        if (!target.isEmpty()) {
-
-                return info;
-        }
-
-        if (castled && firstMove) {
-            // After castling, the king can move 1 cell at max, which
-            // a distance between 1 and sqrt(2) - for diagonal
-            if (source.getDistance(target) > Math.sqrt(2)) {
-                return info;
-            }
-
-
-            if (isInCheck(target)) {
-                return info;
-            }
-
-            // If the target is free and the distance is ok, move the king
-        } else {
-            // Check if it can castle (because we want to move more than 1 cell
+        // If the king hasn't castled and has it's first move, check if
+        // the movement can be a castle
+        if (!castled && firstMove && source.getDistance(target) > Math.sqrt(2)) {
+            // Check for castle
 
             // Check if we move only along the x axis
             if (source.getDiffRow(target) != 0) {
@@ -110,6 +88,28 @@ public class King extends Piece {
             // TODO - Check if the rook can castle
 
         }
+
+        // If the king has moved once or has castled, we are guaranteed to move only 1 cell at a time
+        if (source.getDistance(target) > Math.sqrt(2)) {
+            return info;
+        }
+
+        // Check if the position is in check
+//        if (isInCheck(target)) {
+//            return info;
+//        }
+
+        // If the target has a piece in it
+        if (!assignedTable.isEmptyCell(target)) {
+            // Check for enemy piece, to attack, else, don't move at all
+            if (!isSameColor(target)) {
+                info.setMove();
+                info.setAttack();
+            }
+            return info;
+        }
+
+        // If the cell was empty, move
         info.setMove();
         return info;
     }
