@@ -82,6 +82,7 @@ public class Table {
                 pieces[0][whiteID - 1] = piece;
                 positions[p.getRow()][p.getCol()] = whiteID++;
             }
+            piece.setOnBoard(true);
             piece.setAssignedTable(this);
             return true;
         }
@@ -108,6 +109,7 @@ public class Table {
         // Check if the piece actually exist
         if(!isEmptyCell(position)) {
             Piece piece = getPiece(position);
+            piece.setOnBoard(false);
             if(piece.isBlack()) {
                 pieces[1][(piece.getId() * -1) - 1] = null;
             } else {
@@ -121,6 +123,7 @@ public class Table {
 
     /**
      * Check if the pieces at the specified positions have the same color
+     * Will return false when both cells are empty
      * @param source The first piece position
      * @param target The second piece position
      * @return If they have the same color
@@ -154,7 +157,7 @@ public class Table {
      * Check if a cell is empty at the specified coordinates
      * @param row The row of the cell to check
      * @param col The column of the cell to check
-     * @return If the cell is empty
+     * @return If the cell is not empty
      */
     public boolean isNotEmptyCell(int row, int col) {
         return positions[row][col] != 0;

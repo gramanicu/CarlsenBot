@@ -68,7 +68,7 @@ class PawnTest {
         table.movePiece(p3, "a6");
         table.movePiece(p1, "b3");
         assertEquals(table.getPiece(new Position("a6")), p3,"The pawn should have moved");
-        assertEquals(table.getPiece(new Position("b3")), p1,"The pawn should have moved");
+        assertEquals(table.getPiece(new Position("b3")), p1,"The pawn should have moved and captured");
         table.movePiece(p1, "a4");
         assertEquals(table.getPiece(new Position("b3")), p1,"The pawn shouldn't have moved");
 
@@ -79,11 +79,9 @@ class PawnTest {
 
         table.movePiece(p4, "b1");
         table.movePiece(p5, "b1");
-        assertNull(table.getPiece(new Position("b1")), "The pawn should not exist");
+        assertFalse(p4.isOnBoard(), "The pawn should be on the table");
         assertEquals(table.getPiece(new Position("a2")), p5,"The pawn shouldn't have moved");
         table.movePiece(p5, "a1");
         assertEquals(table.getPiece(new Position("a1")), p5,"The pawn should have moved");
-
-
     }
 }

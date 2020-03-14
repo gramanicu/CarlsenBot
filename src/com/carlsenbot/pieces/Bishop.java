@@ -10,7 +10,6 @@ import com.carlsenbot.position.Position;
 public class Bishop extends Piece {
     /**
      * Create a new bishop, with the specified position and id
-     *
      * @param color    The color of the bishop
      * @param position The position of the bishop
      */

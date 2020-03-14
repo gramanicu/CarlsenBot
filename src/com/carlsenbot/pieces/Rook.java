@@ -37,6 +37,8 @@ public class Rook extends Piece {
         }
     }
 
+//    protected static MoveInfo validMoveRook() {};
+
     /*
      * Check if rook can move to the specified position
      */
@@ -49,51 +51,70 @@ public class Rook extends Piece {
             return info;
         }
 
-        Table table = GameManager.getInstance().getTable();
         Position source = getPosition();
-        int currRow = source.getRow();
-        int currCol = source.getCol();
-        int targetRow = target.getRow();
-        int targetCol = target.getCol();
-        int difPos = 1, difRow, difCol;
+        int difPos = 1;
+        int difRow = (int) source.getDiffRow(target);
+        int difCol = (int) source.getDiffCol(target);
 
-        if (currRow != targetRow && currCol != targetCol) {
-            // If it didn't move along the file/rank
+
+        if(difRow == 0) {
+            // Moving along a row (horizontally)
+            if(source.getCol() > target.getCol()) {
+                difPos = -1;
+            }
+
+            // Check the cells along the row
+            for (int i = source.getCol() + difPos; i != target.getCol(); i += difPos) {
+                // Check if the cells are empty
+                if (assignedTable.isNotEmptyCell(source.getRow(), i)) {
+                    return info;
+                }
+            }
+
+            // If the target has a piece in it
+            if(!assignedTable.isEmptyCell(target)) {
+                // Check for enemy piece, to attack, else, don't move at all
+                if(!assignedTable.isSameColor(source, target)) {
+                    info.setMove();
+                    info.setAttack();
+                }
+                return info;
+            }
+
+            // If we reached the end, and we didn't have to attack, just move
+            info.setMove();
+            return info;
+        } else if (difCol == 0) {
+            // Moving along a column (vertically)
+            if(source.getRow() > target.getRow()) {
+                difPos = -1;
+            }
+
+            // Check the cells along the column
+            for (int i = source.getRow() + difPos; i != target.getRow(); i += difPos) {
+                // Check if the cells are empty
+                if (assignedTable.isNotEmptyCell(i, source.getCol())) {
+                    return info;
+                }
+            }
+
+            // If the target has a piece in it
+            if(!assignedTable.isEmptyCell(target)) {
+                // Check for enemy piece, to attack, else, don't move at all
+                if(!assignedTable.isSameColor(source, target)) {
+                    info.setMove();
+                    info.setAttack();
+                }
+                return info;
+            }
+
+            // If we reached the end, and we didn't have to attack, just move
+            info.setMove();
+            return info;
+        } else {
+            // If it didn't move along a row/columns
             return info;
         }
-
-        // When the rook is moving along the rows.
-        if (currRow != targetRow) {
-            if (currRow > targetRow) {
-                difPos = -1;
-            }
-            difRow = currRow + difPos;
-            // I am going to iterate from currentRow to targetRow
-            // I check every space to be empty
-            for (int i = difRow; i != targetRow; i += difPos) {
-                if (assignedTable.isNotEmptyCell(difRow, currCol)) {
-                    return info;
-                }
-            }
-        }
-        difPos = 1;
-        // When the rook is moving along the columns.
-        if (currCol != targetCol) {
-            if (currCol > targetCol) {
-                difPos = -1;
-            }
-            difCol = currCol + difPos;
-            // I am going to iterate from currentCol to targetCol
-            // I check every space to be empty
-            for (int i = difCol; i != targetCol; i += difPos) {
-                if (assignedTable.isNotEmptyCell(currRow, difCol)) {
-                    return info;
-                }
-            }
-        }
-
-        info.setMove();
-        return info;
     }
 
     /*
