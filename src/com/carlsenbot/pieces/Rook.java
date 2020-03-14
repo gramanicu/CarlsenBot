@@ -74,7 +74,7 @@ public class Rook extends Piece {
             // If the target has a piece in it
             if(!assignedTable.isEmptyCell(target)) {
                 // Check for enemy piece, to attack, else, don't move at all
-                if(!assignedTable.isSameColor(source, target)) {
+                if(!isSameColor(target)) {
                     info.setMove();
                     info.setAttack();
                 }
@@ -101,7 +101,7 @@ public class Rook extends Piece {
             // If the target has a piece in it
             if(!assignedTable.isEmptyCell(target)) {
                 // Check for enemy piece, to attack, else, don't move at all
-                if(!assignedTable.isSameColor(source, target)) {
+                if(!isSameColor(target)) {
                     info.setMove();
                     info.setAttack();
                 }

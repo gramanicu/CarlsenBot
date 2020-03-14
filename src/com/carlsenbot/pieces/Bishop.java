@@ -50,14 +50,16 @@ public class Bishop extends Piece {
         }
 
         Position source = getPosition();
+
         int currRow = source.getRow();
         int currCol = source.getCol();
         int targetRow = target.getRow();
         int targetCol = target.getCol();
+
         int rowDiff = 1;
         int colDiff = 1;
 
-        // Should move the same amount on both axes ( != 0 )
+        // Should move the same amount on both axes
         if (source.getDiffRow(target) != source.getDiffCol(target) || source.getDiffRow(target) == 0) {
             return info;
         }
@@ -74,24 +76,30 @@ public class Bishop extends Piece {
 
         // Check the existence of pieces along the path
         // Move to the first position
-        int y = currCol + colDiff;
+        int x = currCol + colDiff;
 
-        for (int x = currRow + rowDiff; x != targetRow; x += rowDiff) {
+        for (int i = currRow + rowDiff; i != targetRow; i += rowDiff) {
             // Check if empty cell
-            if (assignedTable.isNotEmptyCell(x, y)) {
+            if (assignedTable.isNotEmptyCell(i, x)) {
                 // If it is attacking and the target position was reached
                 // we can capture the piece
                 return info;
             }
-            y += colDiff;
+            x += colDiff;
         }
 
-        // h8 -> rook(alba) nu o ia
-        info.setMove();
-        // In case there is on the target position an opponent piece, it also attacks the piece
-        if (!isSameColor(target)) {
-            info.setAttack();
+
+        // If the target has a piece in it
+        if(!assignedTable.isEmptyCell(target)) {
+            // Check for enemy piece, to attack, else, don't move at all
+            if(!isSameColor(target)) {
+                info.setMove();
+                info.setAttack();
+            }
+            return info;
         }
+
+        info.setMove();
         return info;
     }
 
