@@ -6,11 +6,12 @@ package com.carlsenbot.pieces;
 
 import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Position;
+import com.carlsenbot.table.Table;
 
 public class Bishop extends Piece {
     /**
      * Create a new bishop, with the specified position and id
-     * @param color    The color of the bishop
+     * @param color The color of the bishop
      * @param position The position of the bishop
      */
     public Bishop(PieceColor color, Position position) {
@@ -36,20 +37,18 @@ public class Bishop extends Piece {
         }
     }
 
-
-    /*
-     * Check if bishop can move to the specified position
+    /**
+     * A method used to check if a move is valid, from a bishop perspective.
+     * As the queen movement combines that of a rook and a bishop, it made
+     * sense to use the same method for both.
+     * @param source The position of the piece to be moved
+     * @param target The point to move to
+     * @param table The table the piece is assigned to
+     * @return If the move can happen and if the piece needs to
+     *         attack to perform it
      */
-    @Override
-    protected MoveInfo isValidMove(Position target) {
+    protected static MoveInfo isValidBishopMove(Position source, Position target, Table table) {
         MoveInfo info = new MoveInfo();
-        // Every move is legal in forced mode
-        if (GameManager.getInstance().isForceMode()) {
-            info.setMove();
-            return info;
-        }
-
-        Position source = getPosition();
 
         int currRow = source.getRow();
         int currCol = source.getCol();
@@ -80,7 +79,7 @@ public class Bishop extends Piece {
 
         for (int i = currRow + rowDiff; i != targetRow; i += rowDiff) {
             // Check if empty cell
-            if (assignedTable.isNotEmptyCell(i, x)) {
+            if (table.isNotEmptyCell(i, x)) {
                 // If it is attacking and the target position was reached
                 // we can capture the piece
                 return info;
@@ -90,9 +89,9 @@ public class Bishop extends Piece {
 
 
         // If the target has a piece in it
-        if(!assignedTable.isEmptyCell(target)) {
+        if(!table.isEmptyCell(target)) {
             // Check for enemy piece, to attack, else, don't move at all
-            if(!isSameColor(target)) {
+            if(!table.isSameColor(source, target)) {
                 info.setMove();
                 info.setAttack();
             }
@@ -101,6 +100,22 @@ public class Bishop extends Piece {
 
         info.setMove();
         return info;
+    }
+
+    /*
+     * Check if bishop can move to the specified position
+     */
+    @Override
+    protected MoveInfo isValidMove(Position target) {
+        MoveInfo info = new MoveInfo();
+        // Every move is legal in forced mode
+        if (GameManager.getInstance().isForceMode()) {
+            info.setMove();
+            return info;
+        }
+
+        Position source = getPosition();
+        return isValidBishopMove(source, target, assignedTable);
     }
 
     /*

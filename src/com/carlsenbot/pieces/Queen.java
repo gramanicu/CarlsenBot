@@ -4,9 +4,7 @@
 
 package com.carlsenbot.pieces;
 
-import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Position;
-import com.carlsenbot.table.Table;
 
 public class Queen extends Piece {
     /**
@@ -43,71 +41,15 @@ public class Queen extends Piece {
      */
     @Override
     public MoveInfo isValidMove(Position target) {
-        MoveInfo info = new MoveInfo();
         Position source = getPosition();
+        MoveInfo diagonal = Rook.isValidRookMove(source, target, assignedTable);
+        MoveInfo line = Bishop.isValidBishopMove(source, target, assignedTable);
+        MoveInfo info = new MoveInfo();
 
-        if (isWhite()) {
-            if (new Rook(PieceColor.White, source).isValidMove(target) != null) {
-                info.setMove();
-                info.setAttack();
-            }
-            if (new Bishop(PieceColor.White, source).isValidMove(target) != null) {
-                info.setMove();
-                info.setAttack();
-            }
-        } else {
-            if (new Rook(PieceColor.Black, source).isValidMove(target) != null) {
-                info.setMove();
-                info.setAttack();
-            }
-            if (new Bishop(PieceColor.Black, source).isValidMove(target) != null) {
-                info.setMove();
-                info.setAttack();
-            }
-        }
+        info.canMove = diagonal.canMove || line.canMove;
+        info.attacking = diagonal.attacking || line.attacking;
+
         return info;
-
-//        if (isWhite()) {
-//            Rook r = new Rook(PieceColor.White, source);
-//            table.addPiece(r);
-//            if (r.isValidMove(target) != null) {
-//                info.setMove();
-//                info.setAttack();
-//                return info;
-//            }
-//            table.removePiece(r);
-//        } else {
-//            Rook r = new Rook(PieceColor.Black, source);
-//            table.addPiece(r);
-//            if (r.isValidMove(target) != null) {
-//                info.setMove();
-//                info.setAttack();
-//                return info;
-//            }
-//            table.removePiece(r);
-//        }
-//
-//        if (isWhite()) {
-//            Bishop bishop = new Bishop(PieceColor.White, source);
-//            table.addPiece(bishop);
-//            if (bishop.isValidMove(target) != null) {
-//                info.setMove();
-//                info.setAttack();
-//                return info;
-//            }
-//            table.removePiece(bishop);
-//        } else {
-//            Bishop bishop= new Bishop(PieceColor.Black, source);
-//            table.addPiece(bishop);
-//            if (bishop.isValidMove(target) != null) {
-//                info.setMove();
-//                info.setAttack();
-//                return info;
-//            }
-//            table.removePiece(bishop);
-//        }
-//
-//        return info;
     }
 
     /*

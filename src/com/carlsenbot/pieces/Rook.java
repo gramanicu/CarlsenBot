@@ -37,21 +37,18 @@ public class Rook extends Piece {
         }
     }
 
-//    protected static MoveInfo validMoveRook() {};
-
-    /*
-     * Check if rook can move to the specified position
+    /**
+     * A method used to check if a move is valid, from a rook perspective.
+     * As the queen movement combines that of a rook and a bishop, it made
+     * sense to use the same method for both.
+     * @param source The position of the piece to be moved
+     * @param target The point to move to
+     * @param table The table the piece is assigned to
+     * @return If the move can happen and if the piece needs to
+     *         attack to perform it
      */
-    @Override
-    public MoveInfo isValidMove(Position target) {
+    protected static MoveInfo isValidRookMove(Position source, Position target, Table table) {
         MoveInfo info = new MoveInfo();
-        // Every move is legal in forced mode
-        if(GameManager.getInstance().isForceMode()) {
-            info.setMove();
-            return info;
-        }
-
-        Position source = getPosition();
         int difPos = 1;
         int difRow = (int) source.getDiffRow(target);
         int difCol = (int) source.getDiffCol(target);
@@ -66,15 +63,15 @@ public class Rook extends Piece {
             // Check the cells along the row
             for (int i = source.getCol() + difPos; i != target.getCol(); i += difPos) {
                 // Check if the cells are empty
-                if (assignedTable.isNotEmptyCell(source.getRow(), i)) {
+                if (table.isNotEmptyCell(source.getRow(), i)) {
                     return info;
                 }
             }
 
             // If the target has a piece in it
-            if(!assignedTable.isEmptyCell(target)) {
+            if(!table.isEmptyCell(target)) {
                 // Check for enemy piece, to attack, else, don't move at all
-                if(!isSameColor(target)) {
+                if(!table.isSameColor(source, target)) {
                     info.setMove();
                     info.setAttack();
                 }
@@ -93,15 +90,15 @@ public class Rook extends Piece {
             // Check the cells along the column
             for (int i = source.getRow() + difPos; i != target.getRow(); i += difPos) {
                 // Check if the cells are empty
-                if (assignedTable.isNotEmptyCell(i, source.getCol())) {
+                if (table.isNotEmptyCell(i, source.getCol())) {
                     return info;
                 }
             }
 
             // If the target has a piece in it
-            if(!assignedTable.isEmptyCell(target)) {
+            if(!table.isEmptyCell(target)) {
                 // Check for enemy piece, to attack, else, don't move at all
-                if(!isSameColor(target)) {
+                if(!table.isSameColor(source, target)) {
                     info.setMove();
                     info.setAttack();
                 }
@@ -115,6 +112,22 @@ public class Rook extends Piece {
             // If it didn't move along a row/columns
             return info;
         }
+    }
+
+    /*
+     * Check if rook can move to the specified position
+     */
+    @Override
+    public MoveInfo isValidMove(Position target) {
+        MoveInfo info = new MoveInfo();
+        // Every move is legal in forced mode
+        if(GameManager.getInstance().isForceMode()) {
+            info.setMove();
+            return info;
+        }
+
+        Position source = getPosition();
+        return isValidRookMove(source, target, assignedTable);
     }
 
     /*
