@@ -9,7 +9,6 @@ import com.carlsenbot.position.Position;
 public class Queen extends Piece {
     /**
      * Create a new queen, with the specified position and id
-     *
      * @param color    The color of the queen
      * @param position The position of the queen
      */
