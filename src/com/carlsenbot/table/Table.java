@@ -164,6 +164,15 @@ public class Table {
     }
 
     /**
+     * Check if a cell is empty at the specified position
+     * @param target The position of the target
+     * @return If the cell is not empty
+     */
+    public boolean isNotEmptyCell(Position target) {
+        return positions[target.getRow()][target.getCol()] != 0;
+    }
+
+    /**
      * Check if a cell is empty at the specified "chess coordinates"
      * @param target The chess coordinates to check
      * @return If the cell is empty

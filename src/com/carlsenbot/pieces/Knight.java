@@ -43,7 +43,6 @@ public class Knight extends Piece {
      */
     @Override
     public MoveInfo isValidMove(Position target) {
-
         MoveInfo info = new MoveInfo();
         // Every move is legal in forced mode
         if(GameManager.getInstance().isForceMode()) {
@@ -51,29 +50,22 @@ public class Knight extends Piece {
             return info;
         }
 
-        Table table = GameManager.getInstance().getTable();
         Position source = getPosition();
-        int currRow = source.getRow();
-        int currCol = source.getCol();
-        int targetRow = target.getRow();
-        int targetCol = target.getCol();
-        if (assignedTable.isNotEmptyCell(targetRow, targetCol)) {
+
+        if (assignedTable.isNotEmptyCell(target)) {
             if (isSameColor(target)) {
                 return info;
             } else {
                 info.setAttack();
-                info.setMove();
             }
         }
-        if(Math.abs(targetRow - currRow) == 2 && Math.abs(targetCol - currCol) == 1) {
+
+        if((source.getDiffRow(target) == 2 && source.getDiffCol(target) == 1) || (source.getDiffRow(target) == 1 && source.getDiffCol(target) == 2)) {
             info.setMove();
-            info.setAttack();
+        } else {
+            info.setNotAttack();
         }
 
-        if (Math.abs(targetRow - currRow) == 1 && Math.abs(targetCol - currCol) == 2) {
-            info.setMove();
-            info.setAttack();
-        }
         return info;
     }
     @Override
