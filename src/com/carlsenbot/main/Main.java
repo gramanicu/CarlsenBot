@@ -8,11 +8,7 @@ public class Main {
     public static void main(String[] args) {
         GameManager game = GameManager.getInstance();
 
-        game.initialize();
-        game.resetPieces();
-        //game.startGame();
-
-
+        game.startGame();
         game.printTable();
     }
 }

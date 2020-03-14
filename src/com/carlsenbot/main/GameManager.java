@@ -79,7 +79,18 @@ public class GameManager {
      * @return Whether or not the move was possible
      */
     public boolean move(Position start, Position target) {
-        return table.movePiece(start, target);
+        boolean moveWasDone = table.movePiece(start, target);
+
+        // Count the moves only if they were not forced
+        if(moveWasDone && !isForceMode()) {
+            isWhiteTurn = !isWhiteTurn;
+
+            // Every time black moved, we go to the next round
+            if (!isWhiteTurn) {
+                round++;
+            }
+        }
+        return moveWasDone;
     }
 
     /**
@@ -89,6 +100,9 @@ public class GameManager {
         table = new Table();
         round = 0;
         isWhiteTurn = true;
+        player = new Player();
+        checkSystem = new CheckSystem();
+        player.setColor(PieceColor.Black);
     }
 
     /**
@@ -103,14 +117,12 @@ public class GameManager {
 
     /**
      * Start a game ( start the AI, wait for input, etc. )
+     * This is used by main
      * @return The game has finished successfully
      */
-    public boolean startGame() {
-        // If a game is now going on, reinitialise
-        if(round != 0 && !isWhiteTurn) {
-            initialize();
-            resetPieces();
-        }
+    protected boolean startGame() {
+        initialize();
+        resetPieces();
 
         commEngine.listen();
         return false;

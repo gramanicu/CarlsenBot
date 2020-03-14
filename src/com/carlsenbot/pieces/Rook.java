@@ -127,6 +127,12 @@ public class Rook extends Piece {
         }
 
         Position source = getPosition();
+
+        // If the target is the same cell
+        if(source.getDistance(target) == 0) {
+            return info;
+        }
+
         return isValidRookMove(source, target, assignedTable);
     }
 

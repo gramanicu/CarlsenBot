@@ -7,8 +7,9 @@ package com.carlsenbot.communication;
 import com.carlsenbot.main.GameManager;
 import com.carlsenbot.pieces.PieceColor;
 import com.carlsenbot.player.Player;
+import com.carlsenbot.position.Position;
 
-public abstract class Command {
+public class Command {
     private boolean received;
     private String command;
     private String parameter;
@@ -22,9 +23,10 @@ public abstract class Command {
      */
     public Command(String command, boolean wasReceived) {
         String[] args = command.split(" ");
-
-        command = args[0];
-        parameter = args[1];
+        this.command = args[0];
+        if(args.length > 1) {
+            parameter = args[1];
+        }
         received = wasReceived;
 
         gameManager = GameManager.getInstance();
@@ -46,16 +48,37 @@ public abstract class Command {
      * @return If the command succeeded
      */
     public boolean execute() {
-        switch (command) {
-            case "black":
-                return changeColors(PieceColor.Black);
-            case "white":
-                return changeColors(PieceColor.White);
-            case "force":
-                return force();
-
-            default:
-                return true;
+        if(received) {
+            switch (command) {
+                case "black":
+                    return changeColors(PieceColor.Black);
+                case "white":
+                    return changeColors(PieceColor.White);
+                case "force":
+                    return force();
+                case "xboard":
+                    return xboard();
+                case "new":
+                    return newGame();
+                case "quit":
+                    return quit();
+                case "move":
+                    return move();
+                case "go":
+                    return go();
+                case "stop":
+                    return false;
+                default:
+                    return true;
+            }
+        } else {
+            // Send from the engine to XBoard
+            switch (command) {
+                case "resign":
+                    return resign();
+                default:
+                    return true;
+            }
         }
     }
 
@@ -75,4 +98,50 @@ public abstract class Command {
         player.setColor(color);
         return true;
     }
+
+    private boolean newGame() {
+        gameManager.initialize();
+        gameManager.resetPieces();
+        player.setColor(PieceColor.Black);
+        // Reset clocks, etc.
+        return true;
+    }
+
+    private boolean xboard() {
+        // Could send back setup parameters
+        return true;
+    }
+
+    private boolean go() {
+//        gameManager.disableForceMode();
+        // Start thinking ?
+        int i = 1000;
+        while (i != 0) {
+            gameManager.getPlayer().doAMove();
+            gameManager.printTable();
+            i--;
+        }
+        return true;
+    }
+
+    private boolean quit() {
+        System.exit(0);
+        return true;
+    }
+
+    private boolean resign() {
+        return true;
+    }
+
+    private boolean move() {
+        String source = parameter.substring(0,2);
+        String target = parameter.substring(2,4);
+        char promotion;
+        if(parameter.length() > 4) {
+             promotion = parameter.charAt(4);
+        }
+
+        return gameManager.move(new Position(source), new Position(target));
+    }
+
 }

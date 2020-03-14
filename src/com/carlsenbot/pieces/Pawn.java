@@ -66,7 +66,13 @@ public class Pawn extends Piece {
             info.setMove();
             return info;
         }
+
         Position source = getPosition();
+
+        // If the target is the same cell
+        if(source.getDistance(target) == 0) {
+            return info;
+        }
 
         // Make sure the position is in the front of the pawn
         if(!isForward(target)) {

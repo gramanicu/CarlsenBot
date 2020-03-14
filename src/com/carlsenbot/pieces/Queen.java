@@ -41,9 +41,15 @@ public class Queen extends Piece {
     @Override
     public MoveInfo isValidMove(Position target) {
         Position source = getPosition();
+        MoveInfo info = new MoveInfo();
+
+        // If the target is the same cell
+        if(source.getDistance(target) == 0) {
+            return info;
+        }
+
         MoveInfo diagonal = Rook.isValidRookMove(source, target, assignedTable);
         MoveInfo line = Bishop.isValidBishopMove(source, target, assignedTable);
-        MoveInfo info = new MoveInfo();
 
         info.canMove = diagonal.canMove || line.canMove;
         info.attacking = diagonal.attacking || line.attacking;

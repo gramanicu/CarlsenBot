@@ -63,6 +63,8 @@ public class Table {
 
     public byte[][] getPositions() { return positions; }
 
+    public Piece[][] getPieces() { return pieces; }
+
     /**
      * Add a piece to the table
      * @param piece The piece to add

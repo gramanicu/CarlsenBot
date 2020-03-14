@@ -115,6 +115,12 @@ public class Bishop extends Piece {
         }
 
         Position source = getPosition();
+
+        // If the target is the same cell
+        if(source.getDistance(target) == 0) {
+            return info;
+        }
+
         return isValidBishopMove(source, target, assignedTable);
     }
 

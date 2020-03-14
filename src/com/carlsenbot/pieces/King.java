@@ -70,6 +70,11 @@ public class King extends Piece {
 
         Position source = getPosition();
 
+        // If the target is the same cell
+        if(source.getDistance(target) == 0) {
+            return info;
+        }
+
         // If the king hasn't castled and has it's first move, check if
         // the movement can be a castle
         if (!castled && firstMove && source.getDistance(target) > Math.sqrt(2)) {

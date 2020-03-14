@@ -32,11 +32,9 @@ public class Engine {
     public void listen() {
         do {
             try {
-                // If the program should stop (because of a command)
-                if(receive()) {
+                // Stop if the receive returns true
+                if(!receive()) {
                     return;
-                } else {
-
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -47,14 +45,14 @@ public class Engine {
     /**
      * Read data from xboard
      * @throws IOException In case the read fails
+     * @return If the read should continue
      */
     public boolean receive() throws IOException {
-        String command = input.readLine();
-        if (!command.isEmpty()) {
-            // Interpret command
-            return false;
+        String xMessage = input.readLine();
+        if (!xMessage.isEmpty()) {
+            Command command = new Command(xMessage, true);
+            return command.execute();
         }
-
         return true;
     }
 

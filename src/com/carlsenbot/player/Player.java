@@ -8,6 +8,16 @@ import com.carlsenbot.pieces.PieceColor;
 
 public class Player {
     private boolean isWhite;
+    private AI ai;
+
+    public Player() {
+        ai = new AI(this);
+    }
+
+    public Player(PieceColor color) {
+        setColor(color);
+        ai = new AI(this);
+    }
 
     // Getters
     public boolean isWhite() { return isWhite; }
@@ -16,5 +26,10 @@ public class Player {
     // Setters
     public void setColor(PieceColor color) {
         isWhite = color == PieceColor.White;
+    }
+
+    public boolean doAMove() {
+        ai.think();
+        return true;
     }
 }

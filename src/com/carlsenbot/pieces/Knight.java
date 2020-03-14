@@ -44,6 +44,11 @@ public class Knight extends Piece {
 
         Position source = getPosition();
 
+        // If the target is the same cell
+        if(source.getDistance(target) == 0) {
+            return info;
+        }
+
         if (assignedTable.isNotEmptyCell(target)) {
             if (isSameColor(target)) {
                 return info;
