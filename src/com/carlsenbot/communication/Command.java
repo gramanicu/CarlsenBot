@@ -7,40 +7,34 @@ package com.carlsenbot.communication;
 import com.carlsenbot.main.GameManager;
 import com.carlsenbot.main.GameUtils;
 import com.carlsenbot.pieces.PieceColor;
-import com.carlsenbot.player.Player;
 import com.carlsenbot.position.Position;
 
+// Commands are received from the xboard
 public class Command {
-    private boolean received;
     private String command;
     private String parameter;
     private GameManager gameManager;
-    private Player player;
 
     /**
      * Creates a command object
      * @param command The command string
-     * @param wasReceived If the command was received from xboard or not
      */
-    public Command(String command, boolean wasReceived) {
+    public Command(String command) {
         String[] args = command.split(" ");
         this.command = args[0];
+        this.parameter = "";
         if(args.length > 1) {
             parameter = args[1];
         }
-        received = wasReceived;
 
         gameManager = GameManager.getInstance();
-        player = gameManager.getPlayer();
     }
 
     // Getters
-    public boolean isReceived() { return received; }
     public String getCommand() { return command; }
     public String getParameter() { return parameter; }
 
     // Setters
-    public void setReceived(boolean received) { this.received = received; }
     public void setCommand(String command) { this.command = command; }
     public void setParameter(String parameter) { this.parameter = parameter; }
 
@@ -49,39 +43,28 @@ public class Command {
      * @return If the command succeeded
      */
     public boolean execute() {
-        if(received) {
-            System.err.println("Received: " + command);
-            switch (command) {
-                case "black":
-                    return changeColors(PieceColor.Black);
-                case "white":
-                    return changeColors(PieceColor.White);
-                case "force":
-                    return force();
-                case "xboard":
-                    return xboard();
-                case "new":
-                    return newGame();
-                case "quit":
-                    return quit();
-                case "move":
-                    return move();
-                case "go":
-                    return go();
-                case "stop":
-                    return false;
-                default:
-                    return true;
-            }
-        } else {
-            System.err.println("Sent: " + command);
-            // Send from the engine to XBoard
-            switch (command) {
-                case "resign":
-                    return resign();
-                default:
-                    return true;
-            }
+        gameManager.getCommEngine().sendDebug("Received: " + command + " " + parameter);
+        switch (command) {
+            case "black":
+                return changeColors(PieceColor.Black);
+            case "white":
+                return changeColors(PieceColor.White);
+            case "force":
+                return force();
+            case "xboard":
+                return xboard();
+            case "new":
+                return newGame();
+            case "quit":
+                return quit();
+            case "usermove":
+                return move();
+            case "go":
+                return go();
+            case "stop":
+                return false;
+            default:
+                return true;
         }
     }
 
@@ -98,7 +81,7 @@ public class Command {
      * @param color The specific color
      */
     private boolean changeColors(PieceColor color) {
-        player.setColor(GameUtils.otherColor(color));
+        gameManager.getPlayer().setColor(GameUtils.otherColor(color));
         gameManager.setTurnColor(color);
         return true;
     }
@@ -106,13 +89,14 @@ public class Command {
     private boolean newGame() {
         gameManager.initialize();
         gameManager.resetPieces();
-        player.setColor(PieceColor.Black);
+        gameManager.getPlayer().setColor(PieceColor.Black);
         // Reset clocks, etc.
         return true;
     }
 
     private boolean xboard() {
         // Could send back setup parameters
+        gameManager.getCommEngine().sendSettings();
         return true;
     }
 
@@ -121,7 +105,7 @@ public class Command {
         // Start thinking ?
         gameManager.getPlayer().setColor(gameManager.getTurnColor());
         gameManager.getPlayer().doAMove();
-        gameManager.printTable();
+//        gameManager.printTable();
         return true;
     }
 
@@ -142,7 +126,8 @@ public class Command {
              promotion = parameter.charAt(4);
         }
 
-        return gameManager.move(new Position(source), new Position(target));
+        gameManager.move(new Position(source), new Position(target));
+        gameManager.getPlayer().doAMove();
+        return true;
     }
-
 }

@@ -12,6 +12,16 @@ public class Engine {
     private BufferedWriter output;
     private Command lastReceived;
 
+    private String[] settings = new String[] {
+            "usermove=1",
+            "sigint=1",
+            "reuse=0",
+            "myname=\"CarlsenBot\"",
+            "pause=0",
+            "debug=1",
+            "time=0"
+    };
+
     // Constructor, made private for singleton
     private Engine() {
         input = new BufferedReader(new InputStreamReader(System.in));
@@ -24,6 +34,16 @@ public class Engine {
             instance = new Engine();
         }
         return instance;
+    }
+
+    public void sendSettings() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("feature");
+        for(String s : settings) {
+            builder.append(" ");
+            builder.append(s);
+        }
+        sendCommand(builder.toString());
     }
 
     /**
@@ -43,6 +63,23 @@ public class Engine {
     }
 
     /**
+     * Send command (and a debug message)
+     * @param command The command sent
+     */
+    public void sendCommand(String command) {
+        System.out.println("#Sent: " + command);
+        System.out.println(command);
+    }
+
+    /**
+     * Send a debug message
+     * @param debugMessage The debug message to be sent
+     */
+    public void sendDebug(String debugMessage) {
+        System.out.println("#" + debugMessage);
+    }
+
+    /**
      * Read data from xboard
      * @throws IOException In case the read fails
      * @return If the read should continue
@@ -50,7 +87,7 @@ public class Engine {
     public boolean receive() throws IOException {
         String xMessage = input.readLine();
         if (!xMessage.isEmpty()) {
-            Command command = new Command(xMessage, true);
+            Command command = new Command(xMessage);
             return command.execute();
         }
         return true;

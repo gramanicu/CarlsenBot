@@ -19,7 +19,8 @@ public class AI {
     }
 
     public void think() {
-        Table table = GameManager.getInstance().getTable();
+        GameManager gameManager = GameManager.getInstance();
+        Table table = gameManager.getTable();
 
         Random rand = new Random();
 
@@ -36,7 +37,7 @@ public class AI {
             }
 
             // Try to execute a move
-            validMove = GameManager.getInstance().move(piece.getPosition(),
+            validMove = GameManager.getInstance().moveAndSend(piece.getPosition(),
                     new Position(rand.nextInt(8),rand.nextInt(8)));
         }
     }

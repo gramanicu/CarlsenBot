@@ -67,6 +67,7 @@ public class GameManager {
     public Player getPlayer() { return player; }
     public boolean isForceMode() { return forceMode; }
     public CheckSystem getCheckSystem() { return checkSystem; }
+    public Engine getCommEngine() { return commEngine; }
     public PieceColor getTurnColor() {
         if(isWhiteTurn) {
             return PieceColor.White;
@@ -80,6 +81,14 @@ public class GameManager {
     public void disableForceMode() { forceMode = false; }
     public void setTurnColor(PieceColor color) {
         isWhiteTurn = color == PieceColor.White;
+    }
+
+    /**
+     * Send a command to the XBoard
+     * @param string The command to be sent
+     */
+    public void sendCommand(String string) {
+        commEngine.sendCommand(string);
     }
 
     /**
@@ -101,6 +110,15 @@ public class GameManager {
             }
         }
         return moveWasDone;
+    }
+
+    public boolean moveAndSend(Position start, Position target) {
+        // If the piece could be moved, send the command to the server
+        if (move(start, target)) {
+             sendCommand("move " + start.toString() + target.toString());
+             return true;
+        }
+        return false;
     }
 
     /**
