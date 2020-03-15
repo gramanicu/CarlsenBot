@@ -35,7 +35,9 @@ public class AI {
                 piece = table.getPieces()[1][id];
             }
 
-            validMove = table.movePiece(piece.getPosition(), new Position(rand.nextInt(8),rand.nextInt(8)));
+            // Try to execute a move
+            validMove = GameManager.getInstance().move(piece.getPosition(),
+                    new Position(rand.nextInt(8),rand.nextInt(8)));
         }
     }
 }

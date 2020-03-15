@@ -67,10 +67,20 @@ public class GameManager {
     public Player getPlayer() { return player; }
     public boolean isForceMode() { return forceMode; }
     public CheckSystem getCheckSystem() { return checkSystem; }
+    public PieceColor getTurnColor() {
+        if(isWhiteTurn) {
+            return PieceColor.White;
+        } else {
+            return PieceColor.Black;
+        }
+    }
 
     // Setters
     public void enableForceMode() { forceMode = true; }
     public void disableForceMode() { forceMode = false; }
+    public void setTurnColor(PieceColor color) {
+        isWhiteTurn = color == PieceColor.White;
+    }
 
     /**
      * Move a piece using the game manager

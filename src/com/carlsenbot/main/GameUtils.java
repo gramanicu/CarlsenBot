@@ -72,4 +72,12 @@ public class GameUtils {
 
         return newPiece;
     }
+
+    public static PieceColor otherColor(PieceColor color) {
+        if (color == PieceColor.White) {
+            return PieceColor.Black;
+        } else {
+            return PieceColor.White;
+        }
+    }
 }

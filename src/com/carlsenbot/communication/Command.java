@@ -5,6 +5,7 @@
 package com.carlsenbot.communication;
 
 import com.carlsenbot.main.GameManager;
+import com.carlsenbot.main.GameUtils;
 import com.carlsenbot.pieces.PieceColor;
 import com.carlsenbot.player.Player;
 import com.carlsenbot.position.Position;
@@ -49,6 +50,7 @@ public class Command {
      */
     public boolean execute() {
         if(received) {
+            System.err.println("Received: " + command);
             switch (command) {
                 case "black":
                     return changeColors(PieceColor.Black);
@@ -72,6 +74,7 @@ public class Command {
                     return true;
             }
         } else {
+            System.err.println("Sent: " + command);
             // Send from the engine to XBoard
             switch (command) {
                 case "resign":
@@ -95,7 +98,8 @@ public class Command {
      * @param color The specific color
      */
     private boolean changeColors(PieceColor color) {
-        player.setColor(color);
+        player.setColor(GameUtils.otherColor(color));
+        gameManager.setTurnColor(color);
         return true;
     }
 
@@ -115,12 +119,9 @@ public class Command {
     private boolean go() {
 //        gameManager.disableForceMode();
         // Start thinking ?
-        int i = 1000;
-        while (i != 0) {
-            gameManager.getPlayer().doAMove();
-            gameManager.printTable();
-            i--;
-        }
+        gameManager.getPlayer().setColor(gameManager.getTurnColor());
+        gameManager.getPlayer().doAMove();
+        gameManager.printTable();
         return true;
     }
 
