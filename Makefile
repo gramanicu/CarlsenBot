@@ -3,33 +3,24 @@
 .PHONY: clean run
 .SILENT: clean
 
-# Compilation variables
-CC = g++
-CFLAGS = -Wno-unused-parameter -Wall -Wextra -pedantic -g -std=c++14
-EXE = ArrayList
-SRC = $(wildcard */*.cpp)
-OBJ = $(SRC:.cpp=.o)
-
 # Compiles the program
-build: $(OBJ)
+build:
+	$(info Creating sources list)
+	@find -name "*.java" -not -path "*/test/*" > sources.txt||:
 	$(info Compiling code...)
-	@$(CC) -o $(EXE) $^ $(CFLAGS) ||:
+	@javac @sources.txt -d out
 	$(info Compilation successfull)
-	-@rm -f *.o ||:
-	@$(MAKE) -s gitignore ||:
-
-%.o: %.cpp
-	$(CC) -o $@ -c $< $(CFLAGS)
+	-@rm -f sources.txt ||:
 
 # Executes the binary
-run: clean build
-	./$(EXE)
+run: build
+	@java -cp out com.carlsenbot.main.Main
 
 # Deletes the binary and object files
 clean:
-	rm -f $(EXE) $(OBJ) ArrayList.zip
+	rm -rdf out/*
 	echo "Deleted the binary and object files"
 
 # Creates an archive of the project
 pack:clean
-	zip -FSr ArrayList.zip *
+	zip -FSr src lib test .gitignore Makefile Readme.md
