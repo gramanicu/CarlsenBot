@@ -63,10 +63,6 @@ public class King extends Piece {
     public MoveInfo isValidMove(Position target) {
         MoveInfo info = new MoveInfo();
         // Every move is legal in forced mode
-        if (GameManager.getInstance().isForceMode()) {
-            info.setMove();
-            return info;
-        }
 
         Position source = getPosition();
 

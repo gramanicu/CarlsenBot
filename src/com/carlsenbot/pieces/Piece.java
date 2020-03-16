@@ -134,7 +134,7 @@ public abstract class Piece {
      * @return If the move can happen and if the piece needs to
      *         attack to perform it
      */
-    protected abstract MoveInfo isValidMove(Position target);
+    public abstract MoveInfo isValidMove(Position target);
 
     /**
      * Return the symbol of the piece

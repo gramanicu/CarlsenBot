@@ -58,14 +58,8 @@ public class Pawn extends Piece {
      * Check if pawn can move to the specified position
      */
     @Override
-    protected MoveInfo isValidMove(final Position target) {
+    public MoveInfo isValidMove(final Position target) {
         MoveInfo info = new MoveInfo();
-
-        // Every move is legal in forced mode
-        if(GameManager.getInstance().isForceMode()) {
-            info.setMove();
-            return info;
-        }
 
         Position source = getPosition();
 
