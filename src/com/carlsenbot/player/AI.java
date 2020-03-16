@@ -36,6 +36,8 @@ public class AI {
                 piece = table.getPieces()[1][id];
             }
 
+            if(piece == null) { continue; }
+
             // Try to execute a move
             validMove = GameManager.getInstance().moveAndSend(piece.getPosition(),
                     new Position(rand.nextInt(8),rand.nextInt(8)));
