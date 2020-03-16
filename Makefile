@@ -9,18 +9,22 @@ build:
 	@find -name "*.java" -not -path "*/test/*" > sources.txt||:
 	$(info Compiling code...)
 	@javac @sources.txt -d out
-	$(info Compilation successfull)
-	-@rm -f sources.txt ||:
+	$(info Creating .jar file)
+	@jar --create --file CarlsenBot.jar --manifest ./src/META-INF/MANIFEST.MF -C out/ .
+	-@$(MAKE) clean||:
 
-# Executes the binary
+# Runs the jarfile
 run: build
-	@java -cp out com.carlsenbot.main.Main
+	@java -jar CarlsenBot.jar
 
-# Deletes the binary and object files
+# Starts xboard using the bot
+xboard: build
+	@xboard -debug -nameOfDebygFile debug.txt -fcp "java -jar CarlsenBot.jar"
+
+# Deletes the "out" directory and sources.txt
 clean:
-	rm -rdf out/*
-	echo "Deleted the binary and object files"
+	@rm -rdf out sources.txt
 
 # Creates an archive of the project
 pack:clean
-	zip -FSr src lib test .gitignore Makefile Readme.md
+	@zip -FSr CarlsenBot.zip src .gitignore Makefile Readme.md
