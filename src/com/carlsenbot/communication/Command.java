@@ -88,6 +88,7 @@ public class Command {
     }
 
     private boolean newGame() {
+        gameManager.disableForceMode();
         gameManager.newGame();
         return true;
     }
