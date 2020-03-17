@@ -29,7 +29,7 @@ xboard: build
 
 # Deletes the "out" directory and sources.txt
 clean:
-	@rm -rdf out sources.txt
+	@rm -rdf out sources.txt debug.txt
 
 # Creates an archive of the project
 pack:clean
