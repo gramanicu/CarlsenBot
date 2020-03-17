@@ -40,16 +40,16 @@ The problem statement can be found [here](https://ocw.cs.pub.ro/courses/pa/proie
 
 This package contains the communication logic.
 
-- Command - it is a wrapper for commands that are making connections with xboard.
-- Engine - communication manager
+- Command - wrapper for the commands received from xboard
+- Engine - communication manager. Handles incoming commands, stores the xboard settings and sends commands to the xboard.
 
 ### main
 
 This package contains the game logic.
 
-- GameManager - game manager
-- GameUtils - a class where the pieces are initialised
-- Main - contains the main function
+- GameManager - the game manager. Handles things like turn (who can move), and it's a "hub" that connects the different parts of the project
+- GameUtils - contains helper methods (ex. pieces starting position)
+- Main - main function. Initialises the game manager.
 
 ### pieces
 
@@ -57,27 +57,27 @@ This package contains the logic behind every piece.
 
 - Bishop, King, Knight, Pawn, Queen, Rook - classes that implement functionality specific to the piece
 - Piece - a template class, that contains the base logic for pieces
-- PieceColor - a class that stores the colours.
+- PieceColor - a enum that contains the two possible color for the pieces: black & white.
 
 ### player
 
 This package contains the brain of the game.
 
-- AI - class that stores the "brain"
-- Player - it is a wrapper used by the AI
+- AI - class that implements the ai - the brain of the bot
+- Player - it is a wrapper used by the AI, will store information about both players in the future
 
 ### position
 
-- Position - position manager
+- Position - used to represent positions on the board. Different methods, to be able to use 3 systems to represent a point: char+number, x+y, Position. Parses strings into x-y positions.
 
 ### table
 
 - Table - here the chess board is stored, with functionalities added for pieces
-- CheckSystem - class that will store the check functionality
+- CheckSystem - the check system is a class that verifies when the king is in check (and what cells are attacked). At the moment, it is a simple sistem, just made to work.
 
 ## Game overview
 
-Currenlty, when the application is first run, it will initialise the board, then wait for xboard commands. The moment it receives the "xboard" command, it will reply with a set of settings. After each turn change, the "ai" will try to compute a new move. Currently, the AI uses RNG, and it may send invalid movements, as it cannot detect "check" (only if it is already in check, when it resigns). And, because xboard doesn't reply with "invalid move", it doesn't know, to be able to select another move or resign. It must be closed manually. Because the application activates the "usermove" option, every move command it receives must have this prefix "usermove _move_".
+Currently, when the application is first run, it will initialise the board, then wait for xboard commands. The moment it receives the "xboard" command, it will reply with a set of settings. After each turn change, the "ai" will try to compute a new move. Currently, the AI uses RNG, and it may send invalid movements, as it cannot detect "check" (only if it is already in check, when it resigns). And, because xboard doesn't reply with "invalid move", it doesn't know, to be able to select another move or resign. It must be closed manually. Because the application activates the "usermove" option, every move command it receives must have this prefix "usermove _move_".
 
 Every piece is implemented, without some advanced movements (castling, en passant, check by discovery detection).
 
@@ -92,6 +92,8 @@ make build - creates the jarfile that contains the bot
 make run - compiles and runs the bot in terminal
 make xboard - compiles and runs the bot, using xboard
 make pack - creates an archive containing the essential files
+
+It was tested on two ubuntu machines (18 and 19), using the makefile rules, and on a windows 10 machine, using a .jar file build using intellij and winboard 4.8.
 
 ## Other information
 
