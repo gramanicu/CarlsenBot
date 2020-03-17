@@ -118,12 +118,13 @@ public class GameManager {
      * @return Whether or not the move was possible
      */
     public boolean move(Position start, Position target) {
-        boolean moveWasDone = table.movePiece(start, target);
-
+        // If the move would promote a pawn
         if(table.getPiece(start).getName().equals("Pawn") && (target.getRow() == 0 || target.getRow() == 8)) {
             // If the pawn promoted
             commEngine.sendResign();
         }
+
+        boolean moveWasDone = table.movePiece(start, target);
 
         // Count the moves only if they were not forced
         if(moveWasDone && !isForceMode()) {
