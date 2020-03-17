@@ -146,6 +146,7 @@ public class GameManager {
     public void newGame() {
         initialize();
         resetPieces();
+        commEngine.listen();
     }
 
     /**
@@ -168,19 +169,6 @@ public class GameManager {
         pieces[0] = GameUtils.initWhitePieces();
         pieces[1] = GameUtils.initBlackPieces();
         table = new Table(pieces);
-    }
-
-    /**
-     * Start a game ( start the AI, wait for input, etc. )
-     * This is used by main
-     * @return The game has finished successfully
-     */
-    protected boolean startGame() {
-        initialize();
-        resetPieces();
-
-        commEngine.listen();
-        return false;
     }
 
     public void printTable() {
