@@ -14,19 +14,6 @@ public class King extends Piece {
     public boolean castled;
 
     /**
-     * Check if the target position is in check
-     * @param position The specified position
-     * @return If it is in check
-     */
-    private boolean isInCheck(Position position) {
-        if(isWhite()) {
-            return GameManager.getInstance().getCheckSystem().isInCheck(PieceColor.White);
-        } else {
-            return GameManager.getInstance().getCheckSystem().isInCheck(PieceColor.Black);
-        }
-    }
-
-    /**
      * Create a new king, with the specified position and id
      * @param color The color of the king
      * @param position The position of the king

@@ -22,6 +22,13 @@ public class Player {
     // Getters
     public boolean isWhite() { return isWhite; }
     public boolean isBlack() { return !isWhite; }
+    public PieceColor getColor() {
+        if(isWhite) {
+            return PieceColor.White;
+        } else {
+            return PieceColor.Black;
+        }
+    }
 
     // Setters
     public void setColor(PieceColor color) {

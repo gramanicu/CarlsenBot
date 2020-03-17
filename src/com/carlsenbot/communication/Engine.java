@@ -46,6 +46,10 @@ public class Engine {
         sendCommand(builder.toString());
     }
 
+    public void sendResign() {
+        sendCommand("resign");
+    }
+
     /**
      * Listen to input from xboard
      */
@@ -67,7 +71,7 @@ public class Engine {
      * @param command The command sent
      */
     public void sendCommand(String command) {
-        System.out.println("#Sent: " + command);
+        sendDebug("Sent " + command);
         System.out.println(command);
     }
 
