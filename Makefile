@@ -3,6 +3,12 @@
 .PHONY: clean run
 .SILENT: clean
 
+# Install dependencies
+install:
+	sudo apt update
+	sudo apt-get install -y xboard
+	sudo apt install openjdk-13-jdk
+
 # Compiles the program
 build:
 	$(info Creating sources list)
@@ -19,7 +25,7 @@ run: build
 
 # Starts xboard using the bot
 xboard: build
-	@xboard -debug -nameOfDebygFile debug.txt -fcp "java -jar CarlsenBot.jar"
+	@xboard -debug -nameOfDebugFile debug.txt -fcp "java -jar CarlsenBot.jar"
 
 # Deletes the "out" directory and sources.txt
 clean:
