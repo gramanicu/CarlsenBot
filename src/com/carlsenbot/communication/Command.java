@@ -128,6 +128,7 @@ public class Command {
         }
 
         gameManager.move(new Position(source), new Position(target));
+        gameManager.checkBotAct();
         return true;
     }
 }

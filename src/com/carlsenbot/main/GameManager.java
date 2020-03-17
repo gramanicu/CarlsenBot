@@ -89,7 +89,7 @@ public class GameManager {
     /**
      * Check if it's the bot's turn
      */
-    private void checkBotAct() {
+    public void checkBotAct() {
         if(getTurnColor() == player.getColor()) {
             player.doAMove();
         }
@@ -100,7 +100,6 @@ public class GameManager {
      */
     public void switchTurn() {
         isWhiteTurn = !isWhiteTurn;
-        checkBotAct();
      }
 
     /**
@@ -128,6 +127,7 @@ public class GameManager {
     }
 
     public boolean moveAndSend(Position start, Position target) {
+        if(!botActive) { return false; }
         // If the piece could be moved, send the command to the server
         if (move(start, target)) {
             sendCommand("move " + start.toString() + target.toString());
