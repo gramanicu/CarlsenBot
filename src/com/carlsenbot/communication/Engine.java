@@ -4,6 +4,8 @@
 
 package com.carlsenbot.communication;
 
+import com.carlsenbot.main.GameManager;
+
 import java.io.*;
 
 public class Engine {

@@ -39,6 +39,9 @@ public class Player {
 
     public boolean doAMove() {
         String move = ai.think();
+        if(move.equals("")) {
+            return false;
+        }
         Position start = new Position(Character.toString(move.charAt(0)) + Character.toString(move.charAt(1)));
         Position target = new Position(Character.toString(move.charAt(2)) + Character.toString(move.charAt(3)));
         GameManager.getInstance().moveAndSend(start, target);

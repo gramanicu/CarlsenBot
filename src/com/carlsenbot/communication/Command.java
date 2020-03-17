@@ -62,6 +62,7 @@ public class Command {
             case "go":
                 return go();
             case "stop":
+                gameManager.printTable();
                 return false;
             default:
                 return true;

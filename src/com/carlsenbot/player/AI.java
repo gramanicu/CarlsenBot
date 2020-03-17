@@ -37,7 +37,10 @@ public class AI {
                 piece = table.getPieces()[1][id];
             }
 
-            if(gameManager.getCheckSystem().isInCheck(assignedPlayer.getColor())) { gameManager.getCommEngine().sendResign(); }
+            if(gameManager.getCheckSystem().isInCheck(assignedPlayer.getColor())) {
+                gameManager.getCommEngine().sendResign();
+                return "";
+            }
             if(piece == null) { continue; }
 
 
