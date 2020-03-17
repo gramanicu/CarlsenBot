@@ -15,11 +15,11 @@ public class GameManager {
     private static GameManager instance = null;
     private boolean isWhiteTurn;
     private boolean forceMode;
-    private int round;
     private Table table;
     private Engine commEngine;
     private Player player;
     private CheckSystem checkSystem;
+    private boolean botActive;
 
     //region "Dangerous methods"
     /* ----------------------------------------
@@ -46,12 +46,12 @@ public class GameManager {
 
     // Constructor, made private for singleton
     private GameManager() {
-        round = 0;
         isWhiteTurn = true;
         commEngine = Engine.getInstance();
         forceMode = false;
         player = new Player();
         checkSystem = new CheckSystem();
+        botActive = false;
     }
 
     // Get (and initialise if needed) the instance of the singleton
@@ -81,7 +81,27 @@ public class GameManager {
     public void disableForceMode() { forceMode = false; }
     public void setTurnColor(PieceColor color) {
         isWhiteTurn = color == PieceColor.White;
+        checkBotAct();
     }
+    public void activateBot() { botActive = true; }
+
+
+    /**
+     * Check if it's the bot's turn
+     */
+    private void checkBotAct() {
+        if(getTurnColor() == player.getColor()) {
+            player.doAMove();
+        }
+    }
+
+    /**
+     * Change the turn
+     */
+    public void switchTurn() {
+        isWhiteTurn = !isWhiteTurn;
+        checkBotAct();
+     }
 
     /**
      * Send a command to the XBoard
@@ -102,12 +122,7 @@ public class GameManager {
 
         // Count the moves only if they were not forced
         if(moveWasDone && !isForceMode()) {
-            isWhiteTurn = !isWhiteTurn;
-
-            // Every time black moved, we go to the next round
-            if (!isWhiteTurn) {
-                round++;
-            }
+            switchTurn();
         }
         return moveWasDone;
     }
@@ -115,8 +130,8 @@ public class GameManager {
     public boolean moveAndSend(Position start, Position target) {
         // If the piece could be moved, send the command to the server
         if (move(start, target)) {
-             sendCommand("move " + start.toString() + target.toString());
-             return true;
+            sendCommand("move " + start.toString() + target.toString());
+            return true;
         }
         return false;
     }
@@ -126,11 +141,11 @@ public class GameManager {
      */
     public void initialize() {
         table = new Table();
-        round = 0;
         isWhiteTurn = true;
         player = new Player();
         checkSystem = new CheckSystem();
         player.setColor(PieceColor.Black);
+        botActive = false;
     }
 
     /**

@@ -104,6 +104,7 @@ public class Command {
 //        gameManager.disableForceMode();
         // Start thinking ?
         gameManager.getPlayer().setColor(gameManager.getTurnColor());
+        gameManager.activateBot();
         gameManager.getPlayer().doAMove();
 //        gameManager.printTable();
         return true;
@@ -127,7 +128,6 @@ public class Command {
         }
 
         gameManager.move(new Position(source), new Position(target));
-        gameManager.getPlayer().doAMove();
         return true;
     }
 }
