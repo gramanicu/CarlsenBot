@@ -20,9 +20,9 @@ public class King extends Piece {
      */
     private boolean isInCheck(Position position) {
         if(isWhite()) {
-            return GameManager.getInstance().getCheckSystem().isInCheck(position, PieceColor.White);
+            return GameManager.getInstance().getCheckSystem().isInCheck(PieceColor.White);
         } else {
-            return GameManager.getInstance().getCheckSystem().isInCheck(position, PieceColor.Black);
+            return GameManager.getInstance().getCheckSystem().isInCheck(PieceColor.Black);
         }
     }
 
