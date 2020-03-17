@@ -87,10 +87,7 @@ public class Command {
     }
 
     private boolean newGame() {
-        gameManager.initialize();
-        gameManager.resetPieces();
-        gameManager.getPlayer().setColor(PieceColor.Black);
-        // Reset clocks, etc.
+        gameManager.newGame();
         return true;
     }
 
@@ -112,10 +109,6 @@ public class Command {
 
     private boolean quit() {
         System.exit(0);
-        return true;
-    }
-
-    private boolean resign() {
         return true;
     }
 

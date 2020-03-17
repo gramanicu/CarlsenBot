@@ -120,6 +120,11 @@ public class GameManager {
     public boolean move(Position start, Position target) {
         boolean moveWasDone = table.movePiece(start, target);
 
+        if(table.getPiece(start).getName().equals("Pawn") && (target.getRow() == 0 || target.getRow() == 8)) {
+            // If the pawn promoted
+            commEngine.sendResign();
+        }
+
         // Count the moves only if they were not forced
         if(moveWasDone && !isForceMode()) {
             switchTurn();
@@ -135,6 +140,11 @@ public class GameManager {
             return true;
         }
         return false;
+    }
+
+    public void newGame() {
+        initialize();
+        resetPieces();
     }
 
     /**

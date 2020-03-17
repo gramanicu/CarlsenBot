@@ -15,7 +15,7 @@ public class Engine {
     private String[] settings = new String[] {
             "usermove=1",
             "sigint=0",
-            "reuse=0",
+            "reuse=1",
             "myname=\"CarlsenBot\"",
             "pause=0",
             "debug=1",
