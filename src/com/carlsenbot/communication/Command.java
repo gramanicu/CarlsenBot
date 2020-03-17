@@ -127,8 +127,12 @@ public class Command {
              promotion = parameter.charAt(4);
         }
 
-        gameManager.move(new Position(source), new Position(target));
-        gameManager.checkBotAct();
+        if(gameManager.move(new Position(source), new Position(target))) {
+            gameManager.checkBotAct();
+        } else {
+            GameManager.getInstance().getCommEngine().sendInvalidMove(source + target);
+        }
+
         return true;
     }
 }

@@ -50,6 +50,10 @@ public class Engine {
         sendCommand("resign");
     }
 
+    public void sendInvalidMove(String move) {
+        sendCommand("Illegal move: " + move);
+    }
+
     /**
      * Listen to input from xboard
      */

@@ -100,6 +100,7 @@ public class GameManager {
      */
     public void switchTurn() {
         isWhiteTurn = !isWhiteTurn;
+        activateBot();
      }
 
     /**
