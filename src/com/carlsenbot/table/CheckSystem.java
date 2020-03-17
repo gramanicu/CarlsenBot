@@ -4,6 +4,7 @@
 
 package com.carlsenbot.table;
 
+import com.carlsenbot.main.GameManager;
 import com.carlsenbot.pieces.PieceColor;
 import com.carlsenbot.position.Position;
 
@@ -34,11 +35,13 @@ public class CheckSystem {
 
     }
 
-    public boolean isInCheck(Position position, PieceColor playerColor) {
-        if(playerColor == PieceColor.White) {
-            return dangerW[position.getRow()][position.getCol()] != 0;
-        } else {
-            return dangerB[position.getRow()][position.getCol()] != 0;
+    public boolean isInCheck(PieceColor playerColor) {
+        Position kingPosWhite = GameManager.getInstance().getTable().getPieces()[0][0].getPosition();
+        Position kingPosBlack = GameManager.getInstance().getTable().getPieces()[1][0].getPosition();
+        if (playerColor.equals("White")){
+            for (int i = 1; i < 16; i++){
+            }
         }
+        return true;
     }
 }

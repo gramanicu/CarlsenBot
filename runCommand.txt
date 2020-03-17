@@ -1,1 +1,2 @@
 winboard.exe -debug -fcp "java -classpath D:\Development\College\CarlsenBot\out\artifacts\CarlsenBot_jar\CarlsenBot.jar com.carlsenbot.main.Main"
+winboard.exe -debug -fcp "java -classpath C:\Users\WansE\Documents\GitHub\CarlsenBot\out\artifacts\CarlsenBot_jar\CarlsenBot.jar com.carlsenbot.main.Main"

@@ -25,7 +25,7 @@ class TableTest {
         }
 
         @Override
-        protected MoveInfo isValidMove(Position target) {
+        public MoveInfo isValidMove(Position target) {
             return null;
         }
 
