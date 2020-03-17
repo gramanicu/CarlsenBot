@@ -2,13 +2,17 @@ runs-on: ubuntu-latest
 
 steps:
 - uses: actions/checkout@v2
+- name: Set up JDK
 - uses: actions/setup-java@v1
   with:
     java-version: '8'
     java-package: jdk
     architecture: x64
-- run: |
-  find -name "*.java" -not -path "*/test/*" > sources.txt
-  javac @sources.txt -d out
-  jar --create --file CarlsenBot.jar --manifest ./src/META-INF/MANIFEST.MF -C out/ .
-  java -jar CarlsenBot.jar
+- name: Find all sources
+- run: find -name "*.java" -not -path "*/test/*" > sources.txt
+- name: Create classfiles
+- run: javac @sources.txt -d out
+- name: Build the jarfile
+- run: jar --create --file CarlsenBot.jar --manifest ./src/META-INF/MANIFEST.MF -C out/ .
+- name: Run the .jar file
+- run: java -jar CarlsenBot.jar
