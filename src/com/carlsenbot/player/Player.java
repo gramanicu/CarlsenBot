@@ -4,7 +4,9 @@
 
 package com.carlsenbot.player;
 
+import com.carlsenbot.main.GameManager;
 import com.carlsenbot.pieces.PieceColor;
+import com.carlsenbot.position.Position;
 
 public class Player {
     private boolean isWhite;
@@ -36,7 +38,10 @@ public class Player {
     }
 
     public boolean doAMove() {
-        ai.think();
+        String move = ai.think();
+        Position start = new Position(Character.toString(move.charAt(0)) + Character.toString(move.charAt(1)));
+        Position target = new Position(Character.toString(move.charAt(2)) + Character.toString(move.charAt(3)));
+        GameManager.getInstance().moveAndSend(start, target);
         return true;
     }
 }
