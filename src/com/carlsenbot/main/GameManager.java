@@ -5,11 +5,16 @@
 package com.carlsenbot.main;
 
 import com.carlsenbot.communication.Engine;
-import com.carlsenbot.pieces.*;
+import com.carlsenbot.pieces.Piece;
+import com.carlsenbot.pieces.PieceColor;
 import com.carlsenbot.player.Player;
+import com.carlsenbot.position.Move;
 import com.carlsenbot.position.Position;
 import com.carlsenbot.table.CheckSystem;
 import com.carlsenbot.table.Table;
+
+import java.util.ArrayList;
+
 
 public class GameManager {
     private static GameManager instance = null;
@@ -20,6 +25,7 @@ public class GameManager {
     private Player player;
     private CheckSystem checkSystem;
     private boolean botActive;
+    private ArrayList<Move> moveHistory;
 
     //region "Dangerous methods"
     /* ----------------------------------------
@@ -121,13 +127,14 @@ public class GameManager {
         // If the move would promote a pawn
         if(table.getPiece(start).getName().equals("Pawn") && (target.getRow() == 0 || target.getRow() == 8)) {
             // If the pawn promoted
-            commEngine.sendResign();
+            resign();
         }
 
         boolean moveWasDone = table.movePiece(start, target);
 
         // Count the moves only if they were not forced
         if(moveWasDone && !isForceMode()) {
+
             switchTurn();
         }
         return moveWasDone;
@@ -161,6 +168,11 @@ public class GameManager {
         botActive = false;
     }
 
+    public void resign() {
+        commEngine.sendResign();
+        printMoveHistory();
+    }
+
     /**
      * Set the pieces to their normal positions
      */
@@ -173,5 +185,11 @@ public class GameManager {
 
     public void printTable() {
         System.out.println(table.printTable());
+    }
+
+    public void printMoveHistory() {
+        for (Move move : moveHistory) {
+            System.out.println(move);
+        }
     }
 }

@@ -41,7 +41,7 @@ public class AI {
             }
 
             if(gameManager.getCheckSystem().isInCheck(assignedPlayer.getColor(), king.getPosition())) {
-                gameManager.getCommEngine().sendResign();
+                gameManager.resign();
                 return "";
             }
             if(piece == null) { continue; }

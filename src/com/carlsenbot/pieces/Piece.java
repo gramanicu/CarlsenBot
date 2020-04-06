@@ -70,6 +70,13 @@ public abstract class Piece {
     public String getName() { return name; }
     public double getValue() { return value; }
     public Table getAssignedTable() { return assignedTable; }
+    public PieceColor getColor() {
+        if(isWhite) {
+            return PieceColor.White;
+        } else {
+            return PieceColor.Black;
+        }
+    }
 
     // Setters
     public void setOnBoard(boolean onBoard) {
