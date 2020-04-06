@@ -11,6 +11,7 @@ public abstract class Piece {
     public static class MoveInfo {
         public boolean canMove;
         public boolean attacking;
+        public Position attackedPiece;
 
         public MoveInfo() {
             canMove = false;
@@ -20,6 +21,12 @@ public abstract class Piece {
         public MoveInfo(boolean canMove, boolean attacking) {
             this.canMove = canMove;
             this.attacking = attacking;
+        }
+
+        public MoveInfo(boolean canMove, boolean attacking, Position pos) {
+            this.canMove = canMove;
+            this.attacking = attacking;
+            this.attackedPiece = pos;
         }
 
         public void setMove() { canMove = true; }

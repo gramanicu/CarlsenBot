@@ -5,6 +5,7 @@
 package com.carlsenbot.main;
 
 import com.carlsenbot.communication.Engine;
+import com.carlsenbot.pieces.Pawn;
 import com.carlsenbot.pieces.Piece;
 import com.carlsenbot.pieces.PieceColor;
 import com.carlsenbot.player.Player;
@@ -37,7 +38,10 @@ public class GameManager {
      * Assign a new table to the game table
      * @param table The new table
      */
-    public void setTable(Table table) { this.table = table; }
+    public void setTable(Table table) {
+        this.table = table;
+        this.table.setAssignedGameManager(this);
+    }
 
     /**
      * Remove the game instance
@@ -92,6 +96,32 @@ public class GameManager {
     }
     public void activateBot() { botActive = true; }
 
+    /**
+     * Check if a pawn can attack another pawn at this position using
+     * "En Passant"
+     * @param position The position of the pawn to be "en passanted"
+     * @param myColor The color of the pawn that wants to capture
+     * @return If the move is possible
+     */
+    public boolean canBeEnPassanted(Position position, PieceColor myColor) {
+        Piece other = table.getPiece(position);
+        Move lastMove = moveHistory.get(moveHistory.size() - 1);
+
+        /**
+         * To be able to do an "En Passant"
+         * - the other piece must be a pawn
+         * - the other pawn must be of a different color
+         * - the other pawn must be the last moved piece
+         * - he must have done his first move, a double move
+         */
+        if(other instanceof Pawn &&
+                myColor != other.getColor() &&
+                other == lastMove.getPiece() &&
+                lastMove.getDistance() == 2d) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Check if it's the bot's turn
@@ -162,6 +192,7 @@ public class GameManager {
      */
     public void initialize() {
         table = new Table();
+        table.setAssignedGameManager(this);
         isWhiteTurn = true;
         player = new Player();
         checkSystem = new CheckSystem();
@@ -182,6 +213,7 @@ public class GameManager {
         pieces[0] = GameUtils.initWhitePieces();
         pieces[1] = GameUtils.initBlackPieces();
         table = new Table(pieces);
+        table.setAssignedGameManager(this);
     }
 
     public void printTable() {

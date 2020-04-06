@@ -5,6 +5,7 @@
 package com.carlsenbot.table;
 
 
+import com.carlsenbot.main.GameManager;
 import com.carlsenbot.pieces.Piece;
 import com.carlsenbot.position.Position;
 
@@ -34,6 +35,7 @@ public class Table {
     private byte blackID;
     private byte whiteID;
     private Piece[][] pieces;
+    private GameManager assignedGameManager;
 
     /**
      * Initialise an empty table
@@ -62,8 +64,10 @@ public class Table {
     }
 
     public byte[][] getPositions() { return positions; }
-
+    public GameManager getAssignedGameManager() { return assignedGameManager; }
     public Piece[][] getPieces() { return pieces; }
+
+    public void setAssignedGameManager(GameManager gm) { this.assignedGameManager = gm; }
 
     /**
      * Add a piece to the table

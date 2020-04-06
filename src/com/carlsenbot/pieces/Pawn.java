@@ -143,6 +143,24 @@ public class Pawn extends Piece {
                 info.setMove();
                 info.setAttack();
             }
+        } else if (assignedTable.isEmptyCell(target)) {
+            // This could be an "en passant"
+
+            // Check if it is 1 cell one the diagonal
+            if(source.getDistance(target) == Math.sqrt(2)) {
+                int rowDiff = 1;
+                if(isWhite()) {
+                    rowDiff = -1;
+                }
+
+                GameManager gm = assignedTable.getAssignedGameManager();
+
+                Position tpos = new Position(target.getRow() + rowDiff, target.getCol());
+                if(gm.canBeEnPassanted(tpos, getColor())) {
+                    // Do the en passant
+
+                }
+            }
         }
         return info;
     }
