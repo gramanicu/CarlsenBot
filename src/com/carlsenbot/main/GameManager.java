@@ -134,7 +134,7 @@ public class GameManager {
 
         // Count the moves only if they were not forced
         if(moveWasDone && !isForceMode()) {
-
+            moveHistory.add(new Move(start, target, table.getPiece(target)));
             switchTurn();
         }
         return moveWasDone;
