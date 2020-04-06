@@ -74,6 +74,29 @@ public class King extends Piece {
             }
 
             // TODO - Check if the rook can castle
+            /*
+            check if we can castle
+            if we can castle, we set castled true
+             */
+
+            boolean flag = false;
+            int diffCol = 1;
+
+            if(source.getDiffCol(target) == 2) {
+                diffCol = -1;
+            }
+
+            for(int i = getPosition().getCol(); i <=target.getCol(); i += diffCol) {
+                if(assignedTable.getAssignedGameManager().getCheckSystem().isInCheck(getColor(), new Position(getPosition().getRow(), i))) {
+                    flag = true;
+                }
+            }
+
+            if(!flag) {
+                if (!castled) {
+                    castled = true;
+                }
+            }
 
         }
 
@@ -86,15 +109,20 @@ public class King extends Piece {
 //        if (isInCheck(target)) {
 //            return info;
 //        }
-
-        // If the target has a piece in it
-        if (!assignedTable.isEmptyCell(target)) {
-            // Check for enemy piece, to attack, else, don't move at all
-            if (!isSameColor(target)) {
-                info.setMove();
-                info.setAttack();
+        if(castled) {
+            /**
+            we should teleport them
+             */
+        } else {
+            // If the target has a piece in it
+            if (!assignedTable.isEmptyCell(target)) {
+                // Check for enemy piece, to attack, else, don't move at all
+                if (!isSameColor(target)) {
+                    info.setMove();
+                    info.setAttack();
+                }
+                return info;
             }
-            return info;
         }
 
         // If the cell was empty, move
