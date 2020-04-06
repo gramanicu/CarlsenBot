@@ -48,7 +48,7 @@ public class King extends Piece {
      */
     @Override
     public MoveInfo isValidMove(Position target) {
-        MoveInfo info = new MoveInfo();
+        MoveInfo info = new MoveInfo(target);
         // Every move is legal in forced mode
 
         Position source = getPosition();

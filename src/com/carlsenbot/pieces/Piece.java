@@ -18,6 +18,12 @@ public abstract class Piece {
             attacking = false;
         }
 
+        public MoveInfo(Position position) {
+            canMove = false;
+            attacking = false;
+            attackedPiece = position;
+        }
+
         public MoveInfo(boolean canMove, boolean attacking) {
             this.canMove = canMove;
             this.attacking = attacking;

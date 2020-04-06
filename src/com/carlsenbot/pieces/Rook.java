@@ -48,7 +48,7 @@ public class Rook extends Piece {
      *         attack to perform it
      */
     protected static MoveInfo isValidRookMove(Position source, Position target, Table table) {
-        MoveInfo info = new MoveInfo();
+        MoveInfo info = new MoveInfo(target);
         int difPos = 1;
         int difRow = (int) source.getDiffRow(target);
         int difCol = (int) source.getDiffCol(target);

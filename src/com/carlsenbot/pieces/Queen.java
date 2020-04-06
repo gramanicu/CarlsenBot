@@ -41,7 +41,7 @@ public class Queen extends Piece {
     @Override
     public MoveInfo isValidMove(Position target) {
         Position source = getPosition();
-        MoveInfo info = new MoveInfo();
+        MoveInfo info = new MoveInfo(target);
 
         // If the target is the same cell
         if(source.getDistance(target) == 0) {
