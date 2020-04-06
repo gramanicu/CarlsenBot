@@ -39,6 +39,7 @@ public abstract class Piece {
         public void setStay() { canMove = false; }
         public void setAttack() { attacking = true; }
         public void setNotAttack() { attacking = false; }
+        public void setAttackedPiece(Position target) { attackedPiece = target; }
     }
 
     private double value;
@@ -120,6 +121,17 @@ public abstract class Piece {
         assignedTable.removePiece(target);
         setPosition(target);
     }
+
+    /**
+     * Notify the capture to the game manager
+     * @param target The position to move to
+     * @param captured The position of the piece that is captured
+     */
+    protected void capturePiece(Position target, Position captured) {
+        assignedTable.removePiece(captured);
+        setPosition(target);
+    }
+
 
     /**
      * Shows the character associated with a unicode

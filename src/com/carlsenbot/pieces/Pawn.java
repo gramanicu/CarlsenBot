@@ -61,7 +61,7 @@ public class Pawn extends Piece {
      */
     @Override
     public MoveInfo isValidMove(final Position target) {
-        MoveInfo info = new MoveInfo();
+        MoveInfo info = new MoveInfo(target);
 
         Position source = getPosition();
 
@@ -98,45 +98,6 @@ public class Pawn extends Piece {
                     info.setMove();
                 }
             }
-//            if(isWhite()) {
-//                if (target.getCol() < 7) {
-//                    if (!assignedTable.isEmptyCell(new Position(target.getRow(), target.getCol() + 1))) {
-//                        if (assignedTable.getPiece(new Position(target.getRow(), target.getCol() + 1)) instanceof Pawn) {
-//                            if(assignedTable.getPiece(new Position(target.getRow(), target.getCol() + 1)).isBlack()) {
-//                                enPassante = true;
-//                            }
-//                        }
-//                    }
-//                } else {
-//                    if (target.getCol() > 1)
-//                        if (!assignedTable.isEmptyCell(new Position(target.getRow(), target.getCol() - 1))) {
-//                            if (assignedTable.getPiece(new Position(target.getRow(), target.getCol() - 1)) instanceof Pawn) {
-//                                if(assignedTable.getPiece(new Position(target.getRow(), target.getCol() + 1)).isBlack()) {
-//                                    enPassante = true;
-//                                }
-//                            }
-//                        }
-//                }
-//            } else {
-//                if (target.getCol() < 7) {
-//                    if (!assignedTable.isEmptyCell(new Position(target.getRow(), target.getCol() + 1))) {
-//                        if (assignedTable.getPiece(new Position(target.getRow(), target.getCol() + 1)) instanceof Pawn) {
-//                            if(assignedTable.getPiece(new Position(target.getRow(), target.getCol() + 1)).isWhite()) {
-//                                enPassante = true;
-//                            }
-//                        }
-//                    }
-//                } else {
-//                    if (target.getCol() > 1)
-//                        if (!assignedTable.isEmptyCell(new Position(target.getRow(), target.getCol() - 1))) {
-//                            if (assignedTable.getPiece(new Position(target.getRow(), target.getCol() - 1)) instanceof Pawn) {
-//                                if(assignedTable.getPiece(new Position(target.getRow(), target.getCol() + 1)).isWhite()) {
-//                                    enPassante = true;
-//                                }
-//                            }
-//                        }
-//                }
-//            }
         } else if (!isSameColor(target) && !assignedTable.isEmptyCell(target)) {
             // Check if the pawn can attack and move diagonally
             if(source.getDistance(target) == Math.sqrt(2)) {
@@ -153,12 +114,14 @@ public class Pawn extends Piece {
                     rowDiff = -1;
                 }
 
+                // Check if we can do an "en passant"
                 GameManager gm = assignedTable.getAssignedGameManager();
-
-                Position tpos = new Position(target.getRow() + rowDiff, target.getCol());
+                Position tpos = new Position(target.getCol(), target.getRow() + rowDiff);
                 if(gm.canBeEnPassanted(tpos, getColor())) {
                     // Do the en passant
-
+                    info.setAttackedPiece(tpos);
+                    info.setMove();
+                    info.setAttack();
                 }
             }
         }
@@ -176,9 +139,8 @@ public class Pawn extends Piece {
         MoveInfo info = isValidMove(target);
 
         if (info.canMove) {
-
             if(info.attacking) {
-                capturePiece(target);
+                capturePiece(target, info.attackedPiece);
             } else {
                 movePiece(target);
             }
