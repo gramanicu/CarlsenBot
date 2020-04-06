@@ -8,6 +8,7 @@ import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Position;
 
 public class Pawn extends Piece {
+    boolean enPassante;
     boolean moved;
 
     /**
@@ -33,6 +34,7 @@ public class Pawn extends Piece {
     public Pawn(PieceColor color, Position position) {
         super(100d, color, position, "Pawn");
         moved = false;
+        enPassante = false;
     }
 
     /*
@@ -95,8 +97,47 @@ public class Pawn extends Piece {
                 if(assignedTable.isEmptyCell(inter)) {
                     info.setMove();
                 }
-
             }
+            if(isWhite()) {
+                if (target.getCol() < 7) {
+                    if (!assignedTable.isEmptyCell(new Position(target.getRow(), target.getCol() + 1))) {
+                        if (assignedTable.getPiece(new Position(target.getRow(), target.getCol() + 1)) instanceof Pawn) {
+                            if(assignedTable.getPiece(new Position(target.getRow(), target.getCol() + 1)).isBlack()) {
+                                enPassante = true;
+                            }
+                        }
+                    }
+                } else {
+                    if (target.getCol() > 1)
+                        if (!assignedTable.isEmptyCell(new Position(target.getRow(), target.getCol() - 1))) {
+                            if (assignedTable.getPiece(new Position(target.getRow(), target.getCol() - 1)) instanceof Pawn) {
+                                if(assignedTable.getPiece(new Position(target.getRow(), target.getCol() + 1)).isBlack()) {
+                                    enPassante = true;
+                                }
+                            }
+                        }
+                }
+            } else {
+                if (target.getCol() < 7) {
+                    if (!assignedTable.isEmptyCell(new Position(target.getRow(), target.getCol() + 1))) {
+                        if (assignedTable.getPiece(new Position(target.getRow(), target.getCol() + 1)) instanceof Pawn) {
+                            if(assignedTable.getPiece(new Position(target.getRow(), target.getCol() + 1)).isWhite()) {
+                                enPassante = true;
+                            }
+                        }
+                    }
+                } else {
+                    if (target.getCol() > 1)
+                        if (!assignedTable.isEmptyCell(new Position(target.getRow(), target.getCol() - 1))) {
+                            if (assignedTable.getPiece(new Position(target.getRow(), target.getCol() - 1)) instanceof Pawn) {
+                                if(assignedTable.getPiece(new Position(target.getRow(), target.getCol() + 1)).isWhite()) {
+                                    enPassante = true;
+                                }
+                            }
+                        }
+                }
+            }
+
         } else if (!isSameColor(target) && !assignedTable.isEmptyCell(target)) {
             // Check if the pawn can attack and move diagonally
             if(source.getDistance(target) == Math.sqrt(2)) {
@@ -107,6 +148,9 @@ public class Pawn extends Piece {
         return info;
     }
 
+
+
+
     /*
      * Move to the desired position
      */
@@ -115,6 +159,7 @@ public class Pawn extends Piece {
         MoveInfo info = isValidMove(target);
 
         if (info.canMove) {
+
             if(info.attacking) {
                 capturePiece(target);
             } else {
