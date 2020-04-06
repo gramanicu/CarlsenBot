@@ -58,6 +58,7 @@ public class GameManager {
         player = new Player();
         checkSystem = new CheckSystem();
         botActive = false;
+        moveHistory = new ArrayList<>();
     }
 
     // Get (and initialise if needed) the instance of the singleton
