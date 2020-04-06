@@ -110,7 +110,7 @@ public class Pawn extends Piece {
             // Check if it is 1 cell one the diagonal
             if(source.getDistance(target) == Math.sqrt(2)) {
                 int rowDiff = 1;
-                if(isWhite()) {
+                if(isBlack()) {
                     rowDiff = -1;
                 }
 
