@@ -30,14 +30,17 @@ public class AI {
         while(!validMove) {
             int id = rand.nextInt(16);
             Piece piece;
+            Piece king;
 
             if(assignedPlayer.isWhite()) {
                 piece = table.getPieces()[0][id];
+                king = table.getPieces()[0][0];
             } else {
                 piece = table.getPieces()[1][id];
+                king = table.getPieces()[1][0];
             }
 
-            if(gameManager.getCheckSystem().isInCheck(assignedPlayer.getColor())) {
+            if(gameManager.getCheckSystem().isInCheck(assignedPlayer.getColor(), king.getPosition())) {
                 gameManager.getCommEngine().sendResign();
                 return "";
             }

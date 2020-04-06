@@ -12,24 +12,20 @@ import com.carlsenbot.position.Position;
 public class CheckSystem {
     public CheckSystem() { }
 
-
-    public boolean isInCheck(PieceColor playerColor) {
+    public boolean isInCheck(PieceColor playerColor, Position pos) {
         Table table = GameManager.getInstance().getTable();
         Piece[] pieces;
-        Position kingPos;
         if(playerColor == PieceColor.White) {
             pieces = table.getPieces()[1];
-            kingPos = table.getPieces()[0][0].getPosition();
         } else {
             pieces = table.getPieces()[0];
-            kingPos = table.getPieces()[1][0].getPosition();
         }
 
         for(Piece p : pieces) {
             if (p == null) {
                 continue;
             }
-            if(p.isValidMove(kingPos).attacking) {
+            if(p.isValidMove(pos).attacking) {
                 return true;
             }
         }
