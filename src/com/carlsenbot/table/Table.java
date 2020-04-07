@@ -4,9 +4,10 @@
 
 package com.carlsenbot.table;
 
-
-import com.carlsenbot.main.GameManager;
+import com.carlsenbot.pieces.King;
+import com.carlsenbot.pieces.Pawn;
 import com.carlsenbot.pieces.Piece;
+import com.carlsenbot.pieces.PieceColor;
 import com.carlsenbot.position.Move;
 import com.carlsenbot.position.Position;
 
@@ -38,7 +39,8 @@ public class Table {
     private byte blackID;
     private byte whiteID;
     private Piece[][] pieces;
-    private GameManager assignedGameManager;
+    private ArrayList<Move> moveHistory;
+    private CheckSystem checkSystem;
 
     /**
      * Initialise an empty table
@@ -63,13 +65,14 @@ public class Table {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 16; j++) {
                 // This must be copy constructor
-                pieces[i][j] = other.pieces[i][j];
+                Piece p = other.pieces[i][j];
+                if(p instanceof King) {
+                }
             }
         }
 
         blackID = other.blackID;
         whiteID = other.whiteID;
-        assignedGameManager = null;
     }
 
     /**
@@ -89,10 +92,38 @@ public class Table {
     }
 
     public byte[][] getPositions() { return positions; }
-    public GameManager getAssignedGameManager() { return assignedGameManager; }
     public Piece[][] getPieces() { return pieces; }
 
-    public void setAssignedGameManager(GameManager gm) { this.assignedGameManager = gm; }
+    private void addMoveToHistory(Move move) {
+        moveHistory.add(move);
+    }
+
+    /**
+     * Check if a pawn can attack another pawn at this position using
+     * "En Passant"
+     * @param position The position of the pawn to be "en passanted"
+     * @param myColor The color of the pawn that wants to capture
+     * @return If the move is possible
+     */
+    public boolean canBeEnPassanted(Position position, PieceColor myColor) {
+        Piece other = getPiece(position);
+        if(moveHistory.size() > 2) {
+            Move lastMove = moveHistory.get(moveHistory.size() - 1);
+
+            /**
+             * To be able to do an "En Passant"
+             * - the other piece must be a pawn
+             * - the other pawn must be of a different color
+             * - the other pawn must be the last moved piece
+             * - he must have done his first move, a double move
+             */
+            return other instanceof Pawn &&
+                    myColor != other.getColor() &&
+                    other == lastMove.getPiece() &&
+                    lastMove.getDistance() == 2d;
+        }
+        return false;
+    }
 
     /**
      * Add a piece to the table
@@ -234,9 +265,7 @@ public class Table {
                 return false;
             }
 
-            if(assignedGameManager != null) {
-                assignedGameManager.addMoveToHistory(new Move(start, target, piece));
-            }
+            addMoveToHistory(new Move(start, target, piece));
 
             setCell(start, (byte) 0);
             setCell(target, piece.getId());
@@ -339,5 +368,12 @@ public class Table {
         }
         sb.append("   A  B  C  D  E  F  G  H\n");
         return sb.toString();
+    }
+
+
+    public void printMoveHistory() {
+        for (Move move : moveHistory) {
+            System.out.println(move);
+        }
     }
 }

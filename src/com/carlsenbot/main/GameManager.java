@@ -5,16 +5,11 @@
 package com.carlsenbot.main;
 
 import com.carlsenbot.communication.Engine;
-import com.carlsenbot.pieces.Pawn;
 import com.carlsenbot.pieces.Piece;
 import com.carlsenbot.pieces.PieceColor;
 import com.carlsenbot.player.Player;
-import com.carlsenbot.position.Move;
 import com.carlsenbot.position.Position;
-import com.carlsenbot.table.CheckSystem;
 import com.carlsenbot.table.Table;
-
-import java.util.ArrayList;
 
 
 public class GameManager {
@@ -24,9 +19,7 @@ public class GameManager {
     private Table table;
     private Engine commEngine;
     private Player player;
-    private CheckSystem checkSystem;
     private boolean botActive;
-    private ArrayList<Move> moveHistory;
 
     //region "Dangerous methods"
     /* ----------------------------------------
@@ -40,7 +33,6 @@ public class GameManager {
      */
     public void setTable(Table table) {
         this.table = table;
-        this.table.setAssignedGameManager(this);
     }
 
     /**
@@ -60,9 +52,7 @@ public class GameManager {
         commEngine = Engine.getInstance();
         forceMode = false;
         player = new Player();
-        checkSystem = new CheckSystem();
         botActive = false;
-        moveHistory = new ArrayList<>();
     }
 
     // Get (and initialise if needed) the instance of the singleton
@@ -77,7 +67,6 @@ public class GameManager {
     public Table getTable() { return table; }
     public Player getPlayer() { return player; }
     public boolean isForceMode() { return forceMode; }
-    public CheckSystem getCheckSystem() { return checkSystem; }
     public Engine getCommEngine() { return commEngine; }
     public PieceColor getTurnColor() {
         if(isWhiteTurn) {
@@ -95,33 +84,6 @@ public class GameManager {
         checkBotAct();
     }
     public void activateBot() { botActive = true; }
-
-    /**
-     * Check if a pawn can attack another pawn at this position using
-     * "En Passant"
-     * @param position The position of the pawn to be "en passanted"
-     * @param myColor The color of the pawn that wants to capture
-     * @return If the move is possible
-     */
-    public boolean canBeEnPassanted(Position position, PieceColor myColor) {
-        Piece other = table.getPiece(position);
-        if(moveHistory.size() > 2) {
-            Move lastMove = moveHistory.get(moveHistory.size() - 1);
-
-            /**
-             * To be able to do an "En Passant"
-             * - the other piece must be a pawn
-             * - the other pawn must be of a different color
-             * - the other pawn must be the last moved piece
-             * - he must have done his first move, a double move
-             */
-            return other instanceof Pawn &&
-                    myColor != other.getColor() &&
-                    other == lastMove.getPiece() &&
-                    lastMove.getDistance() == 2d;
-        }
-        return false;
-    }
 
     /**
      * Check if it's the bot's turn
@@ -148,9 +110,6 @@ public class GameManager {
         commEngine.sendCommand(string);
     }
 
-    public void addMoveToHistory(Move move) {
-        moveHistory.add(move);
-    }
 
     /**
      * Move a piece using the game manager
@@ -195,17 +154,14 @@ public class GameManager {
      */
     public void initialize() {
         table = new Table();
-        table.setAssignedGameManager(this);
         isWhiteTurn = true;
         player = new Player();
-        checkSystem = new CheckSystem();
         player.setColor(PieceColor.Black);
         botActive = false;
     }
 
     public void resign() {
         commEngine.sendResign();
-        printMoveHistory();
     }
 
     /**
@@ -216,16 +172,10 @@ public class GameManager {
         pieces[0] = GameUtils.initWhitePieces();
         pieces[1] = GameUtils.initBlackPieces();
         table = new Table(pieces);
-        table.setAssignedGameManager(this);
     }
 
     public void printTable() {
         System.out.println(table.printTable());
     }
 
-    public void printMoveHistory() {
-        for (Move move : moveHistory) {
-            System.out.println(move);
-        }
-    }
 }
