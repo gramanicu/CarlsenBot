@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class MiniMax {
 
-    private double minimax(int depth, boolean maxPlayer, Table table, double alpha, double beta) {
+    private static double minimax(int depth, boolean maxPlayer, Table table, double alpha, double beta) {
         if(depth == 0) {
             return -EvaluationBoards.evaluateBoard(table);
         }
@@ -50,7 +50,7 @@ public class MiniMax {
         }
     }
 
-    public Move minimax(int depth, boolean maxPlayer, Table table) {
+    public static Move minimax(int depth, boolean maxPlayer, Table table) {
         ArrayList<Move> possibleMoves = table.getAllPossibleMoves();
         double best = -9999;
         Move bestMove = null;
