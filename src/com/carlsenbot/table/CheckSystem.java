@@ -5,6 +5,7 @@
 package com.carlsenbot.table;
 
 import com.carlsenbot.main.GameManager;
+import com.carlsenbot.pieces.King;
 import com.carlsenbot.pieces.Piece;
 import com.carlsenbot.pieces.PieceColor;
 import com.carlsenbot.position.Position;
@@ -22,7 +23,7 @@ public class CheckSystem {
         }
 
         for(Piece p : pieces) {
-            if (p == null) {
+            if (p == null || p instanceof King) {
                 continue;
             }
             if(p.isValidMove(pos).attacking) {

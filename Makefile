@@ -25,7 +25,7 @@ run: build
 
 # Starts xboard using the bot
 xboard: build
-	@xboard -debug -nameOfDebugFile debug.txt -fcp "java -jar CarlsenBot.jar"
+	@xboard -debug -nameOfDebugFile debug.txt -fcp "java -jar CarlsenBot.jar" -scp "fairymax" -secondInitString "new\nrandom\nsd 2\n" -tc 5 -inc 2 -autoCallFlag true -mg 10 -sgf partide.txt -reuseFirst false
 
 # Deletes the "out" directory and sources.txt
 clean:
