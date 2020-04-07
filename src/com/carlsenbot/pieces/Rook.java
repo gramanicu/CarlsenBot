@@ -25,6 +25,9 @@ public class Rook extends Piece {
         this(color, new Position(position));
     }
 
+    public Rook(Queen other) {
+        this(other.getColor(), new Position(other.getPosition()));
+    }
     /*
      * Returns the bishop symbol
      */

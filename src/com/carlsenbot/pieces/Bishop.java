@@ -28,6 +28,11 @@ public class Bishop extends Piece {
     /*
      * Returns the bishop symbol
      */
+
+    public Bishop(Bishop other) {
+        this(other.getColor(), new Position(other.getPosition()));
+    }
+
     @Override
     public String getSymbol() {
         if (isWhite()) {

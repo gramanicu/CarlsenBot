@@ -31,6 +31,9 @@ public class King extends Piece {
         this(color, new Position(position));
     }
 
+    public King(King other) {
+        this(other.getColor(), new Position(other.getPosition()));
+    }
     /*
      * Implementation of the get symbol
      */
@@ -58,7 +61,7 @@ public class King extends Piece {
             return info;
         }
 
-        if(assignedTable.getAssignedGameManager().getCheckSystem().isInCheck(getColor(), target)) {
+        if(assignedTable.getCheckSystem().isInCheck(getColor(), target)) {
             return info;
         }
 
@@ -91,7 +94,7 @@ public class King extends Piece {
             }
 
             for(int i = getPosition().getCol(); i <=target.getCol(); i += diffCol) {
-                if(assignedTable.getAssignedGameManager().getCheckSystem().isInCheck(getColor(), new Position(getPosition().getRow(), i))) {
+                if(assignedTable.getCheckSystem().isInCheck(getColor(), new Position(getPosition().getRow(), i))) {
                     if(!assignedTable.isEmptyCell(new Position(target.getRow(), i))) {
                         flag = true;
                     }

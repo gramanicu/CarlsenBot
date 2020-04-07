@@ -18,6 +18,9 @@ public class Knight extends Piece {
         this(color, new Position(position));
     }
 
+    public Knight(Knight other) {
+        this(other.getColor(), new Position(other.getPosition()));
+    }
     /*
      * Implementation of the get symbol
      */

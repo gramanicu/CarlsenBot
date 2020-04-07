@@ -44,9 +44,10 @@ public class Pawn extends Piece {
         this(color, new Position(position));
     }
 
-    /*
-     * Returns the bishop symbol
-     */
+   public Pawn(Pawn other) {
+        this(other.getColor(), new Position(other.getPosition()));
+    }
+
     @Override
     public String getSymbol() {
         if (isWhite()) {
@@ -115,9 +116,8 @@ public class Pawn extends Piece {
                 }
 
                 // Check if we can do an "en passant"
-                GameManager gm = assignedTable.getAssignedGameManager();
                 Position tpos = new Position(target.getCol(), target.getRow() + rowDiff);
-                if(gm.canBeEnPassanted(tpos, getColor())) {
+                if(assignedTable.canBeEnPassanted(tpos, getColor())) {
                     // Do the en passant
                     info.setAttackedPiece(tpos);
                     info.setMove();
