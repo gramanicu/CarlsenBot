@@ -38,43 +38,59 @@ public class Table {
     private Piece[][] pieces;
     private ArrayList<Move> moveHistory;
     private CheckSystem checkSystem;
+    private boolean isWhiteTurn;
 
     /**
      * Initialise an empty table
      */
     public Table() {
+        isWhiteTurn = true;
         positions = new byte[8][8];
         blackID = -1;
         whiteID = 1;
         pieces = new Piece[2][16];
+        moveHistory = new ArrayList<>();
+        checkSystem = new CheckSystem(this);
     }
 
     public Table(Table other) {
         positions = new byte[8][8];
         pieces = new Piece[2][16];
+        isWhiteTurn = other.isWhiteTurn;
 
         for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                positions[i][j] = other.positions[i][j];
-            }
+            System.arraycopy(other.positions[i], 0, positions[i], 0, 8);
         }
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 16; j++) {
-                // This must be copy constructor
-                Piece p = other.pieces[i][j];
-                if(p instanceof King) {
-                } else if(p instanceof Queen) {
-                } else if(p instanceof Knight) {
-                } else if(p instanceof Bishop) {
-                } else if(p instanceof Rook) {
-                } else if(p instanceof Pawn) {
+                if(other.pieces[i][j] != null) {
+                    // This must be copy constructor
+                    Piece p = other.pieces[i][j];
+                    if (p instanceof King) {
+                        pieces[i][j] = new King(p);
+                    } else if (p instanceof Queen) {
+                        pieces[i][j] = new Queen(p);
+                    } else if (p instanceof Knight) {
+                        pieces[i][j] = new Knight(p);
+                    } else if (p instanceof Bishop) {
+                        pieces[i][j] = new Bishop(p);
+                    } else if (p instanceof Rook) {
+                        pieces[i][j] = new Rook(p);
+                    } else if (p instanceof Pawn) {
+                        pieces[i][j] = new Pawn(p);
+                    }
+                    pieces[i][j].setId(p.getId());
+                    pieces[i][j].setOnBoard(true);
+                    pieces[i][j].setAssignedTable(this);
                 }
             }
         }
 
         blackID = other.blackID;
         whiteID = other.whiteID;
+        moveHistory = new ArrayList<>();
+        checkSystem = new CheckSystem(this);
     }
 
     /**
@@ -112,7 +128,7 @@ public class Table {
         if(moveHistory.size() > 2) {
             Move lastMove = moveHistory.get(moveHistory.size() - 1);
 
-            /**
+            /*
              * To be able to do an "En Passant"
              * - the other piece must be a pawn
              * - the other pawn must be of a different color
@@ -125,6 +141,22 @@ public class Table {
                     lastMove.getDistance() == 2d;
         }
         return false;
+    }
+
+    public PieceColor getTurnColor() {
+        if(isWhiteTurn) {
+            return PieceColor.White;
+        } else {
+            return PieceColor.Black;
+        }
+    }
+
+    public void setTurnColor(PieceColor color) {
+        isWhiteTurn = color == PieceColor.White;
+    }
+
+    public void switchTurn() {
+        isWhiteTurn = !isWhiteTurn;
     }
 
     /**
@@ -154,7 +186,27 @@ public class Table {
     }
 
     public ArrayList<Move> getAllPossibleMoves() {
-        ArrayList<Move> moves = new ArrayList<Move>();
+        ArrayList<Move> moves = new ArrayList<>();
+
+        Piece[] moveable;
+        if(isWhiteTurn) {
+            moveable = pieces[0];
+        } else {
+            moveable = pieces[1];
+        }
+
+        for (Piece p : moveable) {
+            if (p != null) {
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        Piece.MoveInfo info = p.isValidMove(new Position(i, j));
+                        if(info.canMove) {
+                            moves.add(new Move(p.getPosition(), new Position(i, j), p));
+                        }
+                    }
+                }
+            }
+        }
         return moves;
     }
 

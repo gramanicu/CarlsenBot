@@ -14,7 +14,6 @@ import com.carlsenbot.table.Table;
 
 public class GameManager {
     private static GameManager instance = null;
-    private boolean isWhiteTurn;
     private boolean forceMode;
     private Table table;
     private Engine commEngine;
@@ -48,7 +47,6 @@ public class GameManager {
 
     // Constructor, made private for singleton
     private GameManager() {
-        isWhiteTurn = true;
         commEngine = Engine.getInstance();
         forceMode = false;
         player = new Player();
@@ -69,18 +67,14 @@ public class GameManager {
     public boolean isForceMode() { return forceMode; }
     public Engine getCommEngine() { return commEngine; }
     public PieceColor getTurnColor() {
-        if(isWhiteTurn) {
-            return PieceColor.White;
-        } else {
-            return PieceColor.Black;
-        }
+        return table.getTurnColor();
     }
 
     // Setters
     public void enableForceMode() { forceMode = true; }
     public void disableForceMode() { forceMode = false; }
     public void setTurnColor(PieceColor color) {
-        isWhiteTurn = color == PieceColor.White;
+        table.setTurnColor(color);
         checkBotAct();
     }
     public void activateBot() { botActive = true; }
@@ -89,7 +83,7 @@ public class GameManager {
      * Check if it's the bot's turn
      */
     public void checkBotAct() {
-        if(getTurnColor() == player.getColor()) {
+        if(table.getTurnColor() == player.getColor()) {
             player.doAMove();
         }
     }
@@ -98,7 +92,7 @@ public class GameManager {
      * Change the turn
      */
     public void switchTurn() {
-        isWhiteTurn = !isWhiteTurn;
+        table.switchTurn();
         activateBot();
      }
 
@@ -154,7 +148,7 @@ public class GameManager {
      */
     public void initialize() {
         table = new Table();
-        isWhiteTurn = true;
+        table.setTurnColor(PieceColor.White);
         player = new Player();
         player.setColor(PieceColor.Black);
         botActive = false;

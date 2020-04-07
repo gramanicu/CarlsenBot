@@ -29,7 +29,7 @@ public class Bishop extends Piece {
      * Returns the bishop symbol
      */
 
-    public Bishop(Bishop other) {
+    public Bishop(Piece other) {
         this(other.getColor(), new Position(other.getPosition()));
     }
 

@@ -25,7 +25,7 @@ public class Rook extends Piece {
         this(color, new Position(position));
     }
 
-    public Rook(Queen other) {
+    public Rook(Piece other) {
         this(other.getColor(), new Position(other.getPosition()));
     }
     /*

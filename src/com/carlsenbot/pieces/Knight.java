@@ -18,7 +18,7 @@ public class Knight extends Piece {
         this(color, new Position(position));
     }
 
-    public Knight(Knight other) {
+    public Knight(Piece other) {
         this(other.getColor(), new Position(other.getPosition()));
     }
     /*

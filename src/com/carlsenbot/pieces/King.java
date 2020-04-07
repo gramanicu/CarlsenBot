@@ -31,7 +31,7 @@ public class King extends Piece {
         this(color, new Position(position));
     }
 
-    public King(King other) {
+    public King(Piece other) {
         this(other.getColor(), new Position(other.getPosition()));
     }
     /*
@@ -120,7 +120,7 @@ public class King extends Piece {
 //        }
         if(castled && !firstMove) {
             firstMove = true;
-            /**
+            /*
             we should teleport them
              */
         } else {

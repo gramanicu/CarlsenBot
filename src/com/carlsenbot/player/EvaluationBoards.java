@@ -4,12 +4,13 @@
 
 package com.carlsenbot.player;
 
-import com.carlsenbot.pieces.Piece;
+import com.carlsenbot.pieces.*;
+import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
 public class EvaluationBoards {
 
-    double[][] pawnEvalWhite = {
+    private static double[][] pawnEvalWhite = {
             {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
             {5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0},
             {1.0, 1.0, 2.0, 3.0, 3.0, 2.0, 1.0, 1.0},
@@ -20,9 +21,9 @@ public class EvaluationBoards {
             {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
     };
 
-    double[][] pawnEvalBlack = reverseBoard(pawnEvalWhite);
+    private static double[][] pawnEvalBlack = reverseBoard(pawnEvalWhite);
 
-    double[][] knightEval = {
+    private static double[][] knightEval = {
             {-5.0, -4.0, -3.0, -3.0, -3.0, -3.0, -4.0, -5.0},
             {-4.0, -2.0, 0.0, 0.0, 0.0, 0.0, -2.0, -4.0},
             {-3.0, 0.0, 1.0, 1.5, 1.5, 1.0, 0.0, -3.0},
@@ -32,7 +33,8 @@ public class EvaluationBoards {
             {-4.0, -2.0, 0.0, 0.5, 0.5, 0.0, -2.0, -4.0},
             {-5.0, -4.0, -3.0, -3.0, -3.0, -3.0, -4.0, -5.0}
     };
-    double[][] bishopEvalWhite = {
+
+    private static double[][] bishopEvalWhite = {
             {-2.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -2.0},
             {-1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0},
             {-1.0, 0.0, 0.5, 1.0, 1.0, 0.5, 0.0, -1.0},
@@ -43,9 +45,9 @@ public class EvaluationBoards {
             {-2.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -2.0}
     };
 
-    double[][] bishopEvalBlack = reverseBoard(bishopEvalWhite);
+    private static double[][] bishopEvalBlack = reverseBoard(bishopEvalWhite);
 
-    double[][] rookEvalWhite = {
+    private static double[][] rookEvalWhite = {
             {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
             {0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5},
             {0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.5},
@@ -56,9 +58,9 @@ public class EvaluationBoards {
             {0.0, 0.0, 0.0, 0.5, 0.5, 0.0, 0.0, 0.0}
     };
 
-    double[][] rookEvalBlack = reverseBoard(rookEvalWhite);
+    private static double[][] rookEvalBlack = reverseBoard(rookEvalWhite);
 
-    double[][] queenEval = {
+    private static double[][] queenEval = {
             {-2.0, -1.0, -1.0, -0.5, -0.5, -1.0, -1.0, -2.0},
             {-1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0},
             {-1.0, 0.0, 0.5, 0.5, 0.5, 0.5, 0.0, -1.0},
@@ -69,7 +71,7 @@ public class EvaluationBoards {
             {-2.0, -1.0, -1.0, -0.5, -0.5, -1.0, -1.0, -2.0}
     };
 
-    double[][] kingEvalWhite = {
+    private static double[][] kingEvalWhite = {
             {-3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0},
             {-3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0},
             {-3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0},
@@ -80,12 +82,12 @@ public class EvaluationBoards {
             {2.0, 3.0, 1.0, 0.0, 0.0, 1.0, 3.0, 2.0}
     };
 
-    double[][] kingEvalBlack = reverseBoard(kingEvalWhite);
+    private static double[][] kingEvalBlack = reverseBoard(kingEvalWhite);
 
     public static double[][] reverseBoard(double[][] my_array) {
         int my_rows = my_array.length;
         int my_cols = my_array[0].length;
-        double array[][] = new double[my_rows][my_cols];
+        double[][] array = new double[my_rows][my_cols];
         for (int i = my_rows - 1; i >= 0; i--) {
             for (int j = my_cols - 1; j >= 0; j--) {
                 array[my_rows - 1 - i][my_cols - 1 - j] = my_array[i][j];
@@ -96,9 +98,11 @@ public class EvaluationBoards {
 
     public static double evaluateBoard(Table table) {
         double result = 0d;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-
+        for (Piece[] whiteAndBlack : table.getPieces()) {
+            for(Piece p : whiteAndBlack) {
+                if(p != null) {
+                    result += getPieceValue(p);
+                }
             }
         }
         return result;
@@ -106,7 +110,25 @@ public class EvaluationBoards {
 
     // double[][] kingEvalBlack = reverse
 
-    double getPieceValue(Piece piece) {
-       return piece.getValue();
+    public static double getPieceValue(Piece piece) {
+        double value = piece.getValue();
+        int x = piece.getPosition().getCol();
+        int y = piece.getPosition().getRow();
+
+        if (piece instanceof King) {
+            value += piece.isWhite() ? kingEvalWhite[y][x] : kingEvalBlack[y][x];
+        } else if (piece instanceof Queen) {
+            value += queenEval[y][x];
+        } else if (piece instanceof Knight) {
+            value += knightEval[y][x];
+        } else if (piece instanceof Bishop) {
+            value += piece.isWhite() ? bishopEvalWhite[y][x] : bishopEvalBlack[y][x];
+        } else if (piece instanceof Rook) {
+            value += piece.isWhite() ? rookEvalWhite[y][x] : rookEvalBlack[y][x];
+        } else if (piece instanceof Pawn) {
+            value += piece.isWhite() ? pawnEvalWhite[y][x] : pawnEvalBlack[y][x];
+        }
+
+        return value;
     }
 }

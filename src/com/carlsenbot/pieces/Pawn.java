@@ -44,7 +44,7 @@ public class Pawn extends Piece {
         this(color, new Position(position));
     }
 
-   public Pawn(Pawn other) {
+   public Pawn(Piece other) {
         this(other.getColor(), new Position(other.getPosition()));
     }
 

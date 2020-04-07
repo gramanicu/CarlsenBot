@@ -1,0 +1,103 @@
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.07"]
+[Round "1"]
+[White "CarlsenBot"]
+[Black "Fairy-Max 5.0b"]
+[Result "0-1"]
+[TimeControl "300+2"]
+
+1. b4 Nc6 {+0,16/2 0,1} 2. h4 Nxb4 {+0,47/2 0,1} 3. f4 f5 {+0,81/2 0,1} 4.
+e3 c5 {+0,74/2 0,1} 5. h5 Nf6 {+0,72/2 0,1} 6. Qe2 Nxc2+ {+5,87/2 0,1}
+{White resigns} 0-1
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.07"]
+[Round "2"]
+[White "Fairy-Max 5.0b"]
+[Black "CarlsenBot"]
+[Result "1-0"]
+[TimeControl "300+2"]
+
+1. d4 {+0,07/2} d6 2. c4 {+0,07/2 0,1} Be6 3. Qa4+ {+0,12/2 0,1}
+{Black resigns} 1-0
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.07"]
+[Round "1"]
+[White "CarlsenBot"]
+[Black "Fairy-Max 5.0b"]
+[Result "0-1"]
+[TimeControl "300+2"]
+
+1. a4 d6 {+0,13/2 0,1} 2. c3 Nd7 {+0,09/2 0,1} 3. Ra2 Ngf6 {+0,08/2 0,1} 4.
+Ra3 c5 {+0,00/2 0,1} 5. f3 Ne5 {+0,01/2 0,1} 6. c4 Nxc4 {+0,70/2 0,1} 7.
+Rb3 Bf5 {+0,74/2 0,1} 8. Nc3 Rb8 {+0,68/2 0,1} 9. Rb5 g5 {+0,74/2 0,1} 10.
+Rxc5 dxc5 {+4,28/2 0,1} 11. g3 h5 {+4,46/2 0,1} 12. Bh3 Nd6 {+4,37/2 0,1}
+13. Kf2 Bg7 {+4,39/2 0,1} 14. e4 Be6 {+4,32/2 0,1} 15. f4 Nfxe4+
+{+5,22/2 0,1}
+{White resigns} 0-1
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.07"]
+[Round "2"]
+[White "Fairy-Max 5.0b"]
+[Black "CarlsenBot"]
+[Result "*"]
+[TimeControl "300+2"]
+
+1. Nc3 {+0,15/2} g6 2. f3 {+0,11/2 0,1} f6 3. b4 {+0,06/2 0,1}
+{xboard exit (Clocks: 305, 274)} *
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.07"]
+[Round "1"]
+[White "CarlsenBot"]
+[Black "Fairy-Max 5.0b"]
+[Result "*"]
+[TimeControl "300+2"]
+
+1. c4 f5 {+0,07/2 0,1} 2. b4 a5 {+0,19/2 0,1} 3. g4 fxg4 {+0,56/2 0,1} 4.
+Nc3 axb4 {+1,40/2 0,1}
+{xboard exit (Clocks: 299, 307)} *
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.07"]
+[Round "-"]
+[White "nicolae"]
+[Black "CarlsenBot"]
+[Result "*"]
+[TimeControl "300+2"]
+
+1. e4
+{xboard exit (Clocks: 302, 295)} *
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.07"]
+[Round "-"]
+[White "nicolae"]
+[Black "CarlsenBot"]
+[Result "*"]
+[TimeControl "300+2"]
+
+1. e4
+{xboard exit (Clocks: 302, 290)} *
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.07"]
+[Round "-"]
+[White "nicolae"]
+[Black "CarlsenBot"]
+[Result "*"]
+[TimeControl "300+2"]
+
+1. e4
+{xboard exit (Clocks: 302, 135)} *
+

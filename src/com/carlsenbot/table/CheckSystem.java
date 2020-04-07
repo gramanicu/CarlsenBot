@@ -4,17 +4,19 @@
 
 package com.carlsenbot.table;
 
-import com.carlsenbot.main.GameManager;
 import com.carlsenbot.pieces.King;
 import com.carlsenbot.pieces.Piece;
 import com.carlsenbot.pieces.PieceColor;
 import com.carlsenbot.position.Position;
 
 public class CheckSystem {
-    public CheckSystem() { }
+    Table table;
+
+    public CheckSystem(Table table) {
+        this.table = table;
+    }
 
     public boolean isInCheck(PieceColor playerColor, Position pos) {
-        Table table = GameManager.getInstance().getTable();
         Piece[] pieces;
         if(playerColor == PieceColor.White) {
             pieces = table.getPieces()[1];

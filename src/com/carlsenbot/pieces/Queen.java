@@ -23,7 +23,7 @@ public class Queen extends Piece {
         this(color, new Position(position));
     }
 
-    public Queen(Queen other) {
+    public Queen(Piece other) {
         this(other.getColor(), new Position(other.getPosition()));
     }
     /*
