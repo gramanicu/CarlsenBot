@@ -19,7 +19,7 @@ public class King extends Piece {
      * @param position The position of the king
      */
     public King(PieceColor color, Position position) {
-        super(Double.MAX_VALUE, color, position, "King");
+        super(900d, color, position, "King");
         firstMove = true;
         castled = false;
     }

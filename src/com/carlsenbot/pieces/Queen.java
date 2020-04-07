@@ -13,7 +13,7 @@ public class Queen extends Piece {
      * @param position The position of the queen
      */
     public Queen(PieceColor color, Position position) {
-        super(880d, color, position, "Queen");
+        super(90d, color, position, "Queen");
     }
 
     /*

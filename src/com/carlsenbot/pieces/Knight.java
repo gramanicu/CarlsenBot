@@ -11,7 +11,7 @@ import com.carlsenbot.table.Table;
 public class Knight extends Piece {
 
     public Knight(PieceColor color, Position position) {
-        super(300d, color, position,"Knight");
+        super(30d, color, position,"Knight");
     }
 
     public Knight(PieceColor color, String position) {

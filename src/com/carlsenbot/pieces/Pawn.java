@@ -32,7 +32,7 @@ public class Pawn extends Piece {
      * @param position The position of the pawn
      */
     public Pawn(PieceColor color, Position position) {
-        super(100d, color, position, "Pawn");
+        super(10d, color, position, "Pawn");
         moved = false;
         enPassante = false;
     }

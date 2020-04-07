@@ -15,7 +15,7 @@ public class Bishop extends Piece {
      * @param position The position of the bishop
      */
     public Bishop(PieceColor color, Position position) {
-        super(325d, color, position, "Bishop");
+        super(30d, color, position, "Bishop");
     }
 
     /*
