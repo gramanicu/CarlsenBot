@@ -58,6 +58,10 @@ public class King extends Piece {
             return info;
         }
 
+        if(assignedTable.getAssignedGameManager().getCheckSystem().isInCheck(getColor(), target)) {
+            return info;
+        }
+
         // If the king hasn't castled and has it's first move, check if
         // the movement can be a castle
         if (!castled && firstMove && source.getDistance(target) > Math.sqrt(2)) {
