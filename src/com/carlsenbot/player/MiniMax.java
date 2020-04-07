@@ -4,48 +4,69 @@
 
 package com.carlsenbot.player;
 
+import com.carlsenbot.position.Move;
+import com.carlsenbot.table.Table;
+
+import java.util.ArrayList;
+
 public class MiniMax {
 
-    static double minimax(int depth, int nodeIndex, Boolean maximizingPlayer, int[] values, double alpha, double beta) {
-        // Terminating condition. i.e
-        // leaf node is reached
-        if (depth == 3)
-            return values[nodeIndex];
+    private double minimax(int depth, boolean maxPlayer, Table table, double alpha, double beta) {
+        if(depth == 0) {
+            return -EvaluationBoards.evaluateBoard(table);
+        }
 
-        if (maximizingPlayer) {
+        ArrayList<Move> possibleMoves = table.getAllPossibleMoves();
+
+        if(maxPlayer) {
             double best = Double.NEGATIVE_INFINITY;
 
-            // Recur for left and
-            // right children
-            for (int i = 0; i < 2; ++i) {
-                double val = minimax(depth + 1, nodeIndex * 2 + i,
-                        false, values, alpha, beta);
-                best = Math.max(best, val);
-                alpha = Math.max(alpha, best);
+            for(Move move : possibleMoves) {
+                Table afterMove = new Table(table);
+                afterMove.movePiece(move.getStart(), move.getEnd());
+                best = Math.max(best, minimax(depth-1, false, afterMove, alpha, beta));
 
-                // Alpha Beta Pruning
-                if (beta <= alpha)
-                    break;
+                alpha = Math.max(alpha, best);
+                if(beta <= alpha) {
+                    return best;
+                }
             }
+
             return best;
         } else {
             double best = Double.POSITIVE_INFINITY;
 
-            // Recur for left and
-            // right children
-            for (int i = 0; i < 2; ++i) {
+            for(Move move : possibleMoves) {
+                Table afterMove = new Table(table);
+                afterMove.movePiece(move.getStart(), move.getEnd());
+                best = Math.min(best, minimax(depth-1, true, afterMove, alpha, beta));
 
-                double val = minimax(depth + 1, nodeIndex * 2 + i,
-                        true, values, alpha, beta);
-                best = Math.min(best, val);
                 beta = Math.min(beta, best);
-
-                // Alpha Beta Pruning
-                if (beta <= alpha)
-                    break;
+                if(beta <= alpha) {
+                    return best;
+                }
             }
             return best;
         }
+    }
+
+    public Move minimax(int depth, boolean maxPlayer, Table table) {
+        ArrayList<Move> possibleMoves = table.getAllPossibleMoves();
+        double best = -9999;
+        Move bestMove = null;
+
+        for(Move move : possibleMoves) {
+            Table afterMove = new Table(table);
+            afterMove.movePiece(move.getStart(), move.getEnd());
+            double value = minimax(depth - 1, !maxPlayer, afterMove, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+
+            if(value >= best) {
+                best = value;
+                bestMove = move;
+            }
+        }
+
+        return bestMove;
     }
 
 

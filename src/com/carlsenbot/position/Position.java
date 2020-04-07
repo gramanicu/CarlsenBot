@@ -28,6 +28,11 @@ public class Position {
      */
     public Position(String coordinates) { setCoordinates(coordinates); }
 
+    public Position(Position other) {
+        x = other.x;
+        y = other.y;
+    }
+
     // Getters
     public int getX() { return x; }
     public int getY() { return y; }

@@ -115,12 +115,10 @@ public class GameManager {
              * - the other pawn must be the last moved piece
              * - he must have done his first move, a double move
              */
-            if (other instanceof Pawn &&
+            return other instanceof Pawn &&
                     myColor != other.getColor() &&
                     other == lastMove.getPiece() &&
-                    lastMove.getDistance() == 2d) {
-                return true;
-            }
+                    lastMove.getDistance() == 2d;
         }
         return false;
     }
@@ -150,6 +148,10 @@ public class GameManager {
         commEngine.sendCommand(string);
     }
 
+    public void addMoveToHistory(Move move) {
+        moveHistory.add(move);
+    }
+
     /**
      * Move a piece using the game manager
      * @param start The position of the piece to be moved
@@ -167,8 +169,6 @@ public class GameManager {
 
         // Count the moves only if they were not forced
         if(moveWasDone && !isForceMode()) {
-
-            moveHistory.add(new Move(start, target, table.getPiece(target)));
             switchTurn();
         }
         return moveWasDone;

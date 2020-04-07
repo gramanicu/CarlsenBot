@@ -7,7 +7,10 @@ package com.carlsenbot.table;
 
 import com.carlsenbot.main.GameManager;
 import com.carlsenbot.pieces.Piece;
+import com.carlsenbot.position.Move;
 import com.carlsenbot.position.Position;
+
+import java.util.ArrayList;
 
 public class Table {
     /*
@@ -45,6 +48,28 @@ public class Table {
         blackID = -1;
         whiteID = 1;
         pieces = new Piece[2][16];
+    }
+
+    public Table(Table other) {
+        positions = new byte[8][8];
+        pieces = new Piece[2][16];
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                positions[i][j] = other.positions[i][j];
+            }
+        }
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 16; j++) {
+                // This must be copy constructor
+                pieces[i][j] = other.pieces[i][j];
+            }
+        }
+
+        blackID = other.blackID;
+        whiteID = other.whiteID;
+        assignedGameManager = null;
     }
 
     /**
@@ -93,6 +118,11 @@ public class Table {
             return true;
         }
         return false;
+    }
+
+    public ArrayList<Move> getAllPossibleMoves() {
+        ArrayList<Move> moves = new ArrayList<Move>();
+        return moves;
     }
 
     /**
@@ -199,8 +229,13 @@ public class Table {
     public boolean movePiece(Position start, Position target) {
         Piece piece = getPiece(start);
         if (piece != null) {
-            if (!piece.move(target).canMove) {
+            Piece.MoveInfo info = piece.move(target);
+            if (!info.canMove) {
                 return false;
+            }
+
+            if(assignedGameManager != null) {
+                assignedGameManager.addMoveToHistory(new Move(start, target, piece));
             }
 
             setCell(start, (byte) 0);

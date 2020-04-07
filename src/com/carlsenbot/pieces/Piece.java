@@ -67,6 +67,14 @@ public abstract class Piece {
         setOnBoard(onBoard);
     }
 
+    public Piece(Piece other) {
+        setValue(other.value);
+        setColor(other.getColor());
+        setPosition(other.position);
+        setName(other.name);
+        setOnBoard(other.onBoard);
+    }
+
     // Getters
     public boolean isOnBoard() {
         return onBoard;
