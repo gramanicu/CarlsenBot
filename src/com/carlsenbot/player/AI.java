@@ -14,11 +14,7 @@ import java.util.Random;
 public class AI {
     private Player assignedPlayer;
 
-    public AI(Player player) {
-        this.assignedPlayer = player;
-    }
-
-    public String think() {
+    private String randomAI() {
         GameManager gameManager = GameManager.getInstance();
         Table table = gameManager.getTable();
 
@@ -40,7 +36,7 @@ public class AI {
                 king = table.getPieces()[1][0];
             }
 
-            if(gameManager.getCheckSystem().isInCheck(assignedPlayer.getColor(), king.getPosition())) {
+            if(gameManager.getTable().getCheckSystem().isInCheck(assignedPlayer.getColor(), king.getPosition())) {
                 gameManager.resign();
                 return "";
             }
@@ -48,12 +44,21 @@ public class AI {
 
 
             // Try to execute a move
-
             source = piece.getPosition();
             target = new Position(rand.nextInt(8),rand.nextInt(8));
             validMove = piece.isValidMove(target).canMove;
         }
 
         return source.toString() + target.toString();
+    }
+
+
+    public AI(Player player) {
+        this.assignedPlayer = player;
+    }
+
+    public String think() {
+//        return randomAI();
+        Table minmaxTable = new Table(assignedPlayer)
     }
 }

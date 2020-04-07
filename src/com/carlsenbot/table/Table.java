@@ -4,10 +4,7 @@
 
 package com.carlsenbot.table;
 
-import com.carlsenbot.pieces.King;
-import com.carlsenbot.pieces.Pawn;
-import com.carlsenbot.pieces.Piece;
-import com.carlsenbot.pieces.PieceColor;
+import com.carlsenbot.pieces.*;
 import com.carlsenbot.position.Move;
 import com.carlsenbot.position.Position;
 
@@ -67,6 +64,11 @@ public class Table {
                 // This must be copy constructor
                 Piece p = other.pieces[i][j];
                 if(p instanceof King) {
+                } else if(p instanceof Queen) {
+                } else if(p instanceof Knight) {
+                } else if(p instanceof Bishop) {
+                } else if(p instanceof Rook) {
+                } else if(p instanceof Pawn) {
                 }
             }
         }
@@ -370,6 +372,9 @@ public class Table {
         return sb.toString();
     }
 
+    public CheckSystem getCheckSystem() {
+        return checkSystem;
+    }
 
     public void printMoveHistory() {
         for (Move move : moveHistory) {
