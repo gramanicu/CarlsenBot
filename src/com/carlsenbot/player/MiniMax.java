@@ -6,7 +6,6 @@ package com.carlsenbot.player;
 
 public class MiniMax {
 
-
     static double minimax(int depth, int nodeIndex, Boolean maximizingPlayer, int[] values, double alpha, double beta) {
         // Terminating condition. i.e
         // leaf node is reached
@@ -48,4 +47,6 @@ public class MiniMax {
             return best;
         }
     }
+
+
 }
