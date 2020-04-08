@@ -111,22 +111,23 @@ public class EvaluationBoards {
     // double[][] kingEvalBlack = reverse
 
     public static double getPieceValue(Piece piece) {
-        double value = piece.getValue();
+        double value = piece.isWhite() ? piece.getValue() : -piece.getValue();
+
         int x = piece.getPosition().getCol();
         int y = piece.getPosition().getRow();
 
         if (piece instanceof King) {
-            value += piece.isWhite() ? kingEvalWhite[y][x] : kingEvalBlack[y][x];
+            value += piece.isWhite() ? kingEvalWhite[y][x] : -kingEvalBlack[y][x];
         } else if (piece instanceof Queen) {
-            value += queenEval[y][x];
+            value += piece.isWhite() ? queenEval[y][x] : -queenEval[y][x];
         } else if (piece instanceof Knight) {
-            value += knightEval[y][x];
+            value += piece.isWhite() ? knightEval[y][x] : -knightEval[y][x];
         } else if (piece instanceof Bishop) {
-            value += piece.isWhite() ? bishopEvalWhite[y][x] : bishopEvalBlack[y][x];
+            value += piece.isWhite() ? bishopEvalWhite[y][x] : -bishopEvalBlack[y][x];
         } else if (piece instanceof Rook) {
-            value += piece.isWhite() ? rookEvalWhite[y][x] : rookEvalBlack[y][x];
+            value += piece.isWhite() ? rookEvalWhite[y][x] : -rookEvalBlack[y][x];
         } else if (piece instanceof Pawn) {
-            value += piece.isWhite() ? pawnEvalWhite[y][x] : pawnEvalBlack[y][x];
+            value += piece.isWhite() ? pawnEvalWhite[y][x] : -pawnEvalBlack[y][x];
         }
 
         return value;

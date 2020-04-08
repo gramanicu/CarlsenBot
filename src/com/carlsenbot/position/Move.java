@@ -4,8 +4,7 @@
 
 package com.carlsenbot.position;
 
-import com.carlsenbot.pieces.Piece;
-import com.carlsenbot.pieces.PieceColor;
+import com.carlsenbot.pieces.*;
 
 public class Move {
     private Position start;
@@ -23,6 +22,27 @@ public class Move {
         this.start = start;
         this.end = end;
         this.what = what;
+        who = what.getColor();
+    }
+
+    public Move(Move other) {
+        this.start = new Position(other.start);
+        this.end = new Position(other.end);
+        Piece p = other.what;
+        if (p instanceof King) {
+            what = new King(p);
+        } else if (p instanceof Queen) {
+            what = new Queen(p);
+        } else if (p instanceof Knight) {
+            what = new Knight(p);
+        } else if (p instanceof Bishop) {
+            what = new Bishop(p);
+        } else if (p instanceof Rook) {
+            what = new Rook(p);
+        } else if (p instanceof Pawn) {
+            what = new Pawn(p);
+        }
+        assert what != null;
         who = what.getColor();
     }
 

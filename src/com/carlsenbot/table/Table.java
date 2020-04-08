@@ -87,9 +87,12 @@ public class Table {
             }
         }
 
+        moveHistory = new ArrayList<>();
         blackID = other.blackID;
         whiteID = other.whiteID;
-        moveHistory = new ArrayList<>();
+        for (Move historicMove : other.moveHistory) {
+            moveHistory.add(new Move(historicMove));
+        }
         checkSystem = new CheckSystem(this);
     }
 
