@@ -4,7 +4,6 @@
 
 package com.carlsenbot.pieces;
 
-import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Position;
 
 public class Pawn extends Piece {
@@ -46,6 +45,8 @@ public class Pawn extends Piece {
 
    public Pawn(Piece other) {
         this(other.getColor(), new Position(other.getPosition()));
+        enPassante = ((Pawn) other).enPassante;
+        moved = ((Pawn) other).moved;
     }
 
     @Override
@@ -128,9 +129,6 @@ public class Pawn extends Piece {
         return info;
     }
 
-
-
-
     /*
      * Move to the desired position
      */
@@ -139,12 +137,12 @@ public class Pawn extends Piece {
         MoveInfo info = isValidMove(target);
 
         if (info.canMove) {
+            moved = true;
             if(info.attacking) {
                 capturePiece(target, info.attackedPiece);
             } else {
                 movePiece(target);
             }
-            moved = true;
         }
         return info;
     }

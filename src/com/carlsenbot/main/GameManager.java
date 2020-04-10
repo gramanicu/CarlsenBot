@@ -8,6 +8,7 @@ import com.carlsenbot.communication.Engine;
 import com.carlsenbot.pieces.Piece;
 import com.carlsenbot.pieces.PieceColor;
 import com.carlsenbot.player.Player;
+import com.carlsenbot.position.Move;
 import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
@@ -19,6 +20,8 @@ public class GameManager {
     private Engine commEngine;
     private Player player;
     private boolean botActive;
+    private Move queuedMove;
+    public boolean againstComputer;
 
     //region "Dangerous methods"
     /* ----------------------------------------
@@ -51,6 +54,8 @@ public class GameManager {
         forceMode = false;
         player = new Player();
         botActive = false;
+        queuedMove = null;
+        againstComputer = false;
     }
 
     // Get (and initialise if needed) the instance of the singleton
@@ -77,7 +82,15 @@ public class GameManager {
         table.setTurnColor(color);
         checkBotAct();
     }
-    public void activateBot() { botActive = true; }
+    public void activateBot() {
+        botActive = true;
+
+        if(queuedMove != null) {
+            if (move(queuedMove.getStart(), queuedMove.getEnd())) {
+                sendCommand("move " + queuedMove.getStart().toString() + queuedMove.getEnd().toString());
+            }
+        }
+    }
 
     /**
      * Check if it's the bot's turn
@@ -89,21 +102,12 @@ public class GameManager {
     }
 
     /**
-     * Change the turn
-     */
-    public void switchTurn() {
-        table.switchTurn();
-        activateBot();
-     }
-
-    /**
      * Send a command to the XBoard
      * @param string The command to be sent
      */
     public void sendCommand(String string) {
         commEngine.sendCommand(string);
     }
-
 
     /**
      * Move a piece using the game manager
@@ -118,18 +122,16 @@ public class GameManager {
             resign();
         }
 
-        boolean moveWasDone = table.movePiece(start, target);
-
-        // Count the moves only if they were not forced
-        if(moveWasDone && !isForceMode()) {
-            switchTurn();
-        }
-        return moveWasDone;
+        return table.movePiece(start, target);
     }
 
     public boolean moveAndSend(Position start, Position target) {
-        if(!botActive) { return false; }
-        // If the piece could be moved, send the command to the server
+        if(!botActive && againstComputer) {
+            queuedMove = new Move(start, target, table.getPiece(start));
+            return false;
+        }
+
+        // We assume that the bot gave a correct move and we send it
         if (move(start, target)) {
             sendCommand("move " + start.toString() + target.toString());
             return true;
@@ -152,6 +154,8 @@ public class GameManager {
         player = new Player();
         player.setColor(PieceColor.Black);
         botActive = false;
+        queuedMove = null;
+        againstComputer = false;
     }
 
     public void resign() {

@@ -10,6 +10,7 @@ import com.carlsenbot.position.Move;
 import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class AI {
@@ -20,35 +21,25 @@ public class AI {
         Table table = gameManager.getTable();
 
         Random rand = new Random();
-        Position source = null, target = null;
+        Position source , target;
 
-        boolean validMove = false;
+        Piece king;
+        ArrayList<Move> possibleMoves = table.getAllPossibleMoves();
+        int id = rand.nextInt(possibleMoves.size());
 
-        while(!validMove) {
-            int id = rand.nextInt(16);
-            Piece piece;
-            Piece king;
-
-            if(assignedPlayer.isWhite()) {
-                piece = table.getPieces()[0][id];
-                king = table.getPieces()[0][0];
-            } else {
-                piece = table.getPieces()[1][id];
-                king = table.getPieces()[1][0];
-            }
-
-            if(gameManager.getTable().getCheckSystem().isInCheck(assignedPlayer.getColor(), king.getPosition())) {
-                gameManager.resign();
-                return "";
-            }
-            if(piece == null) { continue; }
-
-
-            // Try to execute a move
-            source = piece.getPosition();
-            target = new Position(rand.nextInt(8),rand.nextInt(8));
-            validMove = piece.isValidMove(target).canMove;
+        if (assignedPlayer.isWhite()) {
+            king = table.getPieces()[0][0];
+        } else {
+            king = table.getPieces()[1][0];
         }
+
+        if (gameManager.getTable().getCheckSystem().isInCheck(assignedPlayer.getColor(), king.getPosition())) {
+            gameManager.resign();
+            return "";
+        }
+
+        source = possibleMoves.get(id).getStart();
+        target = possibleMoves.get(id).getEnd();
 
         return source.toString() + target.toString();
     }
@@ -74,7 +65,7 @@ public class AI {
             return "";
         }
 
-        int depth = 4;
+        int depth = 2;
 
         Move move = MiniMax.minimax(depth, true, minimaxTable);
         return move.getStart().toString() + move.getEnd().toString();

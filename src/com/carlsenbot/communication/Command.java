@@ -99,6 +99,13 @@ public class Command {
         return true;
     }
 
+    // When the bot plays against another bot, it should wait for the go command
+    // to start
+    private boolean computer() {
+        gameManager.againstComputer = true;
+        return true;
+    }
+
     private boolean go() {
 //        gameManager.disableForceMode();
         // Start thinking ?

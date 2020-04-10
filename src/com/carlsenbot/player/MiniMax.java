@@ -58,7 +58,7 @@ public class MiniMax {
         for(Move move : possibleMoves) {
             Table afterMove = new Table(table);
             afterMove.movePiece(move.getStart(), move.getEnd());
-            double value = minimax(depth - 1, maxPlayer, afterMove, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+            double value = minimax(depth - 1, !maxPlayer, afterMove, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
 
             if(value >= best) {
                 best = value;

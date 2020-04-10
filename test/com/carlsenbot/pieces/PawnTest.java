@@ -42,7 +42,6 @@ class PawnTest {
 
         assertTrue(p4.isValidMove(new Position("b2")).canMove, "The pawn should be able to move");
         assertTrue(p4.isValidMove(new Position("b1")).canMove, "The pawn should be able to move");
-
     }
 
     @Test
@@ -83,5 +82,37 @@ class PawnTest {
         assertEquals(table.getPiece(new Position("a2")), p5,"The pawn shouldn't have moved");
         table.movePiece(p5, "a1");
         assertEquals(table.getPiece(new Position("a1")), p5,"The pawn should have moved");
+    }
+
+    @Test
+    void enPassant() {
+        Pawn pawnW = new Pawn(PieceColor.White, "e5");
+        Pawn pawnB = new Pawn(PieceColor.Black, "f7");
+        table = new Table();
+        table.addPiece(pawnW);
+        table.addPiece(pawnB);
+
+        assertFalse(pawnW.isValidMove(new Position("f6")).canMove, "No pawn to be taken");
+        table.movePiece(pawnB, "f5");
+        assertTrue(pawnW.isValidMove(new Position("f6")).canMove, "En passant is possible");
+        table.movePiece(pawnW, "f6");
+
+        assertEquals(table.getPiece(new Position("f6")), pawnW, "The pawn should have moved");
+        assertFalse(pawnB.isOnBoard(), "This pawn should have been captured");
+
+        // Same tests, other color
+        pawnW = new Pawn(PieceColor.White, "f2");
+        pawnB = new Pawn(PieceColor.Black, "e4");
+        table = new Table();
+        table.addPiece(pawnW);
+        table.addPiece(pawnB);
+
+        assertFalse(pawnB.isValidMove(new Position("f3")).canMove, "No pawn to be taken");
+        table.movePiece(pawnW, "f4");
+        assertTrue(pawnB.isValidMove(new Position("f3")).canMove, "En passant is possible");
+        table.movePiece(pawnB, "f3");
+
+        assertEquals(table.getPiece(new Position("f3")), pawnB, "The pawn should have moved");
+        assertFalse(pawnW.isOnBoard(), "This pawn should have been captured");
     }
 }

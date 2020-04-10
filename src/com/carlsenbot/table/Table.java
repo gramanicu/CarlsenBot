@@ -128,7 +128,7 @@ public class Table {
      */
     public boolean canBeEnPassanted(Position position, PieceColor myColor) {
         Piece other = getPiece(position);
-        if(moveHistory.size() > 2) {
+        if(moveHistory.size()  != 0) {
             Move lastMove = moveHistory.get(moveHistory.size() - 1);
 
             /*
@@ -322,6 +322,7 @@ public class Table {
                 return false;
             }
 
+            switchTurn();
             addMoveToHistory(new Move(start, target, piece));
 
             setCell(start, (byte) 0);
@@ -335,9 +336,13 @@ public class Table {
         Position target = new Position(destination);
         Position start = piece.getPosition();
 
-        if (!piece.move(target).canMove) {
+        Piece.MoveInfo info = piece.move(target);
+        if (!info.canMove) {
             return false;
         }
+
+        switchTurn();
+        addMoveToHistory(new Move(start, target, piece));
 
         setCell(start, (byte) 0);
         setCell(target, piece.getId());

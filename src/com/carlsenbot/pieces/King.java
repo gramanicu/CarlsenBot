@@ -32,6 +32,8 @@ public class King extends Piece {
 
     public King(Piece other) {
         this(other.getColor(), new Position(other.getPosition()));
+        firstMove = ((King) other).firstMove;
+        castled = ((King) other).castled;
     }
     /*
      * Implementation of the get symbol
@@ -92,7 +94,7 @@ public class King extends Piece {
                 }
             }
 
-            Rook rook;
+            Rook rook = null;
             Position rookPos;
             if(direction > 0) {
                 // We do O-O
@@ -102,7 +104,10 @@ public class King extends Piece {
                 rookPos = new Position(0, source.getY());
             }
 
-            rook = (Rook) assignedTable.getPiece(rookPos);
+            Piece piece = assignedTable.getPiece(rookPos);
+            if(piece instanceof Rook) {
+                rook = (Rook) piece;
+            }
             if(rook == null) {
                 return info;
             } else if (rook.hasMoved) {
