@@ -4,7 +4,6 @@
 
 package com.carlsenbot.pieces;
 
-import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Position;
 
 public class King extends Piece {
@@ -85,28 +84,6 @@ public class King extends Piece {
             check if we can castle
             if we can castle, we set castled true
              */
-
-            boolean flag = false;
-            int diffCol = 1;
-
-            if(source.getDiffCol(target) == 2) {
-                diffCol = -1;
-            }
-
-            for(int i = getPosition().getCol(); i <=target.getCol(); i += diffCol) {
-                if(assignedTable.getCheckSystem().isInCheck(getColor(), new Position(getPosition().getRow(), i))) {
-                    if(!assignedTable.isEmptyCell(new Position(target.getRow(), i))) {
-                        flag = true;
-                    }
-                }
-            }
-
-            if(!flag) {
-                if (!castled) {
-                    castled = true;
-                }
-            }
-
         }
 
         // If the king has moved once or has castled, we are guaranteed to move only 1 cell at a time
