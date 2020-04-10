@@ -8,7 +8,22 @@ import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
 public abstract class Piece {
+    /*
+        This class has is used in different scenarios. Generally, we use it
+        to know if we can move a piece to a location, if it will do an
+        attack to get there and what piece is captured.
+
+        The reason we need to know what piece is captured is to be able
+        to handle the special case of the en-passant (when the piece
+        captured is not the same as the place where the attacking piece
+        will actually move.
+
+        There is another use case. As a convention, when we don't attack,
+        but attackedPiece is set, it means we actually do a castle. The
+        attacked piece stores the location of the rook that will be moved.
+     */
     public static class MoveInfo {
+
         public boolean canMove;
         public boolean attacking;
         public Position attackedPiece;

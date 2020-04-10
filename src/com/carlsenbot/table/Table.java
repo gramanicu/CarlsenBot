@@ -344,6 +344,12 @@ public class Table {
         return true;
     }
 
+    public void teleportRookCastle(Rook rook, Position destination) {
+        setCell(rook.getPosition(), (byte) 0);
+        setCell(destination, rook.getId());
+        rook.setPosition(destination);
+    }
+
     /**
      * Set the value of the cell to one specified
      * @param target The position of the cell

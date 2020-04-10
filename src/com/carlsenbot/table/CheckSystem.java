@@ -5,6 +5,7 @@
 package com.carlsenbot.table;
 
 import com.carlsenbot.pieces.King;
+import com.carlsenbot.pieces.Pawn;
 import com.carlsenbot.pieces.Piece;
 import com.carlsenbot.pieces.PieceColor;
 import com.carlsenbot.position.Position;
@@ -28,9 +29,19 @@ public class CheckSystem {
             if (p == null || p instanceof King) {
                 continue;
             }
-            if(p.isValidMove(pos).attacking) {
-                return true;
+
+            // Every piece, except the pawn can move to the cells it attacks
+            if(p instanceof Pawn) {
+                if(p.isValidMove(pos).attacking) {
+                    return true;
+                }
+            } else {
+                if(p.isValidMove(pos).canMove) {
+                    return true;
+                }
             }
+
+
         }
         return false;
     }

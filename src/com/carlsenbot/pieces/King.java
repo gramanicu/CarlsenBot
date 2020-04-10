@@ -51,16 +51,11 @@ public class King extends Piece {
     @Override
     public MoveInfo isValidMove(Position target) {
         MoveInfo info = new MoveInfo(target);
-        // Every move is legal in forced mode
 
         Position source = getPosition();
 
         // If the target is the same cell
         if(source.getDistance(target) == 0) {
-            return info;
-        }
-
-        if(assignedTable.getCheckSystem().isInCheck(getColor(), target)) {
             return info;
         }
 
@@ -79,11 +74,47 @@ public class King extends Piece {
                 return info;
             }
 
-            // TODO - Check if the rook can castle
-            /*
-            check if we can castle
-            if we can castle, we set castled true
-             */
+            // See if any position the king will pass through is in check or occupied
+            // -1   - moving left
+            //  1   - moving right
+            int direction = (int) ((target.getCol() - source.getCol()) / source.getDiffCol(target));
+
+            for(int i = source.getCol(); i != target.getCol() + direction; i+= direction) {
+                Position interPos =  new Position(i, source.getRow());
+                // If the intermediary positions are in check
+                if(assignedTable.getCheckSystem().isInCheck(getColor(),interPos)) {
+                    return info;
+                }
+
+                // If the intermediary position are not empty (except the starting one)
+                if(!assignedTable.isEmptyCell(interPos) && !interPos.equals(source)) {
+                    return info;
+                }
+            }
+
+            Rook rook;
+            Position rookPos;
+            if(direction > 0) {
+                // We do O-O
+                rookPos = new Position(7, source.getY());
+            } else {
+                // We do O-O-O
+                rookPos = new Position(0, source.getY());
+            }
+
+            rook = (Rook) assignedTable.getPiece(rookPos);
+            if(rook == null) {
+                return info;
+            } else if (rook.hasMoved) {
+                return info;
+            } else {
+                // The rook can also castle
+                info.setMove();
+
+                // This is a trick we use
+                info.attackedPiece = rookPos;
+                return info;
+            }
         }
 
         // If the king has moved once or has castled, we are guaranteed to move only 1 cell at a time
@@ -92,24 +123,19 @@ public class King extends Piece {
         }
 
         // Check if the position is in check
-//        if (isInCheck(target)) {
-//            return info;
-//        }
-        if(castled && !firstMove) {
-            firstMove = true;
-            /*
-            we should teleport them
-             */
-        } else {
-            // If the target has a piece in it
-            if (!assignedTable.isEmptyCell(target)) {
-                // Check for enemy piece, to attack, else, don't move at all
-                if (!isSameColor(target)) {
-                    info.setMove();
-                    info.setAttack();
-                }
-                return info;
+        // TODO - deal with the case where a infinite loop is created (king checks king)
+        if (assignedTable.getCheckSystem().isInCheck(getColor(), target)) {
+            return info;
+        }
+
+        // If the target has a piece in it
+        if (!assignedTable.isEmptyCell(target)) {
+            // Check for enemy piece, to attack, else, don't move at all
+            if (!isSameColor(target)) {
+                info.setMove();
+                info.setAttack();
             }
+            return info;
         }
 
         // If the cell was empty, move
@@ -125,9 +151,17 @@ public class King extends Piece {
         MoveInfo info = isValidMove(target);
 
         if (info.canMove) {
+            firstMove = false;
             if(info.attacking) {
                 capturePiece(target);
             } else {
+                // If we need to castle
+                Rook rook = (Rook) assignedTable.getPiece(info.attackedPiece);
+                if(rook != null) {
+                    Position newRookPos = new Position((getPosition().getX() + target.getX())/2, getPosition().getY());
+                    assignedTable.teleportRookCastle(rook, newRookPos);
+                    castled = true;
+                }
                 movePiece(target);
             }
         }

@@ -4,11 +4,13 @@
 
 package com.carlsenbot.pieces;
 
-import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
 public class Rook extends Piece {
+    // The rook can't castle if it did the first move
+    public boolean hasMoved = false;
+
     /**
      * Create a new rook, with the specified position and id
      * @param color The color of the rook
@@ -142,6 +144,7 @@ public class Rook extends Piece {
         MoveInfo info = isValidMove(target);
 
         if (info.canMove) {
+            hasMoved = true;
             if(info.attacking) {
                 capturePiece(target);
             } else {
