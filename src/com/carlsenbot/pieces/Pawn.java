@@ -90,7 +90,6 @@ public class Pawn extends Piece {
             }
 
             if (source.getDiffRow(target) == 1) {
-                info.setMove();
                 if(target.getRow() == 0){
                     Queen queen = null;
                     Position pawnPos;
@@ -108,6 +107,7 @@ public class Pawn extends Piece {
                     queen = new Queen(PieceColor.White,target);
                     assignedTable.addPiece(queen);
                 }
+                info.setMove();
             } else if (!moved) {
                 // Check if is moving 2 positions and it can do so
                 // (first move of the game)
