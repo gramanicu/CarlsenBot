@@ -8,7 +8,6 @@
 
 package com.carlsenbot.table;
 
-import com.carlsenbot.main.GameManager;
 import com.carlsenbot.pieces.Pawn;
 import com.carlsenbot.pieces.Piece;
 import com.carlsenbot.pieces.PieceColor;

@@ -66,7 +66,7 @@ public class AI {
 //            return "";
 //        }
 
-        int depth = 1;
+        int depth = 4;
 
         Move move = MiniMax.minimax(depth, true, minimaxTable);
         return move.getStart().toString() + move.getEnd().toString();
