@@ -90,22 +90,13 @@ public class Pawn extends Piece {
             }
 
             if (source.getDiffRow(target) == 1) {
-                if(target.getRow() == 0){
-                    Queen queen = null;
-                    Position pawnPos;
-                    pawnPos = new Position(0,target.getCol());
-                    //move(target);
-                    assignedTable.removePiece(this);
-                    queen = new Queen(PieceColor.Black,target);
-                    assignedTable.addPiece(queen);
-                } else if (target.getRow() == 7) {
-                    Queen queen = null;
-                    Position pawnPos;
-                    pawnPos = new Position(7,target.getCol());
-                    //move(target);
-                    assignedTable.removePiece(this);
-                    queen = new Queen(PieceColor.White,target);
-                    assignedTable.addPiece(queen);
+                if (source.getDiffRow(target) == 1) {
+                    if (target.getRow() == 0) {
+                        assignedTable.getPieces()[0][(this.getId()) - 1] = new Queen(PieceColor.White, target);
+                    } else if (target.getRow() == 7) {
+                        assignedTable.getPieces()[1][(this.getId() * -1) - 1] = new Queen(PieceColor.Black, target);
+                    }
+                    info.setMove();
                 }
                 info.setMove();
             } else if (!moved) {
