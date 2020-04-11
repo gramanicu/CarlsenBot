@@ -95,16 +95,16 @@ public class Pawn extends Piece {
                     Queen queen = null;
                     Position pawnPos;
                     pawnPos = new Position(0,target.getCol());
-                    move(target);
-                    assignedTable.removePiece(pawnPos);
+                    //move(target);
+                    assignedTable.removePiece(this);
                     queen = new Queen(PieceColor.Black,target);
                     assignedTable.addPiece(queen);
                 } else if (target.getRow() == 7) {
                     Queen queen = null;
                     Position pawnPos;
                     pawnPos = new Position(7,target.getCol());
-                    move(target);
-                    assignedTable.removePiece(pawnPos);
+                    //move(target);
+                    assignedTable.removePiece(this);
                     queen = new Queen(PieceColor.White,target);
                     assignedTable.addPiece(queen);
                 }
