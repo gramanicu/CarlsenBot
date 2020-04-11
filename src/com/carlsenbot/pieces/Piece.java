@@ -23,7 +23,6 @@ public abstract class Piece {
         attacked piece stores the location of the rook that will be moved.
      */
     public static class MoveInfo {
-
         public boolean canMove;
         public boolean attacking;
         public Position attackedPiece;

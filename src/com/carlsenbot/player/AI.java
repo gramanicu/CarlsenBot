@@ -53,17 +53,18 @@ public class AI {
 //        return randomAI();
         GameManager gameManager = GameManager.getInstance();
         Table minimaxTable = new Table(gameManager.getTable());
-        Piece king;
-        if(assignedPlayer.isWhite()) {
-            king = minimaxTable.getPieces()[0][0];
-        } else {
-            king = minimaxTable.getPieces()[1][0];
-        }
 
-        if(gameManager.getTable().getCheckSystem().isInCheck(assignedPlayer.getColor(), king.getPosition())) {
-            gameManager.resign();
-            return "";
-        }
+//        Piece king;
+//        if(assignedPlayer.isWhite()) {
+//            king = minimaxTable.getPieces()[0][0];
+//        } else {
+//            king = minimaxTable.getPieces()[1][0];
+//        }
+//
+//        if(gameManager.getTable().getCheckSystem().isInCheck(assignedPlayer.getColor(), king.getPosition())) {
+//            gameManager.resign();
+//            return "";
+//        }
 
         int depth = 1;
 

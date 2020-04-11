@@ -93,8 +93,12 @@ public class Pawn extends Piece {
                 if (source.getDiffRow(target) == 1) {
                     if (target.getRow() == 0) {
                         assignedTable.getPieces()[0][(this.getId()) - 1] = new Queen(PieceColor.White, target);
+                        assignedTable.getPieces()[0][(this.getId()) - 1].setOnBoard(true);
+                        assignedTable.getPieces()[0][(this.getId()) - 1].setAssignedTable(assignedTable);
                     } else if (target.getRow() == 7) {
                         assignedTable.getPieces()[1][(this.getId() * -1) - 1] = new Queen(PieceColor.Black, target);
+                        assignedTable.getPieces()[1][(this.getId() * -1) - 1].setOnBoard(true);
+                        assignedTable.getPieces()[1][(this.getId() * -1) - 1].setAssignedTable(assignedTable);
                     }
                     info.setMove();
                 }

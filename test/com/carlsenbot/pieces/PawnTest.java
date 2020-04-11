@@ -81,7 +81,7 @@ class PawnTest {
         assertFalse(p4.isOnBoard(), "The pawn should be on the table");
         assertEquals(table.getPiece(new Position("a2")), p5,"The pawn shouldn't have moved");
         table.movePiece(p5, "a1");
-        assertEquals(table.getPiece(new Position("a1")), p5,"The pawn should have moved");
+        assertTrue(table.getPiece(new Position("a1")) instanceof Queen,"The pawn should have moved and promoted");
     }
 
     @Test
@@ -115,4 +115,24 @@ class PawnTest {
         assertEquals(table.getPiece(new Position("f3")), pawnB, "The pawn should have moved");
         assertFalse(pawnW.isOnBoard(), "This pawn should have been captured");
     }
+
+    @Test
+    void promotion() {
+        Piece ptoQueen = new Pawn(PieceColor.White, "e7");
+        table = new Table();
+        table.addPiece(ptoQueen);
+
+        table.movePiece(ptoQueen, "e8");
+        ptoQueen = table.getPiece(new Position("e8"));
+        assertTrue(ptoQueen instanceof Queen, "Should have promoted.");
+
+        assertTrue(ptoQueen.isValidMove(new Position("a4")).canMove, "Should have move like a Queen.");
+        assertTrue(ptoQueen.isValidMove(new Position("h5")).canMove, "Should have move like a Queen.");
+        assertTrue(ptoQueen.isValidMove(new Position("a8")).canMove, "Should have move like a Queen.");
+        assertTrue(ptoQueen.isValidMove(new Position("e1")).canMove, "Should have move like a Queen.");
+        assertTrue(ptoQueen.isValidMove(new Position("h8")).canMove, "Should have move like a Queen.");
+        assertFalse(ptoQueen.isValidMove(new Position("h6")).canMove, "That move is impossible even for a Queen.");
+        assertFalse(ptoQueen.isValidMove(new Position("h7")).canMove, "That move is impossible even for a Queen.");
+    }
+
 }
