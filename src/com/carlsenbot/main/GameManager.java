@@ -119,7 +119,7 @@ public class GameManager {
         // If the move would promote a pawn
         if(table.getPiece(start).getName().equals("Pawn") && (target.getRow() == 0 || target.getRow() == 8)) {
             // If the pawn promoted
-            resign();
+            //resign();
         }
 
         return table.movePiece(start, target);

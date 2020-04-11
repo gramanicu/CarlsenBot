@@ -94,20 +94,19 @@ public class Pawn extends Piece {
                 if(target.getRow() == 0){
                     Queen queen = null;
                     Position pawnPos;
-                    Position queenPos;
                     pawnPos = new Position(0,target.getCol());
                     move(target);
                     assignedTable.removePiece(pawnPos);
-                    queenPos = pawnPos;
                     queen = new Queen(PieceColor.Black,target);
                     assignedTable.addPiece(queen);
-//                    Piece piece = assignedTable.getPiece(queenPos);
-//                    if(piece instanceof Queen) {
-//                        queen = (Queen) piece;
-//                    }
-//                    if (queen == null){
-//                        return info;
-//                    }
+                } else if (target.getRow() == 7) {
+                    Queen queen = null;
+                    Position pawnPos;
+                    pawnPos = new Position(7,target.getCol());
+                    move(target);
+                    assignedTable.removePiece(pawnPos);
+                    queen = new Queen(PieceColor.White,target);
+                    assignedTable.addPiece(queen);
                 }
             } else if (!moved) {
                 // Check if is moving 2 positions and it can do so
