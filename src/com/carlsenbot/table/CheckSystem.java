@@ -42,6 +42,12 @@ public class CheckSystem {
                     kingPos = p.getPosition();
                 }
             }
+        } else {
+            for(Piece p : table.getPieces()[1]) {
+                if(p instanceof King) {
+                    kingPos = p.getPosition();
+                }
+            }
         }
 
         if(kingPos != null) {
