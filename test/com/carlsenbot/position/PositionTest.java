@@ -15,7 +15,7 @@ class PositionTest {
         pos.setX(0);
         assertEquals( 0, pos.getX());
         pos.setX(128);
-        assertEquals( 127, pos.getX(), "Should not accept values over 127");
+        assertEquals( 7, pos.getX(), "Should not accept values over 7");
         pos.setX(-1);
         assertEquals( 0, pos.getX(), "Should not accept negative values");
     }
@@ -26,7 +26,7 @@ class PositionTest {
         pos.setY(0);
         assertEquals( 0, pos.getY());
         pos.setY(127);
-        assertEquals( 127, pos.getY(), "Should not accept values over 127");
+        assertEquals( 7, pos.getY(), "Should not accept values over 7");
         pos.setY(-1);
         assertEquals( 0, pos.getY(), "Should not accept negative values");
     }

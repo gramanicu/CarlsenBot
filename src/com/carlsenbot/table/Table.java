@@ -202,9 +202,17 @@ public class Table {
             if (p != null) {
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
-                        Piece.MoveInfo info = p.isValidMove(new Position(i, j));
+                        Position target = new Position(i, j);
+                        Piece.MoveInfo info = p.isValidMove(target);
                         if(info.canMove) {
-                            moves.add(new Move(p.getPosition(), new Position(i, j), p));
+                            // Now check if the players king will be in check after this move
+                            Table afterMove = new Table(this);
+                            afterMove.movePiece(p.getPosition(), target);
+
+                            // Check if king is in check
+                            if(!checkSystem.kingIsInCheck(isWhiteTurn ? PieceColor.White : PieceColor.Black)) {
+                                moves.add(new Move(p.getPosition(), target, p));
+                            }
                         }
                     }
                 }

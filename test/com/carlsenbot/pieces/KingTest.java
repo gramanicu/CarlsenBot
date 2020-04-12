@@ -5,6 +5,7 @@
 package com.carlsenbot.pieces;
 
 import com.carlsenbot.position.Position;
+import com.carlsenbot.table.CheckSystem;
 import com.carlsenbot.table.Table;
 import org.junit.jupiter.api.Test;
 
@@ -139,5 +140,31 @@ public class KingTest {
         assertFalse(kw.isValidMove(new Position("g1")).canMove, "The king passes through check.");
         rb2.move("h8");
         assertTrue(kw.isValidMove(new Position("g1")).canMove, "The white king should be able to castle king Side.");
+    }
+
+    @Test
+    void checksPosition() {
+        table = new Table();
+        King whiteK = new King(PieceColor.White, "a1");
+        King blackK = new King(PieceColor.Black, "b7");
+        table.addPiece(whiteK);
+        table.addPiece(blackK);
+
+        CheckSystem cs = table.getCheckSystem();
+        assertTrue(cs.isInCheck(PieceColor.Black, new Position("a2")), "The white king should keep that position in check.");
+        assertTrue(cs.isInCheck(PieceColor.Black, new Position("b2")), "The white king should keep that position in check.");
+        assertTrue(cs.isInCheck(PieceColor.Black, new Position("b1")), "The white king should keep that position in check.");
+        assertFalse(cs.isInCheck(PieceColor.Black, new Position("a3")), "No piece should attack that position.");
+        assertFalse(cs.isInCheck(PieceColor.Black, new Position("b3")), "No piece should attack that position.");
+
+        assertTrue(cs.isInCheck(PieceColor.White, new Position("a7")), "The black king should keep that position in check.");
+        assertTrue(cs.isInCheck(PieceColor.White, new Position("a8")), "The black king should keep that position in check.");
+        assertTrue(cs.isInCheck(PieceColor.White, new Position("b8")), "The black king should keep that position in check.");
+        assertTrue(cs.isInCheck(PieceColor.White, new Position("c8")), "The black king should keep that position in check.");
+        assertTrue(cs.isInCheck(PieceColor.White, new Position("c7")), "The black king should keep that position in check.");
+        assertTrue(cs.isInCheck(PieceColor.White, new Position("c6")), "The black king should keep that position in check.");
+        assertTrue(cs.isInCheck(PieceColor.White, new Position("b6")), "The black king should keep that position in check.");
+        assertTrue(cs.isInCheck(PieceColor.White, new Position("a6")), "The black king should keep that position in check.");
+        assertFalse(cs.isInCheck(PieceColor.White, new Position("d7")), "No piece should attack that position.");
     }
 }

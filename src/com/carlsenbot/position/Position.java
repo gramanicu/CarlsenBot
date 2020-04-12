@@ -43,11 +43,11 @@ public class Position {
 
     // Setters
     public void setX(int x) {
-        this.x = Math.min(Byte.MAX_VALUE, Math.max(x, 0));
+        this.x = Math.min(7, Math.max(x, 0));
     }
-    public void setY(int y) { this.y = Math.min(Byte.MAX_VALUE, Math.max(y, 0)); }
-    public void setRow(int y) { this.y = Math.min(Byte.MAX_VALUE, Math.max(y, 0)); }
-    public void setCol(int x) { this.x = Math.min(Byte.MAX_VALUE, Math.max(x, 0)); }
+    public void setY(int y) { this.y = Math.min(7, Math.max(y, 0)); }
+    public void setRow(int y) { this.y = Math.min(7, Math.max(y, 0)); }
+    public void setCol(int x) { this.x = Math.min(7, Math.max(x, 0)); }
 
     /**
      * Check the validity of the coordinates
@@ -120,7 +120,7 @@ public class Position {
      */
     public static double getDistance(Position p1, Position p2) {
         return Math.sqrt((Math.pow(getDiffRow(p1, p2), 2)
-                        + Math.pow(getDiffCol(p1, p2), 2)));
+                + Math.pow(getDiffCol(p1, p2), 2)));
     }
 
     /**

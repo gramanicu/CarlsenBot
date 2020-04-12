@@ -61,3 +61,170 @@ Bf5 8. d4
 1. e4 d5 2. exd5
 {xboard exit (Clocks: 303, 300)} *
 
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.12"]
+[Round "-"]
+[White "nicolae"]
+[Black "CarlsenBot"]
+[Result "1/2-1/2"]
+[TimeControl "300+2"]
+
+1. e4 Nc6 2. d3 d5 3. Nc3 dxe4 4. dxe4 Qxd1+ 5. Kxd1 Bg4+ 6. Be2 Bxe2+ 7.
+Kxe2 Nb4 8. a3 Nxc2 9. Ra2 Nd4+ 10. Kd3 Nc6 11. Nf3 e6 12. e5 O-O-O+ 13.
+Kc2 f6 14. exf6 gxf6 15. Rd1 Rxd1 16. Kxd1 Bh6 17. Bxh6 Nxh6 18. Nh4 Ng4
+19. f3 Rd8+ 20. Kc2 Nxh2 21. b4 Nf1 22. Kc1 Nd4 23. Kd1 Nxf3+ 24. Ke2 Nxh4
+25. Kxf1 Nf5 26. g4 Ne3+ 27. Ke2 Nxg4 28. Kf3 Rd3+ 29. Ke2 Rxc3 30. Kd2 Rc4
+31. Kd3 Ne5+ 32. Ke3 c5 33. Kd2 Kb8 34. Rc2 Rxc2+ 35. Kxc2 cxb4 36. Kb3
+bxa3 37. Kxa3 f5 38. Kb2 f4 39. Kc1 f3 40. Kd1 f2 41. Ke2 Nc6 42. Kxf2 e5
+43. Kf3 Kc7 44. Kf2 Kb8 45. Ke2 Nd4+ 46. Ke3 h6 47. Ke4 Nc6 48. Kf5 h5 49.
+Kg5 Ne7 50. Kxh5 e4 51. Kg4 Nd5 52. Kg3 a5 53. Kf2 a4 54. Ke1 a3 55. Kd1 a2
+56. Kc1 e3 57. Kb2 e2 58. Kxa2 Nf4 59. Kb2 Ng6 60. Kc2 Nf4 61. Kd2 Ng6 62.
+Kxe2 Nf4+ 63. Kf3 Ng6 64. Kg4 Ne7 65. Kg5 Nc6 66. Kf5 Ne7+ 67. Kf6 Nc6 68.
+Ke6 Nb4 69. Ke5 Nd3+ 70. Ke4 Ne1 71. Ke3 Nc2+ 72. Kd3 Nb4+ 73. Kc3 Nc6 74.
+Kc4 Ne7 75. Kd4 Ng6 76. Ke4 Nh4 77. Kf4 Ng6+ 78. Kg5 Ne7 79. Kf6 Nc6 80.
+Ke6 Nb4 81. Ke5 Nd3+ 82. Ke4 Ne1 83. Ke3 Nc2+ 84. Kd3 Nb4+ 85. Kc4 Nc6 86.
+Kc5 Ne7 87. Kb6 Ng6 88. Ka5 Nf4 89. Kb5 Ng6 90. Kb4 Nf4 91. Ka4 Ng6 92. Ka3
+Nf4 93. Kb3 Ng6 94. Kc3 Nf4 95. Kd2 Ng6 96. Ke2 Nf4+ 97. Ke3 Ng6 98. Ke4
+Nh4 99. Kf4 Ng6+ 100. Kg5 Ne7 101. Kf6 Nc6 102. Ke6 Nb4 103. Ke5 Nd3+ 104.
+Ke4 Ne1 105. Ke3 Nc2+ 106. Kd3 Nb4+ 107. Kc3 Nc6 108. Kc4 Ne7 109. Kc5 Ng6
+110. Kd5 Nf4+ 111. Ke5 Nd3+ 112. Ke4 Ne1 113. Ke3
+{Xboard adjudication: 50-move rule} 1/2-1/2
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.12"]
+[Round "-"]
+[White "nicolae"]
+[Black "CarlsenBot"]
+[Result "*"]
+[TimeControl "300+2"]
+
+1. e4 d5 2. Nc3
+{xboard exit (Clocks: 301, 240)} *
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.12"]
+[Round "-"]
+[White "nicolae"]
+[Black "CarlsenBot"]
+[Result "1/2-1/2"]
+[TimeControl "300+2"]
+
+1. e4 Nc6 2. Nf3 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. d3 e5 6. Bd2 Be7 7. d4 Bxe4
+8. Bd3 Bxf3 9. Qxf3 Nxd4 10. Qd1 Ne6 11. O-O Nf6 12. Re1 Qd6 13. h3 O-O 14.
+a4 Rfe8 15. Ra3 Qd4 16. c3 Qxd3 17. Qe2 Qxe2 18. Rxe2 Bxa3 19. bxa3 Red8
+20. Bg5 Nxg5 21. Rxe5 Nge4 22. a5 Rd1+ 23. Kh2 Nxf2 24. Re2 Rh1+ 25. Kg3
+N2e4+ 26. Kf3 Nxc3 27. g4 Nxe2 28. Kxe2 Rxh3 29. Kf2 Nxg4+ 30. Kg2 Rxa3 31.
+a6 bxa6 32. Kf1 Ra1+ 33. Ke2 Rg1 34. Kd3 Rg2 35. Kc4 Rb8 36. Kc3 Ne3 37.
+Kd4 Rb3 38. Ke4 Nc4 39. Kd4 Nd6 40. Kd5 Rd2+ 41. Ke5 Rf3
+{Xboard adjudication: Stalemate} 1/2-1/2
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.12"]
+[Round "1"]
+[White "CarlsenBot"]
+[Black "Fairy-Max 5.0b"]
+[Result "0-1"]
+[TimeControl "300+2"]
+
+1. g3 d5 {+0,14/2 0,1} 2. f3 Bf5 {+0,10/2 0,1} 3. h4 Nc6 {+0,02/2 0,1} 4.
+c3 Nf6 {+0,07/2 0,1} 5. Kf2 a5 {+0,00/2 0,1} 6. b3 e5 {+0,01/2 0,1} 7. a4
+Bc5+ {+0,39/2 0,1}
+{Xboard: Forfeit due to invalid move: g3g4 (g3g4 via `0, `0) res=24} 0-1
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.12"]
+[Round "2"]
+[White "Fairy-Max 5.0b"]
+[Black "CarlsenBot"]
+[Result "1-0"]
+[TimeControl "300+2"]
+
+1. f4 {+0,13/2} d5 2. d4 {+0,05/2 0,1} Qd6 3. Be3 {+0,12/2 0,1} Nc6 4. Nc3
+{+0,00/2 0,1} Qb4 5. a3 {+0,04/2 0,1} Qxb2 6. Nxd5 {+0,19/2 0,1} Qc3+ 7.
+Nxc3 {+8,31/2 0,1}
+{False illegal-move claim} 1-0
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.12"]
+[Round "3"]
+[White "CarlsenBot"]
+[Black "Fairy-Max 5.0b"]
+[Result "0-1"]
+[TimeControl "300+2"]
+
+1. g3 d5 {+0,11/2 0,1} 2. f3 c5 {+0,06/2 0,1} 3. h4 Qc7 {+0,18/2 0,1} 4. c3
+Qxg3# {+1000,01/2 0,1}
+{Xboard adjudication: Checkmate} 0-1
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.12"]
+[Round "4"]
+[White "Fairy-Max 5.0b"]
+[Black "CarlsenBot"]
+[Result "1-0"]
+[TimeControl "300+2"]
+
+1. f3 {+0,04/2} e5 2. Nc3 {+0,14/2 0,1} Nc6 3. Nd5 {+0,04/2 0,1} Qh4+ 4. g3
+{+0,18/2 0,1}
+{Xboard: Forfeit due to invalid move: h4e1 (h4e1 via `0, `0) res=24} 1-0
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.12"]
+[Round "1"]
+[White "CarlsenBot"]
+[Black "Fairy-Max 5.0b"]
+[Result "0-1"]
+[TimeControl "300+2"]
+
+1. g3 f6 {+0,06/2 0,1} 2. f3 Na6 {+0,02/2 0,1} 3. h4 Nb4 {+0,08/2 0,1} 4.
+c3 Nd5 {+0,02/2 0,1} 5. b3 c5 {+0,10/2 0,1} 6. Kf2 b5 {+0,01/2 0,1} 7. Rh2
+Nh6 {+0,00/2 0,1} 8. g4 Qc7 {+0,00/2 0,1} 9. a4 Qxh2+ {+5,14/2 0,1}
+{Xboard: Forfeit due to invalid move: f3f4 (f3f4 via `0, `0) res=24} 0-1
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.12"]
+[Round "1"]
+[White "CarlsenBot"]
+[Black "Fairy-Max 5.0b"]
+[Result "0-1"]
+[TimeControl "300+2"]
+
+1. g3 f5 {+0,09/2 0,1} 2. f3 c6 {+0,05/2 0,1} 3. h4 d5 {+0,05/2 0,1} 4. c3
+Nd7 {+0,08/2 0,1} 5. Kf2 Ngf6 {+0,07/2 0,1} 6. b3 Qb6+ {+0,09/2 0,1}
+{Xboard: Forfeit due to invalid move: f3f4 (f3f4 via `0, `0) res=24} 0-1
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.12"]
+[Round "-"]
+[White "CarlsenBot"]
+[Black "nicolae"]
+[Result "*"]
+[TimeControl "300+2"]
+
+1. g3 e5 2. f3 Nc6 3. h4 d5 4. c3 Nf6 5. Kf2 Bc5+
+{xboard exit (Clocks: 295, 267)} *
+
+[Event "Computer Chess Game"]
+[Site "ferret"]
+[Date "2020.04.12"]
+[Round "-"]
+[White "CarlsenBot"]
+[Black "nicolae"]
+[Result "*"]
+[TimeControl "300+2"]
+
+1. g3 e5 2. Bh3 Nc6 3. c3 Bc5 4. e3 Nf6 5. f3 h6 6. b3 O-O 7. a4 d5 8. Bg2
+Bf5 9. Qe2 b6 10. h4 Re8 11. Rh2 Nh5 12. Qd3 g6 13. Bh1 Bxd3 14. Rf2 Bxb1
+15. Ne2 Nxg3 16. Ba3 Nxh1 17. b4 Nxf2
+{xboard exit (Clocks: 173, 227)} *
+
