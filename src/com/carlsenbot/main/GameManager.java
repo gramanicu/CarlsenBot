@@ -84,12 +84,6 @@ public class GameManager {
     }
     public void activateBot() {
         botActive = true;
-
-        if(queuedMove != null) {
-            if (move(queuedMove.getStart(), queuedMove.getEnd())) {
-                sendCommand("move " + queuedMove.getStart().toString() + queuedMove.getEnd().toString());
-            }
-        }
     }
 
     /**
@@ -97,7 +91,14 @@ public class GameManager {
      */
     public void checkBotAct() {
         if(table.getTurnColor() == player.getColor()) {
-            player.doAMove();
+            if(queuedMove == null) {
+                player.doAMove();
+            } else {
+                if (move(queuedMove.getStart(), queuedMove.getEnd())) {
+                    sendCommand("move " + queuedMove.getStart().toString() + queuedMove.getEnd().toString());
+                    queuedMove = null;
+                }
+            }
         }
     }
 
@@ -116,12 +117,6 @@ public class GameManager {
      * @return Whether or not the move was possible
      */
     public boolean move(Position start, Position target) {
-        // If the move would promote a pawn
-        if(table.getPiece(start).getName().equals("Pawn") && (target.getRow() == 0 || target.getRow() == 8)) {
-            // If the pawn promoted
-            //resign();
-        }
-
         return table.movePiece(start, target);
     }
 

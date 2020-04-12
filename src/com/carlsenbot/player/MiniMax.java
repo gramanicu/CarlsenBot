@@ -12,11 +12,11 @@ import java.util.ArrayList;
 public class MiniMax {
 
     private static double minimax(int depth, boolean maxPlayer, Table table, double alpha, double beta) {
-        if(depth == 0) {
+        ArrayList<Move> possibleMoves = table.getAllPossibleMoves(table.getTurnColor());
+        if(depth == 0 || possibleMoves.size() == 0) {
             return -EvaluationBoards.evaluateBoard(table);
         }
 
-        ArrayList<Move> possibleMoves = table.getAllPossibleMoves();
 
         double best;
         if(maxPlayer) {
@@ -51,8 +51,8 @@ public class MiniMax {
     }
 
     public static Move minimax(int depth, boolean maxPlayer, Table table) {
-        ArrayList<Move> possibleMoves = table.getAllPossibleMoves();
-        double best = -9999;
+        ArrayList<Move> possibleMoves = table.getAllPossibleMoves(table.getTurnColor());
+        double best = Double.NEGATIVE_INFINITY;
         Move bestMove = null;
 
         for(Move move : possibleMoves) {

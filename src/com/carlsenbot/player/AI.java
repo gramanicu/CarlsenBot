@@ -5,7 +5,6 @@
 package com.carlsenbot.player;
 
 import com.carlsenbot.main.GameManager;
-import com.carlsenbot.pieces.Piece;
 import com.carlsenbot.position.Move;
 import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
@@ -23,20 +22,9 @@ public class AI {
         Random rand = new Random();
         Position source , target;
 
-        Piece king;
-        ArrayList<Move> possibleMoves = table.getAllPossibleMoves();
+        ArrayList<Move> possibleMoves = table.getAllPossibleMoves(table.getTurnColor());
         int id = rand.nextInt(possibleMoves.size());
 
-        if (assignedPlayer.isWhite()) {
-            king = table.getPieces()[0][0];
-        } else {
-            king = table.getPieces()[1][0];
-        }
-
-        if (gameManager.getTable().getCheckSystem().isInCheck(assignedPlayer.getColor(), king.getPosition())) {
-            gameManager.resign();
-            return "";
-        }
 
         source = possibleMoves.get(id).getStart();
         target = possibleMoves.get(id).getEnd();
@@ -54,19 +42,7 @@ public class AI {
         GameManager gameManager = GameManager.getInstance();
         Table minimaxTable = new Table(gameManager.getTable());
 
-//        Piece king;
-//        if(assignedPlayer.isWhite()) {
-//            king = minimaxTable.getPieces()[0][0];
-//        } else {
-//            king = minimaxTable.getPieces()[1][0];
-//        }
-//
-//        if(gameManager.getTable().getCheckSystem().isInCheck(assignedPlayer.getColor(), king.getPosition())) {
-//            gameManager.resign();
-//            return "";
-//        }
-
-        int depth = 5;
+        int depth = 2;
 
         Move move = MiniMax.minimax(depth, true, minimaxTable);
         return move.getStart().toString() + move.getEnd().toString();

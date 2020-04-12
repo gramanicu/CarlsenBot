@@ -5,7 +5,6 @@
 package com.carlsenbot.player;
 
 import com.carlsenbot.pieces.*;
-import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
 
 public class EvaluationBoards {
@@ -99,13 +98,13 @@ public class EvaluationBoards {
     public static double evaluateBoard(Table table) {
         double result = 0d;
         for (Piece[] whiteAndBlack : table.getPieces()) {
-            for(Piece p : whiteAndBlack) {
-                if(p != null) {
+            for (Piece p : whiteAndBlack) {
+                if (p != null) {
                     result += getPieceValue(p);
                 }
             }
         }
-        return result;
+        return table.getTurnColor() == PieceColor.White ? -result : result;
     }
 
     // double[][] kingEvalBlack = reverse

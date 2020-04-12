@@ -188,11 +188,29 @@ public class Table {
         return false;
     }
 
-    public ArrayList<Move> getAllPossibleMoves() {
+    /**
+     * Check if specified player lost
+     * @param color The color of the player
+     * @return If he is in checkmate
+     */
+    public boolean checkmate(PieceColor color) {
+        return checkSystem.kingIsInCheck(color) && getAllPossibleMoves(color).size() == 0;
+    }
+
+    /**
+     * Check if the specified player is in stalemate
+     * @param color The color of the player
+     * @return If he is in stalemate
+     */
+    public boolean stalemate(PieceColor color) {
+        return !checkSystem.kingIsInCheck(color) && getAllPossibleMoves(color).size() == 0;
+    }
+
+    public ArrayList<Move> getAllPossibleMoves(PieceColor color) {
         ArrayList<Move> moves = new ArrayList<>();
 
         Piece[] moveable;
-        if(isWhiteTurn) {
+        if(color == PieceColor.White) {
             moveable = pieces[0];
         } else {
             moveable = pieces[1];
@@ -210,7 +228,7 @@ public class Table {
                             afterMove.movePiece(p.getPosition(), target);
 
                             // Check if king is in check
-                            if(!checkSystem.kingIsInCheck(isWhiteTurn ? PieceColor.White : PieceColor.Black)) {
+                            if(!afterMove.getCheckSystem().kingIsInCheck(isWhiteTurn ? PieceColor.White : PieceColor.Black)) {
                                 moves.add(new Move(p.getPosition(), target, p));
                             }
                         }

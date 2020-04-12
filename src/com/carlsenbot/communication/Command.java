@@ -49,6 +49,8 @@ public class Command {
                 return changeColors(PieceColor.Black);
             case "white":
                 return changeColors(PieceColor.White);
+            case "computer":
+                return computer();
             case "force":
                 return force();
             case "xboard":
@@ -111,7 +113,7 @@ public class Command {
         // Start thinking ?
         gameManager.getPlayer().setColor(gameManager.getTurnColor());
         gameManager.activateBot();
-        gameManager.getPlayer().doAMove();
+        gameManager.checkBotAct();
 //        gameManager.printTable();
         return true;
     }
