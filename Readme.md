@@ -1,7 +1,7 @@
 # CarlsenBot
 
 This is a project that represents the main homework/project for the Algorithm Design Course.
-The problem statement can be found [here](https://ocw.cs.pub.ro/courses/pa/proiect).
+The problem statement can be found [here](https://ocw.cs.pub.ro/courses/pa/regulament-proiect-2020).
 
 
 ## Project structure
