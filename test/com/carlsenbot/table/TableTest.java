@@ -8,14 +8,20 @@
 
 package com.carlsenbot.table;
 
+import com.carlsenbot.main.GameManager;
+import com.carlsenbot.pieces.King;
 import com.carlsenbot.pieces.Pawn;
 import com.carlsenbot.pieces.Piece;
 import com.carlsenbot.pieces.PieceColor;
+import com.carlsenbot.player.EvaluationBoards;
+import com.carlsenbot.player.MiniMax;
+import com.carlsenbot.position.Move;
 import com.carlsenbot.position.Position;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TableTest {
     static class TestPiece extends Piece {
@@ -71,5 +77,21 @@ class TableTest {
         table.movePiece(piece, "a2");
         assertFalse(table.isEmptyCell("a2"), "The cell should not be empty");
         assertTrue(table.isEmptyCell("a1"), "The cell should be empty");
+    }
+
+    @Test
+    void getAllPossibileMoves(){
+        Table table = new Table();
+        Piece piece = new Pawn(PieceColor.White, "a7");
+        Piece piece1 = new King(PieceColor.White, "b3");
+        table.addPiece(piece);
+        table.addPiece(piece1);
+        Move mini = MiniMax.minimax(1,true,table);
+        //ArrayList<Move> possibleMoves = table.getAllPossibleMoves(PieceColor.White);
+
+        double val = EvaluationBoards.evaluateBoard(table);
+        //table.movePiece(piece,"a8");
+        //ArrayList<Move> possibleMoves = table.getAllPossibleMoves(PieceColor.White);
+        assertEquals(90d, table.getPiece(new Position("a8")).getValue(), "Pawn should be promoted to a queen.");
     }
 }
