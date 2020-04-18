@@ -104,7 +104,8 @@ public class EvaluationBoards {
                 }
             }
         }
-        return table.getTurnColor() == PieceColor.White ? -result : result;
+
+        return result;
     }
 
     // double[][] kingEvalBlack = reverse

@@ -4,6 +4,7 @@
 
 package com.carlsenbot.player;
 
+import com.carlsenbot.pieces.PieceColor;
 import com.carlsenbot.position.Move;
 import com.carlsenbot.table.Table;
 
@@ -11,10 +12,25 @@ import java.util.ArrayList;
 
 public class MiniMax {
 
+
+
     private static double minimax(int depth, boolean maxPlayer, Table table, double alpha, double beta) {
         ArrayList<Move> possibleMoves = table.getAllPossibleMoves(table.getTurnColor());
         if(depth == 0 || possibleMoves.size() == 0) {
-            return -EvaluationBoards.evaluateBoard(table);
+            double val = EvaluationBoards.evaluateBoard(table);
+            if (!maxPlayer) {
+                if(table.getTurnColor() == PieceColor.Black)  {
+                    return val;
+                } else {
+                    return -val;
+                }
+            } else {
+                if(table.getTurnColor() == PieceColor.Black)  {
+                    return -val;
+                } else {
+                    return val;
+                }
+            }
         }
 
 
@@ -32,7 +48,6 @@ public class MiniMax {
                     return best;
                 }
             }
-
         } else {
             best = Double.POSITIVE_INFINITY;
 
