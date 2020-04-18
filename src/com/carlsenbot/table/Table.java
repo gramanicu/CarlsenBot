@@ -9,6 +9,8 @@ import com.carlsenbot.position.Move;
 import com.carlsenbot.position.Position;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class Table {
     /*
@@ -152,6 +154,10 @@ public class Table {
         } else {
             return PieceColor.Black;
         }
+    }
+
+    public ArrayList<Move> getMoveHistory() {
+        return moveHistory;
     }
 
     public void setTurnColor(PieceColor color) {
@@ -466,6 +472,25 @@ public class Table {
 
     public CheckSystem getCheckSystem() {
         return checkSystem;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Table table = (Table) o;
+        return blackID == table.blackID &&
+                whiteID == table.whiteID &&
+                isWhiteTurn == table.isWhiteTurn &&
+                Arrays.equals(positions, table.positions) &&
+                Arrays.equals(pieces, table.pieces) &&
+                Objects.equals(moveHistory, table.moveHistory) &&
+                checkSystem.equals(table.checkSystem);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(positions);
     }
 
     public void printMoveHistory() {

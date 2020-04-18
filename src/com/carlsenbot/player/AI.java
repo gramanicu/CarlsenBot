@@ -42,7 +42,7 @@ public class AI {
         GameManager gameManager = GameManager.getInstance();
         Table minimaxTable = new Table(gameManager.getTable());
 
-        int depth = 4;
+        int depth = 3;
 
         Move move = MiniMax.minimax(depth, true, minimaxTable);
         return move.getStart().toString() + move.getEnd().toString();

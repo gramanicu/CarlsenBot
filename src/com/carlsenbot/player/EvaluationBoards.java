@@ -7,7 +7,11 @@ package com.carlsenbot.player;
 import com.carlsenbot.pieces.*;
 import com.carlsenbot.table.Table;
 
+import java.util.Arrays;
+import java.util.HashMap;
+
 public class EvaluationBoards {
+    static HashMap<Integer, Double> computedEvaluations = new HashMap<>();
 
     private static double[][] pawnEvalWhite = {
             {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
@@ -96,7 +100,13 @@ public class EvaluationBoards {
     }
 
     public static double evaluateBoard(Table table) {
-        double result = 0d;
+        int hashcode = Arrays.hashCode(table.getPositions());
+        Double result = computedEvaluations.get(hashcode);
+        if(result != null) {
+            return result;
+        }
+
+        result = 0d;
         for (Piece[] whiteAndBlack : table.getPieces()) {
             for (Piece p : whiteAndBlack) {
                 if (p != null) {
@@ -104,6 +114,8 @@ public class EvaluationBoards {
                 }
             }
         }
+
+        computedEvaluations.put(hashcode, result);
 
         return result;
     }

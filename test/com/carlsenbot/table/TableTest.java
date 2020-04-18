@@ -8,7 +8,6 @@
 
 package com.carlsenbot.table;
 
-import com.carlsenbot.main.GameManager;
 import com.carlsenbot.pieces.King;
 import com.carlsenbot.pieces.Pawn;
 import com.carlsenbot.pieces.Piece;
@@ -18,8 +17,6 @@ import com.carlsenbot.player.MiniMax;
 import com.carlsenbot.position.Move;
 import com.carlsenbot.position.Position;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -90,7 +87,7 @@ class TableTest {
         //ArrayList<Move> possibleMoves = table.getAllPossibleMoves(PieceColor.White);
 
         double val = EvaluationBoards.evaluateBoard(table);
-        //table.movePiece(piece,"a8");
+        table.movePiece(piece,"a8");
         //ArrayList<Move> possibleMoves = table.getAllPossibleMoves(PieceColor.White);
         assertEquals(90d, table.getPiece(new Position("a8")).getValue(), "Pawn should be promoted to a queen.");
     }

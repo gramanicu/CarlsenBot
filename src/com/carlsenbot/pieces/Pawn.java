@@ -90,19 +90,6 @@ public class Pawn extends Piece {
             }
 
             if (source.getDiffRow(target) == 1) {
-                if (target.getRow() == 0) {
-                    assignedTable.getPieces()[0][(this.getId()) - 1] = new Queen(PieceColor.White, target);
-                    assignedTable.getPieces()[0][(this.getId()) - 1].setId(getId());
-                    assignedTable.getPieces()[0][(this.getId()) - 1].setOnBoard(true);
-                    assignedTable.getPieces()[0][(this.getId()) - 1].setAssignedTable(assignedTable);
-                    assignedTable.getPieces()[0][(this.getId()) - 1].setValue(90d);
-                } else if (target.getRow() == 7) {
-                    assignedTable.getPieces()[1][(this.getId() * -1) - 1] = new Queen(PieceColor.Black, target);
-                    assignedTable.getPieces()[1][(this.getId() * -1) - 1].setId(getId());
-                    assignedTable.getPieces()[1][(this.getId() * -1) - 1].setOnBoard(true);
-                    assignedTable.getPieces()[1][(this.getId() * -1) - 1].setAssignedTable(assignedTable);
-                    assignedTable.getPieces()[1][(this.getId() * -1) - 1].setValue(90d);
-                }
                 info.setMove();
             } else if (!moved) {
                 // Check if is moving 2 positions and it can do so
@@ -116,17 +103,6 @@ public class Pawn extends Piece {
         } else if (!isSameColor(target) && !assignedTable.isEmptyCell(target)) {
             // Check if the pawn can attack and move diagonally
             if(source.getDistance(target) == Math.sqrt(2)) {
-                if (target.getRow() == 0) {
-                    assignedTable.getPieces()[0][(this.getId()) - 1] = new Queen(PieceColor.White, target);
-                    assignedTable.getPieces()[0][(this.getId()) - 1].setId(getId());
-                    assignedTable.getPieces()[0][(this.getId()) - 1].setOnBoard(true);
-                    assignedTable.getPieces()[0][(this.getId()) - 1].setAssignedTable(assignedTable);
-                } else if (target.getRow() == 7) {
-                    assignedTable.getPieces()[1][(this.getId() * -1) - 1] = new Queen(PieceColor.Black, target);
-                    assignedTable.getPieces()[1][(this.getId() * -1) - 1].setId(getId());
-                    assignedTable.getPieces()[1][(this.getId() * -1) - 1].setOnBoard(true);
-                    assignedTable.getPieces()[1][(this.getId() * -1) - 1].setAssignedTable(assignedTable);
-                }
                 info.setMove();
                 info.setAttack();
             }
@@ -162,6 +138,19 @@ public class Pawn extends Piece {
 
         if (info.canMove) {
             moved = true;
+
+            if (target.getRow() == 0) {
+                assignedTable.getPieces()[0][(this.getId()) - 1] = new Queen(PieceColor.White, target);
+                assignedTable.getPieces()[0][(this.getId()) - 1].setId(getId());
+                assignedTable.getPieces()[0][(this.getId()) - 1].setOnBoard(true);
+                assignedTable.getPieces()[0][(this.getId()) - 1].setAssignedTable(assignedTable);
+            } else if (target.getRow() == 7) {
+                assignedTable.getPieces()[1][(this.getId() * -1) - 1] = new Queen(PieceColor.Black, target);
+                assignedTable.getPieces()[1][(this.getId() * -1) - 1].setId(getId());
+                assignedTable.getPieces()[1][(this.getId() * -1) - 1].setOnBoard(true);
+                assignedTable.getPieces()[1][(this.getId() * -1) - 1].setAssignedTable(assignedTable);
+            }
+
             if(info.attacking) {
                 capturePiece(target, info.attackedPiece);
             } else {
