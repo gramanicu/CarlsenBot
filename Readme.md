@@ -75,7 +75,7 @@ the best move for that evaluation.
 to decrease the number of nodes that are evaluated by the minimax algorithm in its search tree. It is an
 adversarial search algorithm used commonly for machine playing of two-player games(Tic-tac-toe,Chess). It
 stop evaluating a move when at least one possibility has been found that proves the move to be worse than a
-previously examined move. 
+previously examined move.
 - Player - it is a wrapper used by the AI, will store information about both players in the future
 
 ### position
@@ -87,16 +87,16 @@ previously examined move.
 ### table
 
 - Table - here the chess board is stored, with functionalities added for pieces
-- CheckSystem - the check system is a class that verifies when the king is in check (and what cells are attacked). 
+- CheckSystem - the check system is a class that verifies when the king is in check (and what cells are attacked).
 At the moment, it is a simple sistem, just made to work.
 
 ## Game overview
 
-Currently, when the application is first run, it will initialise the board, then wait for xboard commands. The moment 
-it receives the "xboard" command, it will reply with a set of settings. After each turn change, the "ai" will try to 
-compute a new move. Currently, the AI uses RNG, and it may send invalid movements, as it cannot detect "check" (only if
- it is already in check, when it resigns). And, because xboard doesn't reply with "invalid move", it doesn't know, to be
- able to select another move or resign. It must be closed manually. Because the application activates the "usermove" option,
+Currently, when the application is first run, it will initialise the board, then wait for xboard commands. The moment
+it receives the "xboard" command, it will reply with a set of settings. After each turn change, the "ai" will try to
+compute a new move. The minimax algorithm it uses is set to a depth of 3 (even with alpha-beta pruning and saving the values of certain position in a hastable, it is still quite slow on depth 4).It determines the best move/position using the piece values and evaluation boards.
+
+Because the application activates the "usermove" option,
  every move command it receives must have this prefix "usermove _move_".
 
 Every piece is implemented, without some advanced movements (castling, en passant, check by discovery detection).
@@ -105,7 +105,7 @@ There are many unit tests (JUnit 5), designed to check how if everything does wh
 
 ## Installation and Run
 
-In the makefile are multiple rules written, designed to make the installation, "compilation" and run processes easier. 
+In the makefile are multiple rules written, designed to make the installation, "compilation" and run processes easier.
 It requires java 13 to "compile" and run.
 
 make install - installs java 13 and xboard
@@ -114,12 +114,12 @@ make run - compiles and runs the bot in terminal
 make xboard - compiles and runs the bot, using xboard
 make pack - creates an archive containing the essential files
 
-It was tested on two ubuntu machines (18 and 19), using the makefile rules, and on a windows 10 machine, using a .jar 
+It was tested on two ubuntu machines (18 and 19), using the makefile rules, and on a windows 10 machine, using a .jar
 file build using intellij and winboard 4.8.
 
 ## Other information
 
-Because gitlab was down for a while, we decided use github to host the repository. This is why the commit usernames 
+Because gitlab was down for a while, we decided use github to host the repository. This is why the commit usernames
 are different:
 
 - gramanicu - nicolae.grama
