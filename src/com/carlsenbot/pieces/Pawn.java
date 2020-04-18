@@ -144,11 +144,13 @@ public class Pawn extends Piece {
                 assignedTable.getPieces()[0][(this.getId()) - 1].setId(getId());
                 assignedTable.getPieces()[0][(this.getId()) - 1].setOnBoard(true);
                 assignedTable.getPieces()[0][(this.getId()) - 1].setAssignedTable(assignedTable);
+                assignedTable.getPieces()[0][(this.getId()) - 1].setValue(90d);
             } else if (target.getRow() == 7) {
                 assignedTable.getPieces()[1][(this.getId() * -1) - 1] = new Queen(PieceColor.Black, target);
                 assignedTable.getPieces()[1][(this.getId() * -1) - 1].setId(getId());
                 assignedTable.getPieces()[1][(this.getId() * -1) - 1].setOnBoard(true);
                 assignedTable.getPieces()[1][(this.getId() * -1) - 1].setAssignedTable(assignedTable);
+                assignedTable.getPieces()[1][(this.getId() * -1) - 1].setValue(90d);
             }
 
             if(info.attacking) {
