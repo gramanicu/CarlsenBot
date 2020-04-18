@@ -29,7 +29,7 @@ xboard: build
 
 # Starts xboard using the bot and make it play against fairymax bot
 xboard2: build
-	@xboard -debug -nameOfDebugFile debug.txt -fcp "make run" -scp "fairymax" -depth 2 -tc 5 -inc 2 -autoCallFlag true -mg 10 -sgf partide.txt -reuseFirst false
+	@xboard -debug -nameOfDebugFile debug.txt -fcp "make run" -scp "fairymax" -secondInitString "new\nrandom\nsd 2\n" -tc 5 -inc 2 -autoCallFlag true -mg 10 -sgf partide.txt -reuseFirst false
 
 # Deletes the "out" directory and sources.txt
 clean:
