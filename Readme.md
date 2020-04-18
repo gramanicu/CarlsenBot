@@ -108,11 +108,12 @@ There are many unit tests (JUnit 5), designed to check how if everything does wh
 In the makefile are multiple rules written, designed to make the installation, "compilation" and run processes easier.
 It requires java 13 to "compile" and run.
 
-make install - installs java 13 and xboard
-make build - creates the jarfile that contains the bot
-make run - compiles and runs the bot in terminal
-make xboard - compiles and runs the bot, using xboard
-make pack - creates an archive containing the essential files
+- make install - installs java 13 and xboard
+- make build - creates the jarfile that contains the bot
+- make run - compiles and runs the bot in terminal
+- make xboard - compiles and runs the bot, using xboard
+- make pack - creates an archive containing the essential files
+- make xboard2 - compiles and runs the bot, using xboard, setting FairyMax as adversary (with different options, like a depth of 2)
 
 It was tested on two ubuntu machines (18 and 19), using the makefile rules, and on a windows 10 machine, using a .jar
 file build using intellij and winboard 4.8.
