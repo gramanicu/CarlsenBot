@@ -68,6 +68,13 @@ public class MiniMax {
         return best;
     }
 
+    /**
+     * Runs a minimax algorithm (with alpha-beta pruning) to determine the best move
+     * @param depth The depth of the search
+     * @param maxPlayer If the player is maximizing
+     * @param table The table (current piece position)
+     * @return The computed move
+     */
     public static Move minimax(int depth, boolean maxPlayer, Table table) {
         ArrayList<Move> possibleMoves = table.getAllPossibleMoves(table.getTurnColor());
         double best = Double.NEGATIVE_INFINITY;

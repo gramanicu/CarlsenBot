@@ -87,6 +87,11 @@ public class EvaluationBoards {
 
     private static double[][] kingEvalBlack = reverseBoard(kingEvalWhite);
 
+    /**
+     * A method that reverses the board (for some black pieces evaluation board)
+     * @param my_array The array (evaluation board)
+     * @return The reversed board
+     */
     public static double[][] reverseBoard(double[][] my_array) {
         int my_rows = my_array.length;
         int my_cols = my_array[0].length;
@@ -99,6 +104,11 @@ public class EvaluationBoards {
         return array;
     }
 
+    /**
+     * Compute the value of the current table arrangement
+     * @param table The table
+     * @return The table value
+     */
     public static double evaluateBoard(Table table) {
         int hashcode = Arrays.hashCode(table.getPositions());
         Double result = computedEvaluations.get(hashcode);
@@ -120,8 +130,11 @@ public class EvaluationBoards {
         return result;
     }
 
-    // double[][] kingEvalBlack = reverse
-
+    /**
+     * Computes the value of a piece, based on its position
+     * @param piece The piece
+     * @return The value of the position
+     */
     public static double getPieceValue(Piece piece) {
         double value = piece.isWhite() ? piece.getValue() : -piece.getValue();
 
