@@ -6,39 +6,20 @@ package com.carlsenbot.player;
 
 import com.carlsenbot.main.GameManager;
 import com.carlsenbot.position.Move;
-import com.carlsenbot.position.Position;
 import com.carlsenbot.table.Table;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 public class AI {
     private Player assignedPlayer;
-
-    private String randomAI() {
-        GameManager gameManager = GameManager.getInstance();
-        Table table = gameManager.getTable();
-
-        Random rand = new Random();
-        Position source , target;
-
-        ArrayList<Move> possibleMoves = table.getAllPossibleMoves(table.getTurnColor());
-        int id = rand.nextInt(possibleMoves.size());
-
-
-        source = possibleMoves.get(id).getStart();
-        target = possibleMoves.get(id).getEnd();
-
-        return source.toString() + target.toString();
-    }
-
 
     public AI(Player player) {
         this.assignedPlayer = player;
     }
 
+    /**
+     * Make the AI compute the next move
+     * @return The next move
+     */
     public String think() {
-//        return randomAI();
         GameManager gameManager = GameManager.getInstance();
         Table minimaxTable = new Table(gameManager.getTable());
 
