@@ -30,14 +30,6 @@ public class Command {
         gameManager = GameManager.getInstance();
     }
 
-    // Getters
-    public String getCommand() { return command; }
-    public String getParameter() { return parameter; }
-
-    // Setters
-    public void setCommand(String command) { this.command = command; }
-    public void setParameter(String parameter) { this.parameter = parameter; }
-
     /**
      * Execute the command
      * @return If the command succeeded
@@ -109,12 +101,9 @@ public class Command {
     }
 
     private boolean go() {
-//        gameManager.disableForceMode();
-        // Start thinking ?
         gameManager.getPlayer().setColor(gameManager.getTurnColor());
         gameManager.activateBot();
         gameManager.checkBotAct();
-//        gameManager.printTable();
         return true;
     }
 
@@ -126,10 +115,6 @@ public class Command {
     private boolean move() {
         String source = parameter.substring(0,2);
         String target = parameter.substring(2,4);
-        char promotion;
-        if(parameter.length() > 4) {
-             promotion = parameter.charAt(4);
-        }
 
         if(gameManager.move(new Position(source), new Position(target))) {
             gameManager.checkBotAct();

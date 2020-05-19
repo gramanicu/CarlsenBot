@@ -58,10 +58,6 @@ public class Move {
         return start.getDistance(end);
     }
 
-    public PieceColor getPlayerColor() {
-        return who;
-    }
-
     public Piece getPiece() {
         return what;
     }

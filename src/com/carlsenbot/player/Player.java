@@ -37,13 +37,17 @@ public class Player {
         isWhite = color == PieceColor.White;
     }
 
+    /**
+     * Use the AI to compute a move for the player, then do it
+     * @return If a move was done
+     */
     public boolean doAMove() {
         String move = ai.think();
         if(move.equals("")) {
             return false;
         }
-        Position start = new Position(Character.toString(move.charAt(0)) + Character.toString(move.charAt(1)));
-        Position target = new Position(Character.toString(move.charAt(2)) + Character.toString(move.charAt(3)));
+        Position start = new Position(move.charAt(0) + Character.toString(move.charAt(1)));
+        Position target = new Position(move.charAt(2) + Character.toString(move.charAt(3)));
         GameManager.getInstance().moveAndSend(start, target);
         return true;
     }

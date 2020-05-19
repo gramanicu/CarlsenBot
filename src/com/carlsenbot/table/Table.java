@@ -492,10 +492,4 @@ public class Table {
     public int hashCode() {
         return Arrays.hashCode(positions);
     }
-
-    public void printMoveHistory() {
-        for (Move move : moveHistory) {
-            System.out.println(move);
-        }
-    }
 }
